@@ -29,7 +29,8 @@ function geturl($id,$api){
         $title=(string)$video->name;
         for($i=0;$i<sizeof($playurl[0]);$i++){
             print_r("<form action=\"./play.php\" method='POST'>");
-            print_r("<input type=\"hidden\" name=\"url\" value=\"".$playurl[0][$i]."\">");
+            print_r("<input type=\"hidden\" name=\"url\" value=".$playurl[0][$i].">");
+            print_r("<input type=\"hidden\" name=\"name\" value=".$tag[1][$i]."·".$title.">");
             print_r("<input type=\"submit\" value=播放·".$tag[1][$i]."·".$title."></form>");
         }
     }

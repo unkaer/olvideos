@@ -10,7 +10,13 @@ if(array_key_exists("url", $_POST)){
 <html lang="zh-cmn-Hans">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
-        <title>DPlayer视频播放页</title>
+        <title><?php
+        if(array_key_exists("name", $_POST)){
+            echo $_POST['name'];
+        }else{
+            echo "DPlayer视频播放页";
+        }
+?></title>
         <link rel="stylesheet" href="./DPlayer.min.css"> 
 		<script type="text/javascript"  src="./dplayer/hls.min.js" ></script>
         <script type="text/javascript" src="./dplayer/DPlayer.min.js" ></script> 

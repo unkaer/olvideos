@@ -16,7 +16,9 @@ function playdetail($detailurl)
     preg_match_all("/([^>]+)[$](https?.*\/index.m3u8)/",$html,$playurl);  // 播放地址
     for($i=0;$i<sizeof($playurl[2]);$i++){
         print_r("<form action=\"./play.php\" method='POST'>");
-        print_r("<input type=\"hidden\" name=\"url\" value=".$playurl[2][$i]."><p><input type=\"submit\" value=\"播放·".$playurl[1][$i]."·".$title[1][0]."\"></p></form>");
+        print_r("<input type=\"hidden\" name=\"url\" value=".$playurl[2][$i].">");
+        print_r("<input type=\"hidden\" name=\"name\" value=".$playurl[1][$i]."·".$title[1][0].">");
+        print_r("<p><input type=\"submit\" value=\"播放·".$playurl[1][$i]."·".$title[1][0]."\"></p></form>");
     }
     
 }
