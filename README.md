@@ -1,6 +1,6 @@
 # viedosol
 简易 PHP 在线视频网站，搜索并播放资源站视频。
-
+[演示站http://jx.unkaer.tk/](http://jx.unkaer.tk/)
 
 # 结构
 ```
