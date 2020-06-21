@@ -3,7 +3,8 @@ $url=array("http://www.zuidazy3.net/index.php","http://www.okzyw.com/index.php")
 if(array_key_exists("name", $_POST)){
     $name=$_POST['name'];
 }else{
-    $name="流浪地球";
+    header("Location: ..");
+    exit();
 }
 
 function playdetail($detailurl)

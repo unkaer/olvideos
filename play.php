@@ -2,7 +2,8 @@
 if(array_key_exists("url", $_POST)){
     $url=$_POST['url'];
 }else{
-    $url="http://iqiyi.zuidameiju.com/20200410/14482_5cd3d05a/index.m3u8";
+    header("Location: ..");
+    exit();
 }
 ?>
 <!DOCTYPE html>

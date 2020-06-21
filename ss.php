@@ -3,7 +3,8 @@ $api=array('http://cj.wlzy.tv/inc/api_mac_m3u8.php','http://api.iokzy.com/inc/ap
 if(array_key_exists("name", $_POST)){
     $name=$_POST['name'];
 }else{
-    $name="流浪地球";
+    header("Location: ..");
+    exit();
 }
 
 //获取视频id  并打印
@@ -36,7 +37,7 @@ function geturl($id,$api){
 
 print_r("<a href=\"..\">回到首页</a></br>");
 for($i=0;$i<sizeof($api);$i++){ 
-    print_r("接口".($i+1));
+    print_r("接口".($i+1)."</br>");
     getname($name,$api[$i]);
 }
 ?>
