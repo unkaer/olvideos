@@ -2,6 +2,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <title>APCI视频列表</title>
+        <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+        <link rel="bookmark" href="./favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="./css/d.css" type="text/css" />
 </head>
 <body>

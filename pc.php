@@ -2,10 +2,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <title>爬取视频列表</title>
+        <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+        <link rel="bookmark" href="./favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="./css/d.css" type="text/css" />
 </head>
 <body>
 <?php
+
 $url=array("http://www.zuidazy3.net/index.php","http://www.okzyw.com/index.php");
 if(array_key_exists("name", $_POST)){
     $name=$_POST['name'];
