@@ -1,6 +1,6 @@
 <?php
-if(array_key_exists("url", $_POST)){
-    $url=$_POST['url'];
+if(array_key_exists("urls", $_POST)){
+    $urls=json_decode($_POST['urls']);
 }else{
     header("Location: ..");
     exit();
@@ -40,11 +40,20 @@ if(array_key_exists("url", $_POST)){
             autoplay: true,
             screenshot: true,
             video: {
-                url: '<?php
-                echo $url;
-                ?>',
-                type: 'hls',
+                quality: [<?php
+                for($i=0;$i<sizeof($urls[0]);$i++){
+                    echo "
+                    {
+                        name: '".$urls[0][$i]."',
+                        url: '".$urls[1][$i]."',
+                        type: 'hls',
+                    },";
                 }
+                    ?>
+                ],
+                defaultQuality: 0,
+            }
+            
         });
         </script>
     </body>

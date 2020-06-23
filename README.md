@@ -7,8 +7,8 @@
 .
 ├── README.md
 ├── index.php  输入框
-├── cx.php  爬取 资源站视频播放地址
-├── ss.php  资源站API获取视频播放地址
+├── pc.php  爬取 资源站搜索 视频播放地址
+├── ap.php  通过资源站API获取视频播放地址
 ├── play.php  播放页面
 ├── _dplayer   播放器文件
 |   ├── DPlayer.min.css

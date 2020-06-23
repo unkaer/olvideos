@@ -1,4 +1,12 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <link rel="stylesheet" href="./css/d.css" type="text/css" />
+</head>
+<body>
 <?php
+
 $api=array('http://cj.wlzy.tv/inc/api_mac_m3u8.php','http://api.iokzy.com/inc/apickm3u8.php');
 if(array_key_exists("name", $_POST)){
     $name=$_POST['name'];
@@ -22,23 +30,29 @@ function geturl($id,$api){
     $xml = simplexml_load_string($data);
     foreach($xml->list->video as $video){
         $pic=(string)$video->pic;
-        print_r("<img src=".$pic." style=\"width:150;\"></br>");  // 封面
+        print_r('<li id="play"><img id="cover" src='.$pic.'>');  // 封面
         $url=(string)$video->dl->dd;   //播放地址
         preg_match_all("/http?:\/\/[^#]*\/index.m3u8/",$url,$playurl);
         preg_match_all("/#?([^#]+)[$]/",$url,$tag);
         $title=(string)$video->name;
+        print_r("<form action=\"./play.php\" method='POST'>");
         for($i=0;$i<sizeof($playurl[0]);$i++){
-            print_r("<form action=\"./play.php\" method='POST'>");
-            print_r("<input type=\"hidden\" name=\"url\" value=".$playurl[0][$i].">");
-            print_r("<input type=\"hidden\" name=\"name\" value=".$tag[1][$i]."·".$title.">");
-            print_r("<input type=\"submit\" value=播放·".$tag[1][$i]."·".$title."></form>");
+            $urls[0][$i]=$tag[1][$i];  // 集数
+            $urls[1][$i]=$playurl[0][$i];  // 播放地址
         }
+        print_r("<input type=\"hidden\" name=\"urls\" value=".json_encode($urls).">");
+        print_r("<input type=\"hidden\" name=\"name\" value=".$title.">");
+        print_r("<input type=\"submit\" value=播放·".$title."></form>");
+        print_r("</li>");
     }
 }
 
-print_r("<a href=\"..\">回到首页</a></br>");
+print_r('<div id="head"><ul class="active"><a href="..">首页</a></ul></div>');
 for($i=0;$i<sizeof($api);$i++){ 
-    print_r("接口".($i+1)."</br>");
+    print_r('<ul><p>接口'.($i+1)).'</p>';
     getname($name,$api[$i]);
+    print_r("</ul>");
 }
 ?>
+</body>
+</html>

@@ -1,11 +1,5 @@
 <?php
-$url=array("http://www.zuidazy3.net/index.php","http://www.okzyw.com/index.php");
-if(array_key_exists("name", $_POST)){
-    $name=$_POST['name'];
-}else{
-    header("Location: ..");
-    exit();
-}
+$url=array("https://movie.douban.com/explore#!type=movie&tag=%E7%83%AD%E9%97%A8&sort=recommend&page_limit=20&page_start=0","https://movie.douban.com/tv/#!type=tv&tag=%E7%83%AD%E9%97%A8&sort=recommend&page_limit=20&page_start=0");
 
 function playdetail($detailurl)
 {
@@ -27,10 +21,7 @@ print_r("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\">"
 print_r("<a href=\"..\">回到首页</a></br>");
 for($i=0;$i<sizeof($url);$i++){
     print_r("爬取".($i+1)."</br>");
-    $html = file_get_contents($url[$i]."?m=vod-search&wd=".$name);
-    preg_match_all("/\?m=vod-detail-id-.+.html/",$html,$detail);
-    foreach($detail[0] as $x=>$x_value){
-        playdetail($url[$i].$x_value);
-    }
+    $html = file_get_contents($url[$i]);
+    print_r($html);
 }
 ?>

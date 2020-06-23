@@ -1,0 +1,17 @@
+ul{
+    float: left;
+}
+li{
+    float: left;
+    list-style: none;
+    margin: 20px 12px;
+}
+
+#head{
+    background-color: #D8D8D8;
+}
+#cover{
+    width: 150px;
+    height: 200px;
+    border-radius: 8px;
+}
