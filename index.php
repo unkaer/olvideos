@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <title>在线视频站</title>
         <link rel="stylesheet" href="./css/d.css" type="text/css" />
 </head>
 <body>
