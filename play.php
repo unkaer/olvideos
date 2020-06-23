@@ -17,7 +17,7 @@ if(array_key_exists("urls", $_POST)){
             echo "DPlayer视频播放页";
         }
 ?></title>
-        <link rel="stylesheet" href="./DPlayer.min.css"> 
+        <link rel="stylesheet" href="./dplayer/DPlayer.min.css"> 
 		<script type="text/javascript"  src="./dplayer/hls.min.js" ></script>
         <script type="text/javascript" src="./dplayer/DPlayer.min.js" ></script> 
         <style type="text/css">
