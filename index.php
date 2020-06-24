@@ -8,13 +8,10 @@
         <link rel="stylesheet" href="./css/d.css" type="text/css" />
 </head>
 <body>
-    <form action="./pc.php" method='POST'>
-    <p>请输入要看的电影或者url 爬虫方式：<input type="text" name="name" value=""></p>
-    <p><input type="submit" value="提交"></p>
-</form>
-    <form action="./ap.php" method='POST'>
-    <p>请输入要看的电影或者url API方式：<input type="text" name="name" value=""></p>
-    <p><input type="submit" value="提交"></p>
+    <form action="./dx.php" method='POST'>
+    <p>请输入要看的电影 聚合缓存版：<input type="text" name="wd" value="">
+    <input type="submit" value="搜索"></p>
+    <p>第一次较慢，缓存后秒开。</p><br>
 </form>
 
 <p>暂时只支持输入视频名称 url功能待添加</p>
