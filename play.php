@@ -65,6 +65,7 @@ if(array_key_exists("urls", $_POST)){
         <script type="text/javascript" >
         const dp = new DPlayer({
             container: document.getElementById('dplayer'),
+            hotkey: true,
             autoplay: true,
             screenshot: true,
             video: {
