@@ -35,14 +35,32 @@ if(array_key_exists("urls", $_POST)){
     <body>
         <a href="..">回到首页</a><?php
                 for($i=0;$i<sizeof($urls[0]);$i++){
-                    echo "<button type=\"button\" onclick=\"
-                    dp.switchVideo({
-                        url: '".$urls[1][$i]."',
-                        type: 'hls'
-                        });dp.play();document.getElementById('title').innerHTML ='".$urls[0][$i].$_POST['name']."';\">".$urls[0][$i]."
-                        </button>";
+                    echo "<button type=\"button\" onclick=\"player(".$i.")\">".$urls[0][$i]."</button>";
                 }
+                echo "<script type=\"text/javascript\" >
+                function player(n) {";
+                for($i=0;$i<sizeof($urls[0]);$i++){
+                    echo "
+                        if(n==".$i."){
+                        dp.switchVideo({
+                            url: '".$urls[1][$i]."',
+                            type: 'hls'
+                            });dp.play();document.getElementById('title').innerHTML ='".$urls[0][$i].$_POST['name']."';document.getElementById('jishu').innerHTML ='".$i."';
+                        }";
+                }
+                echo "}</script><button type=\"button\" onclick=\"video_front()\">上一集</button>"; 
+                echo "<button type=\"button\" onclick=\"video_next()\">下一集</button>";
+                echo "<script type=\"text/javascript\" >
+                function video_front() {
+                        var i = Number(document.getElementById('jishu').innerHTML)-1;
+                        player(i);
+                }
+                function video_next() {
+                    var i = Number(document.getElementById('jishu').innerHTML)+1;
+                    player(i);
+                }</script>";
                     ?>
+        <p id="jishu" style="display: none;">0</p>
         <div id="dplayer"></div>
         <script type="text/javascript" >
         const dp = new DPlayer({
@@ -58,70 +76,10 @@ if(array_key_exists("urls", $_POST)){
             
         });
 
-        //   //视频就绪回调,用来监控播放开始 
-        //   function loadedmetadataHandler() {
-        //       if ( seektime===1 && !live && headtime > 0 && player.video.currentTime < headtime) {
-        //               player.seek(headtime);
-        //               player.notice("继续上次播放");
+        dp.on('ended', function () {
+            video_next();
+            });
 
-        //       } else {
-        //              player.notice("视频已就绪");
-          
-        //       }
-        //           player.on("timeupdate", function () {
-        //               timeupdateHandler();
-        //           });
-         
-        //   }
-        //   //播放进度回调  	
-        //   function timeupdateHandler() {
-        //      setCookie("time_"+ videoUrl,player.video.currentTime,24);
-        //  }
-
-        //   //播放结束回调		
-        //   function endedHandler() {
-        //       setCookie("time_"+ videoUrl,"",-1);
-        //       if (xyplay.playlist_array.length > Number(xyplay.part)) {
-        //           player.notice("视频已结束,为您跳到下一集");
-        //           setTimeout(function () {
-        //               video_next();
-        //           }, 500);
-        //       } else {
-        //           player.notice("视频播放已结束");
-        //       }
-        //   }
-        //   //播放下集
-        //   function video_next() {
-        //       if ("undefined" !== typeof xyplay && "undefined" !== typeof xyplay.playlist_array)
-        //           if (Number(xyplay.part) + 1 >= xyplay.playlist_array.length) {
-        //               return false;
-        //           }
-        //       xyplay.part++;
-        //       myplay(xyplay.playlist_array[xyplay.part]);
-        //   }
-        //   //播放上集	
-        //   function video_front() {
-        //       if ("undefined" !== typeof xyplay && "undefined" !== typeof xyplay.playlist_array)
-        //           if (Number(xyplay.part) <= 0) {
-        //               return false;
-        //           }
-        //       xyplay.part--;
-        //       myplay(xyplay.playlist_array[xyplay.part]);
-
-        //   }
-        //   //调用播放
-        //   function myplay(url) { 
-        //       videoUrl=url; headtime= Number(getCookie("time_"+ videoUrl));
-        //       player.switchVideo({url: url});
-        //       player.play();
-        //       if ("undefined" !== typeof xyplay) {
-        //           if (xyplay.title && !live) {
-        //               parent.document.title = "正在播放:【" + xyplay.title + "】part " + (Number(xyplay.part) + 1) + "-- " + xyplay.mytitle;
-        //           }
-
-        //       }
-
-        //   } 
         </script>
     </body>
 
