@@ -8,9 +8,19 @@
         <link rel="stylesheet" href="./css/d.css" type="text/css" />
 </head>
 <body>
-    <form action="./dx.php" method='POST'>
-    <p>请输入要看的电影 聚合缓存版：<input type="text" name="wd" value="">
+    <form action="./dx.php" method='POST' onsubmit="return checkform();">
+    <p>请输入要看的电影 聚合缓存版：<input id="ipt" type="text" name="wd" value="">
     <input type="submit" value="搜索"></p>
+    <script type="text/javascript" >
+    function checkform(){
+        if(document.getElementById('ipt').value.length==0){
+            alert('输入不能为空！！！');
+            document.getElementById('ipt').focus();
+            return false;
+        }
+        else{return true}
+    }
+    </script>
     <p>第一次较慢，缓存后秒开。</p><br>
 </form>
 

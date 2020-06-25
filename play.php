@@ -44,7 +44,7 @@ if(array_key_exists("urls", $_POST)){
                 }
                     ?>
         <div id="dplayer"></div>
-        <script id="play" type="text/javascript" >
+        <script type="text/javascript" >
         const dp = new DPlayer({
             container: document.getElementById('dplayer'),
             autoplay: true,
