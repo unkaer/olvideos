@@ -21,8 +21,54 @@
         else{return true}
     }
     </script>
-    <p>第一次较慢，缓存后秒开。</p><br>
+    <p>第一次较慢，缓存后秒开。</p>
+    <p>如果没有搜到，请减少关键词。</p><br>
 </form>
+
+<?php
+$url=array("https://list.iqiyi.com/www/1/-------------11-1-1-iqiyi--.html","https://list.iqiyi.com/www/2/-------------24-1-1-iqiyi--.html");
+$name=array("热播电影","热播电视剧");
+for($i=0;$i<sizeof($url);$i++){
+    $file="./data/index".$i.".p"; 
+    //读出缓存 
+    if(file_exists($file)){
+        date_default_timezone_set("Asia/Shanghai");
+        $time=time()-filemtime($file);
+        if($time>86400){    // 缓存文件太久才会更新  86400 24H
+            $html = file_get_contents($url[$i]);
+            preg_match_all('/<a\s*?title=\"(.*?)\"\s*?class="link-txt"/',$html,$title);  // 播放地址
+            if(false!==fopen($file,'w+')){ 
+                file_put_contents($file,serialize($title[1]));//写入缓存 
+            }
+        }
+        $handle=fopen($file,'r');// 存在 读取内容 只建立网页  只API 只爬取 
+        $title[1]=unserialize(fread($handle,filesize($file)));
+    }
+    else{
+        $html = file_get_contents($url[$i]);
+        preg_match_all('/<a\s*?title=\"(.*?)\"\s*?class="link-txt"/',$html,$title);  // 播放地址
+        if(false!==fopen($file,'w+')){ 
+            file_put_contents($file,serialize($title[1]));//写入缓存 
+        }
+    }
+    print_r("<ul>".$name[$i]);
+    for($j=0;$j<sizeof($title[1]);$j++){
+        print_r("<div><form action='./dx.php' method='POST'>
+        <input id='ipt'  type='hidden' type='text' name='wd' value=".$title[1][$j].">
+        <input id='button' onmousemove='red(this)' onmouseout='black(this)' style='color=\"black\";background-color:rgb(255, 255, 255);' type='submit' value=".$j.".".$title[1][$j]."></form></div>");
+    }
+    echo "</ul>";
+}
+echo '<script>
+function red(x){
+x.style.color="red";
+}
+
+function black(x){
+x.style.color="black";
+}
+</script>';
+?>
 
 <p>暂时只支持输入视频名称 url功能待添加</p>
 <p>作者 <a href="https://zan7l.tk/">unkaer</a></p>

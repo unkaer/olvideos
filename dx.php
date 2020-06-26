@@ -3,7 +3,11 @@ set_time_limit(0);
 ob_end_clean();
 ob_implicit_flush(); // 1
 if(array_key_exists("wd", $_POST)){
+    $teshu=array(",","!","(",")","第1季","第2季","第3季","普通话","粤语","之冲破特训营");
     $name=$_POST['wd'];
+    for($i=0;$i<sizeof($teshu);$i++){
+        $name=str_replace($teshu[$i],'',$name);
+    }
 }else{
     header("Location: ..");
     exit();
@@ -117,7 +121,8 @@ function playdetail($detailurl,$f){
 
 //获取视频id  只爬虫
 function getname($api,$f){
-    $data = file_get_contents($api."?wd=".$_POST['wd']);
+    global $name;
+    $data = file_get_contents($api."?wd=".$name);
     $xml = simplexml_load_string($data);
     foreach($xml->list->video as $video){
         $id=(string)$video->id;
@@ -167,12 +172,12 @@ function build(){
 }
 
 function getarray($f){
-    global $api,$url;
+    global $api,$url,$name;
     for($i=0;$i<sizeof($api);$i++){    // API 方式
         getname($api[$i],$f);
     }
     for($i=0;$i<sizeof($url);$i++){   // 爬虫方式
-        $html = file_get_contents($url[$i]."?m=vod-search&wd=".$_POST['wd']);
+        $html = file_get_contents($url[$i]."?m=vod-search&wd=".$name);
         preg_match_all("/\?m=vod-detail-id-.+.html/",$html,$detail);
         foreach($detail[0] as $x=>$x_value){
             playdetail($url[$i].$x_value,$f);
@@ -181,7 +186,7 @@ function getarray($f){
 }
 
 
-$file="./data/".$_POST['wd'].".p"; 
+$file="./data/".$name.".p"; 
 //读出缓存 
 if(file_exists($file)){
     $handle=fopen($file,'r');// 存在 读取内容 只建立网页  只API 只爬取 

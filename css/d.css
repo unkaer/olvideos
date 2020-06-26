@@ -15,3 +15,7 @@ li{
     height: 200px;
     border-radius: 8px;
 }
+#button{
+    float: left;
+    border:none;
+}
