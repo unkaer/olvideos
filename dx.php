@@ -3,8 +3,8 @@ set_time_limit(0);
 ob_end_clean();
 ob_implicit_flush(); // 1
 if(array_key_exists("wd", $_POST)){
-    $teshu=array(",","!","(",")","第1季","第2季","第3季","普通话","粤语","之冲破特训营");
-    $name=$_POST['wd'];
+    $teshu=array(",","!",":","(",")","第1季","第2季","第3季","普通话","粤语");
+    $name=trim($_POST['wd']);
     for($i=0;$i<sizeof($teshu);$i++){
         $name=str_replace($teshu[$i],'',$name);
     }
@@ -24,7 +24,21 @@ echo str_repeat(" ",1024);//部分浏览器需要多于1024字节才开始输出
         <link rel="stylesheet" href="./css/d.css" type="text/css" />
 </head>
 <body>
-<div id="head"><ul class="active"><a href="..">首页</a></ul></div>
+<div id="head"><ul class="active"><a href="..">首页</a></ul>
+<form action="./dx.php" method='POST' onsubmit="return checkform();">
+    <p>请输入要看的电影 聚合缓存版：<input id="ipt" type="text" name="wd" autofocus value="<?php echo $name;?>">
+    <input type="submit" value="搜索"></form>
+    <p>如果没有搜到，请适当减少关键词后再试。</p></div>
+    <script type="text/javascript" >
+    function checkform(){
+        if(document.getElementById('ipt').value.length==0){
+            alert('输入不能为空！！！');
+            document.getElementById('ipt').focus();
+            return false;
+        }
+        else{return true}
+    }
+    </script>
 <?php
 
 $api=array('http://cj.wlzy.tv/inc/api_mac_m3u8.php','http://api.iokzy.com/inc/apickm3u8.php');  // API方式 资源站API

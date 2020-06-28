@@ -1,6 +1,6 @@
 ul{
     float: left;
-    width: 150px;
+    width: 182px;
 }
 li{
     float: left;
@@ -19,5 +19,5 @@ li{
 #button{
     float: left;
     border:none;
-    width: 120px;
+    width: 180px;
 }
