@@ -9,7 +9,7 @@
 </head>
 <body>
     <form action="./dx.php" method='POST' onsubmit="return checkform();">
-    <p>请输入要看的电影 聚合缓存版：<input id="ipt" type="text" name="wd" value="">
+    <p>请输入要看的电影 聚合缓存版：<input id="ipt" type="text" name="wd" autofocus value="">
     <input type="submit" value="搜索"></p>
     <script type="text/javascript" >
     function checkform(){
@@ -26,7 +26,7 @@
 </form>
 
 <?php
-$url=array("https://list.iqiyi.com/www/1/-------------11-1-1-iqiyi--.html","https://list.iqiyi.com/www/2/-------------24-1-1-iqiyi--.html");
+$url=array("https://list.iqiyi.com/www/1/-------------11-1-1-iqiyi--.html","https://list.iqiyi.com/www/2/-------------11-1-1-iqiyi--.html");
 $name=array("热播电影","热播电视剧");
 for($i=0;$i<sizeof($url);$i++){
     $file="./data/index".$i.".p"; 
