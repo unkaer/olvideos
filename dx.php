@@ -3,10 +3,13 @@ set_time_limit(0);
 ob_end_clean();
 ob_implicit_flush(); // 1
 if(array_key_exists("wd", $_POST)){
-    $teshu=array(",","!",":","(",")","第1季","第2季","第3季","普通话","粤语");
     $name=trim($_POST['wd']);
-    for($i=0;$i<sizeof($teshu);$i++){
-        $name=str_replace($teshu[$i],'',$name);
+    $teshu=array(array(",","!",":"),array("，","！","："),array("(",")","第1季","第2季","第3季","普通话","粤语"));
+    for($i=0;$i<sizeof($teshu[0]);$i++){
+        $name=str_replace($teshu[0][$i],$teshu[1][$i],$name);
+    }
+    for($i=0;$i<sizeof($teshu[2]);$i++){
+        $name=str_replace($teshu[2][$i],'',$name);
     }
 }else{
     header("Location: ..");
