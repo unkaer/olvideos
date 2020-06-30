@@ -22,12 +22,16 @@ li{
     width: 180px;
 }
 #menu{
-    width: 168px;
+    width: 195px;
     border-radius: 8px;
     float: right;
     direction: ltr;
     overflow: auto;
     
+}
+#menu button{
+    width: 65px;
+    background-color: #256;
 }
 #dplayer{
     border-radius: 8px;
