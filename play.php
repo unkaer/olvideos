@@ -18,6 +18,7 @@ if(array_key_exists("urls", $_POST)){
             echo "DPlayer视频播放页";
         }
 ?></title>
+        <link rel="stylesheet" href="./css/d.css" type="text/css" />
         <link rel="stylesheet" href="./dplayer/DPlayer.min.css"> 
 		<script type="text/javascript"  src="./dplayer/hls.min.js" ></script>
         <script type="text/javascript" src="./dplayer/DPlayer.min.js" ></script> 
@@ -33,7 +34,7 @@ if(array_key_exists("urls", $_POST)){
     </head>
     
     <body>
-        <a href="..">回到首页</a><?php
+        <a href="..">回到首页</a><div id="menu"><?php
                 for($i=0;$i<sizeof($urls[0]);$i++){
                     echo "<button type=\"button\" onclick=\"player(".$i.")\">".$urls[0][$i]."</button>";
                 }
@@ -48,7 +49,7 @@ if(array_key_exists("urls", $_POST)){
                             });dp.play();document.getElementById('title').innerHTML ='".$urls[0][$i].$_POST['name']."';document.getElementById('jishu').innerHTML ='".$i."';
                         }";
                 }
-                echo "}</script><button type=\"button\" onclick=\"video_front()\">上一集</button>"; 
+                echo "}</script><br><button type=\"button\" onclick=\"video_front()\">上一集</button>"; 
                 echo "<button type=\"button\" onclick=\"video_next()\">下一集</button>";
                 echo "<script type=\"text/javascript\" >
                 function video_front() {
@@ -60,7 +61,7 @@ if(array_key_exists("urls", $_POST)){
                     player(i);
                 }</script>";
                     ?>
-        <p id="jishu" style="display: none;">0</p>
+        <p id="jishu" style="display: none;">0</p></div>
         <div id="dplayer"></div>
         <script type="text/javascript" >
         const dp = new DPlayer({

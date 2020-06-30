@@ -55,7 +55,7 @@ for($i=0;$i<sizeof($url);$i++){
     for($j=0;$j<sizeof($title[1]);$j++){
         print_r("<div><form action='./dx.php' method='POST'>
         <input id='ipt'  type='hidden' type='text' name='wd' value=".$title[1][$j].">
-        <input id='button' onmousemove='red(this)' onmouseout='black(this)' style='color=\"black\";background-color:rgb(255, 255, 255);' type='submit' value=".$j.".".$title[1][$j]."></form></div>");
+        <input id='button' onmousemove='red(this)' onmouseout='black(this)' style='color=\"black\";background-color:rgb(255, 255, 255);' type='submit' value=".($j+1).".".$title[1][$j]."></form></div>");
     }
     echo "</ul>";
 }

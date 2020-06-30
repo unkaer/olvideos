@@ -21,3 +21,14 @@ li{
     border:none;
     width: 180px;
 }
+#menu{
+    width: 168px;
+    border-radius: 8px;
+    float: right;
+    direction: ltr;
+    overflow: auto;
+    
+}
+#dplayer{
+    border-radius: 8px;
+}
