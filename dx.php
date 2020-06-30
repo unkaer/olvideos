@@ -1,7 +1,7 @@
 <?php
 set_time_limit(0);
 ob_end_clean();
-ob_implicit_flush(); // 1
+ob_implicit_flush();
 if(array_key_exists("wd", $_POST)){
     $name=trim($_POST['wd']);
     $teshu=array(array(",","!",":"),array("，","！","："),array("(",")","第1季","第2季","第3季","普通话","粤语"));
@@ -48,87 +48,35 @@ $api=array('http://cj.wlzy.tv/inc/api_mac_m3u8.php','http://api.iokzy.com/inc/ap
 $url=array("http://www.zuidazy3.net/index.php","http://www.okzyw.com/index.php");    // 爬虫方式 资源站的搜索页
 $n = 0;
 
-//边API 边打印
-function getname1($api){
-    $data = file_get_contents($api."?wd=".$_POST['wd']);
-    $xml = simplexml_load_string($data);
-    foreach($xml->list->video as $video){
-        $id=(string)$video->id;
-        geturl1($id,$api);
-    }
-}
-
-function geturl1($id,$api){
-    global $array,$file,$n;
-    $data = file_get_contents($api."?ac=videolist&ids=".$id);
-    $xml = simplexml_load_string($data);
-    foreach($xml->list->video as $video){
-        $pic=(string)$video->pic;
-        print_r('<li id="play"><img id="cover" src='.$pic.'>');  // 封面
-        $url=(string)$video->dl->dd;   //播放地址
-        preg_match_all("/http?:\/\/[^#]*\/index.m3u8/",$url,$playurl);
-        preg_match_all("/#?([^#]+)[$]/",$url,$tag);
-        $title=(string)$video->name;
-        print_r("<form action=\"./play.php\" method='POST'>");
-        for($i=0;$i<sizeof($playurl[0]);$i++){
-            $urls[0][$i]=$tag[1][$i];  // 集数
-            $urls[1][$i]=$playurl[0][$i];  // 播放地址
-            $array[$n]["tag"][$i]=$tag[1][$i];  // 集数
-            $array[$n]["url"][$i]=$playurl[0][$i];  // 播放地址
-        }
-        print_r("<input type=\"hidden\" name=\"urls\" value=".json_encode($urls).">");
-        print_r("<input type=\"hidden\" name=\"name\" value=".$title.">");
-        print_r("<input type=\"submit\" value=播放·".$title."></form>");
-        print_r("</li>");
-    }
-    $array[$n]["title"]=$title;  // 名称
-    $array[$n]["cover"]=$pic;  // 封面
-    if(false!==fopen($file,'w+')){ 
-        file_put_contents($file,serialize($array));//写入缓存 
-    }
-    $n++;
-}
-
-function playdetail1($detailurl){
-    global $array,$file,$n;
-    $html = file_get_contents($detailurl);
-    preg_match_all("/https?:\/\/.*\.jpe?g/",$html,$cover); // 封面 $cover[0][0]
-    print_r('<li id="play"><img id="cover" src='.$cover[0][0].'>');  // 封面
-    preg_match_all("/<h2>(.*)<\/h2>/",$html,$title); // 标题 $title[1][0]
-    preg_match_all("/([^>]+)[$](https?.*\/index.m3u8)/",$html,$playurl);  // 播放地址
-    print_r("<form action=\"./play.php\" method='POST'>");
-    for($i=0;$i<sizeof($playurl[2]);$i++){
-        $urls[0][$i]=$playurl[1][$i];  // 集数
-        $urls[1][$i]=$playurl[2][$i];  // 播放地址
-        $array[$n]["tag"][$i]=$playurl[1][$i];  // 集数
-        $array[$n]["url"][$i]=$playurl[2][$i];  // 播放地址
-    }
-    print_r("<input type=\"hidden\" name=\"urls\" value=".json_encode($urls).">");
-    print_r("<input type=\"hidden\" name=\"name\" value=".$title[1][0].">");
-    print_r("<input type=\"submit\" value=播放·".$title[1][0]."></form>");
-    print_r("</li>");
-    $array[$n]["title"]=$title[1][0];  // 名称
-    $array[$n]["cover"]=$cover[0][0];  // 封面
-    if(false!==fopen($file,'w+')){ 
-        file_put_contents($file,serialize($array));//写入缓存 
-    }
-    $n++;
-    
-}
-
-// 只API
+// 爬虫资源站页面
 function playdetail($detailurl,$f){
     global $array,$n;
     $html = file_get_contents($detailurl);
     preg_match_all("/https?:\/\/.*\.jpe?g/",$html,$cover); // 封面 $cover[0][0]
     preg_match_all("/<h2>(.*)<\/h2>/",$html,$title); // 标题 $title[1][0]
     preg_match_all("/([^>]+)[$](https?.*\/index.m3u8)/",$html,$playurl);  // 播放地址
+    preg_match_all("/上映：<span>(.*?)</",$html,$year);  // 上映时间 上映：<span>2016</span>
+    preg_match_all("/类型：<span>(.*?)</",$html,$type);  // 类型：<span>恐怖片 <
+    preg_match_all("/<div class=\"vodplayinfo\">(.*)\s*<\/div>/",$html,$des);  // ok 简介 des[1][0]
+    if($des[1][0]="\n"){
+        preg_match_all("/txt=\"(.*?)\"/",$html,$des);  // 最大 简介 des[1][0]
+    }
+    preg_match_all("/[^>]+[$](https?.*mp4)/",$html,$download);  // 下载名称及地址
     for($i=0;$i<sizeof($playurl[2]);$i++){
         $array[$n]["tag"][$i]=$playurl[1][$i];  // 集数
         $array[$n]["url"][$i]=$playurl[2][$i];  // 播放地址
+        if($download[1]==Array()){
+            $array[$n]["download"][$i]="暂无";
+        }
+        else{
+            $array[$n]["download"][$i]=$download[1][$i];  // 下载地址
+        }
     }
-    $array[$n]["title"]=$title[1][0];  // 名称
     $array[$n]["cover"]=$cover[0][0];  // 封面
+    $array[$n]["title"]=$title[1][0];  // 名称
+    $array[$n]["year"]=$year[1][0];  // 上映时间
+    $array[$n]["type"]=$type[1][0];  // 类型
+    $array[$n]["des"]=$des[1][0];  // 简介
     if($f){
         build();
     }
@@ -136,7 +84,7 @@ function playdetail($detailurl,$f){
     
 }
 
-//获取视频id  只爬虫
+//API 获取视频id geturl视频信息
 function getname($api,$f){
     global $name;
     $data = file_get_contents($api."?wd=".$name);
@@ -152,7 +100,10 @@ function geturl($id,$api,$f){
     $xml = simplexml_load_string($data);
     foreach($xml->list->video as $video){
         global $array,$n;
-        $pic=(string)$video->pic; 
+        $type=(string)$video->type; //类型
+        $year=(string)$video->year; //上映时间
+        $des=(string)$video->des; //简介
+        $pic=(string)$video->pic; //封面
         $url=(string)$video->dl->dd;   //播放地址
         preg_match_all("/http?:\/\/[^#]*\/index.m3u8/",$url,$playurl);
         preg_match_all("/#?([^#]+)[$]/",$url,$tag);
@@ -160,8 +111,12 @@ function geturl($id,$api,$f){
         for($i=0;$i<sizeof($playurl[0]);$i++){
             $array[$n]["tag"][$i]=$tag[1][$i];  // 集数
             $array[$n]["url"][$i]=$playurl[0][$i];  // 播放地址
+            $array[$n]["download"][$i]="暂无";
         }
         $array[$n]["title"]=$title;  // 名称
+        $array[$n]["type"]=$type;  // 类型
+        $array[$n]["year"]=$year;  // 上映时间
+        $array[$n]["des"]=$des;  // 简介
         $array[$n]["cover"]=$pic;  // 封面
         if($f){
             build();
@@ -172,17 +127,20 @@ function geturl($id,$api,$f){
 
 function build(){
     global $array,$n,$file;
-    print_r('<li id="play"><img id="cover" src='.$array[$n]["cover"].'>');  // 封面
+    print_r('<li id="play"><div><a id="cover" title="'.$array[$n]["des"].'" style="background-image: url('.$array[$n]["cover"].')">');  // 封面
+    print_r("<span class=\"type\" >".$array[$n]["type"]."</span>");
+    print_r("<span class=\"year\" >".$array[$n]["year"]."</span></a>");
     print_r("<form action=\"./play.php\" method='POST'>");
     $urls=array();
     for($j=0;$j<sizeof($array[$n]["tag"]);$j++){
-        $urls[0][$j]=$array[$n]["tag"][$j];  // 集数
+        $urls[0][$j]=$array[$n]["tag"][$j];  // 集数 or 画质
         $urls[1][$j]=$array[$n]["url"][$j];  // 播放地址
+        print_r($array[$n]["tag"][$j].":".$array[$n]["download"][$j]."<br>");
     }
     print_r("<input type=\"hidden\" name=\"urls\" value=".json_encode($urls).">");
     print_r("<input type=\"hidden\" name=\"name\" value=".$array[$n]['title'].">");
     print_r("<input type=\"submit\" value=播放·".$array[$n]['title']."></form>");
-    print_r("</li>");
+    print_r("</div></li>");
     if(false!==fopen($file,'w+')){ 
         file_put_contents($file,serialize($array));//写入缓存 
     }
@@ -216,7 +174,7 @@ if(file_exists($file)){
     echo "<br><p>更新时间：".date("Y-m-d H:i:s",filemtime($file))."</p>";
     if($time>86400){    // 缓存文件太久才会更新  86400 24H
         $n=0;
-        getarray(false);  // 获取数据
+        getarray(false);  // 获取数据（不建立网页）
         if(false!==fopen($file,'w+')){ 
             file_put_contents($file,serialize($array));//写入缓存 
         }
@@ -225,7 +183,7 @@ if(file_exists($file)){
 }
 else{
     //不存在 第一次  边API 边爬取 边建立网页 边存  因为完整太慢 每一组数据存一次
-    getarray(true);  // 获取数据 建立网页
+    getarray(true);  // 获取数据（并建立网页）
 }
 
 ?>
