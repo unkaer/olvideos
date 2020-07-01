@@ -140,11 +140,11 @@ function build(){
     print_r("<input type=\"hidden\" name=\"name\" value=".$array[$n]['title'].">");
     print_r("<input type=\"submit\" value=播放·".$array[$n]['title']."></form>");
     if($array[$n]["download"][0]!="暂无"){
-        print_r("<P>迅雷p2p下载：</p><textarea>");
+        print_r("<P>迅雷p2p下载：<textarea>");
         for($j=0;$j<sizeof($array[$n]["tag"]);$j++){
             print_r($array[$n]["tag"][$j]."$".$array[$n]["download"][$j]."\n");
         }
-        print_r("</textarea>");
+        print_r("</textarea></p>");
     }
     print_r("</div></li>");
     if(false!==fopen($file,'w+')){ 

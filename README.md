@@ -23,25 +23,24 @@
 ```
 ## 运行流程
 index.php
-![首页](https://gitee.com/unkaer/blog/raw/master/images/material/20200623212859.webp)
+ 视频搜索框  热门电影、电视剧  
+![首页](https://gitee.com/unkaer/blog/raw/master/images/material/20200701173611.webp)
 
 dx.php
- 输入框  ~~url或~~ 名称
 返回 视频列表
-点击播放
-![播放列表](https://gitee.com/unkaer/blog/raw/master/images/material/20200623213235.webp)
+点击播放  + 迅雷P2P下载链接
+![播放列表](https://gitee.com/unkaer/blog/raw/master/images/material/20200701174024.webp)
 
 play.php
-![播放页](https://gitee.com/unkaer/blog/raw/master/images/material/20200623213605.webp)
+自动播放下一集  手动切换集数
+![播放页](https://gitee.com/unkaer/blog/raw/master/images/material/20200701174347.webp)
 
-
-暂时只做了，视频名称搜索功能。 
 
 ## 计划
 - [ ] 可选 播放器
 - [x] 热播排行榜
 - [x] 缓存 ，提高下一次搜索速度
-- [ ] bt在线播放 解决画质低的片源
+~~- [ ] bt在线播放 解决画质低的片源~~  没有好的在线播放器，速度取决于资源。
 - [ ] url解析功能等
 
  有空 添加
@@ -51,7 +50,15 @@ php 环境
 1. 下载程序压缩包 [点我下载最新版](https://github.com/unkaer/olvideo/archive/master.zip)
 2. 解压置于网站根目录
 
+### 本地安装使用
+推荐一键式搭建LAMP,LNMP环境
+[phpstudy](https://www.unkaer.cf/phpstudy.html)
 
-没有排版，外观简陋
+### 服务器安装使用
+推荐免费服务器
+[彩虹云](https://www.unkaer.cf/free.html)
 
-欢迎 `star`
+演示用的网站，就运行在这上面
+
+## 
+如果你觉得这个项目不错，欢迎 `star` 支持一下。

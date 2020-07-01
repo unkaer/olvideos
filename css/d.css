@@ -55,7 +55,8 @@ li div{
 }
 #menu button{
     width: 65px;
-    background-color: #256;
+    color: #eeeeee !important;
+    background-color: #292929 !important;
 }
 #dplayer{
     border-radius: 8px;
