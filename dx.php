@@ -135,6 +135,10 @@ function geturl($id,$api,$f){
 
 function build(){
     global $array,$n,$file;
+    $luanma=array("<",">","span","style","="," ","color",":","px","rgb","font-family","Helvetica",",","Arial","sans-serif",";","font-size","\"","/","br"); //部分简介乱码
+    for($i=0;$i<sizeof($luanma);$i++){
+        $array[$n]["des"]=str_replace($luanma[$i],"",$array[$n]["des"]);
+    }
     print_r('<li id="play"><div><a id="cover" title="'.$array[$n]["des"].'" style="background-image: url('.$array[$n]["cover"].')">');  // 封面
     print_r("<span class=\"type\" >".$array[$n]["type"]."</span>");
     print_r("<span class=\"year\" >".$array[$n]["year"]."</span></a>");
