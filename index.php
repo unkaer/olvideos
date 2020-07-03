@@ -19,6 +19,31 @@ if(isset($_COOKIE['search'])){
     $searchs = unserialize(passport_decrypt($_COOKIE['search'],$key));
     print_r("<div><form action='./dx.php' method='POST'><p>继续上一次搜素 ".date('m.d-H:i',$searchs[1])."<input id='ipt'  type='hidden' type='text' name='wd' value=".$searchs[0]."><input onmousemove='red(this)' onmouseout='black(this)' style='border:none;color=\"black\";background-color:rgb(230, 230, 230);' type='submit' value=".$searchs[0]."></p></form></div>");
 }
+if(isset($_COOKIE['dt'])){
+    $dt = unserialize(passport_decrypt($_COOKIE['dt'],$key));
+    $n = $dt[1];
+    $file="./data/".$dt[0].".p";  //读出缓存 
+    if(file_exists($file)){
+        $handle=fopen($file,'r');
+        $array=unserialize(fread($handle,filesize($file)));
+        $urls=array();
+        for($j=0;$j<sizeof($array[$n]["tag"]);$j++){
+            $urls[0][$j]=$array[$n]["tag"][$j];  // 集数 or 画质
+            $urls[1][$j]=$array[$n]["url"][$j];  // 播放地址
+        }
+        print_r("<p>继续上一次观看</p><form action=\"./play.php\" method='POST'>");
+        print_r("<input type=\"hidden\" name=\"urls\" value=".json_encode($urls).">");
+        print_r("<input type=\"hidden\" name=\"dt\" value=".json_encode($dt).">");
+        print_r("<input type=\"hidden\" name=\"name\" value=".$array[$n]['title'].">");
+        if(isset($_COOKIE['jishu'])){
+            print_r("<input type=\"hidden\" name=\"jishu\" value=".$_COOKIE['jishu'].">");
+            print_r("<input type=\"submit\" value=".$array[$n]['title'].$urls[0][$_COOKIE['jishu']]."></form>");
+        }
+        else{
+            print_r("<input type=\"submit\" value=".$array[$n]['title']."></form>");
+        }
+    }
+}
 ?>
     <script type="text/javascript" >
     function checkform(){

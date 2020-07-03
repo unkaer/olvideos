@@ -1,11 +1,24 @@
 <?php
 if(array_key_exists("urls", $_POST)){
     $urls=json_decode($_POST['urls']);
-    $url=$urls[1][0];
+    if(array_key_exists("jishu", $_POST)){
+        $url = $urls[1][$_POST['jishu']];
+        $jishu = $_POST['jishu'];
+    }
+    else{
+        $url=$urls[1][0];
+        $jishu = 0;
+    }
 }else{
     header("Location: ..");
     exit();
 }
+// 存放播放的数据位置到 cookie dt
+include_once "./cookie.php";
+$dt = json_decode($_POST['dt']);
+$dt = passport_encrypt(serialize($dt),$key);  // 加密
+$expire=time()+60*60*24*30;
+setcookie("dt", $dt, $expire);
 ?>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
@@ -13,7 +26,7 @@ if(array_key_exists("urls", $_POST)){
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
         <title id="title"><?php
         if(array_key_exists("name", $_POST)){
-            echo $urls[0][0].$_POST['name'];
+            echo $urls[0][$jishu].$_POST['name'];
         }else{
             echo "DPlayer视频播放页";
         }
@@ -46,7 +59,7 @@ if(array_key_exists("urls", $_POST)){
                         dp.switchVideo({
                             url: '".$urls[1][$i]."',
                             type: 'hls'
-                            });dp.play();document.getElementById('title').innerHTML ='".$urls[0][$i].$_POST['name']."';document.getElementById('jishu').innerHTML ='".$i."';
+                            });dp.play();document.getElementById('title').innerHTML ='".$urls[0][$i].$_POST['name']."';document.getElementById('jishu').innerHTML ='".$i."';jsc();
                         }";
                 }
                 echo "}</script><br><button type=\"button\" onclick=\"video_front()\">上一集</button>"; 
@@ -77,7 +90,7 @@ if(array_key_exists("urls", $_POST)){
             },
             contextmenu: [
                 {
-                    text: '我的博客',
+                    text: '作者博客',
                     link: 'https://zan7l.tk/',
                 },
                 {
@@ -89,9 +102,14 @@ if(array_key_exists("urls", $_POST)){
 
         dp.on('ended', function () {
             video_next();
-            });
-
+        });
+        function jsc() {
+            var d = new Date();
+            var jishu = document.getElementById('jishu').innerHTML
+            d.setTime(d.getTime() + (30*24*60*60*1000));
+            document.cookie = "jishu =" + jishu + ";expires="+ d.toUTCString() + ";path=/";
+        }
         </script>
     </body>
-
+    
 </html>

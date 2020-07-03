@@ -3,7 +3,7 @@ set_time_limit(0);
 ob_implicit_flush();
 if(array_key_exists("wd", $_POST)){
     $name=trim($_POST['wd']);
-    $teshu=array(array(",","!",":"),array("，","！","："),array("(",")","第1季","第2季","第3季","普通话","粤语"));
+    $teshu=array(array(",","!",":"),array("，","！","："),array("(",")","普通话","粤语"));
     for($i=0;$i<sizeof($teshu[0]);$i++){
         $name=str_replace($teshu[0][$i],$teshu[1][$i],$name);
     }
@@ -134,8 +134,9 @@ function geturl($id,$api,$f){
 }
 
 function build(){
-    global $array,$n,$file;
-    $luanma=array("<",">","span","style","="," ","color",":","px","rgb","font-family","Helvetica",",","Arial","sans-serif",";","font-size","\"","/","br"); //部分简介乱码
+    global $array,$n,$file,$name;
+    $dt = array($name,$n);
+    $luanma=array("<",">","rgb","(17, 17, 17)","&nbsp","span","style","="," ","color",":","13px","font-family","Helvetica",",","Arial","sans-serif",";","font-size","\"","/","br"); //部分简介乱码
     for($i=0;$i<sizeof($luanma);$i++){
         $array[$n]["des"]=str_replace($luanma[$i],"",$array[$n]["des"]);
     }
@@ -149,6 +150,7 @@ function build(){
         $urls[1][$j]=$array[$n]["url"][$j];  // 播放地址
     }
     print_r("<input type=\"hidden\" name=\"urls\" value=".json_encode($urls).">");
+    print_r("<input type=\"hidden\" name=\"dt\" value=".json_encode($dt).">");
     print_r("<input type=\"hidden\" name=\"name\" value=".$array[$n]['title'].">");
     print_r("<input type=\"submit\" value=播放·".$array[$n]['title']."></form>");
     if($array[$n]["download"][0]!="暂无"){
