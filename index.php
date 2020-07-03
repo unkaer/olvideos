@@ -11,6 +11,15 @@
     <form action="./dx.php" method='POST' onsubmit="return checkform();">
     <p>请输入要看的电影 聚合缓存版：<input id="ipt" type="text" name="wd" autofocus value="">
     <input type="submit" value="搜索"></p>
+    </form>
+<?php
+date_default_timezone_set("Asia/Shanghai");
+if(isset($_COOKIE['search'])){
+    include_once "./cookie.php";
+    $searchs = unserialize(passport_decrypt($_COOKIE['search'],$key));
+    print_r("<div><form action='./dx.php' method='POST'><p>继续上一次搜素 ".date('m.d-H:i',$searchs[1])."<input id='ipt'  type='hidden' type='text' name='wd' value=".$searchs[0]."><input onmousemove='red(this)' onmouseout='black(this)' style='border:none;color=\"black\";background-color:rgb(230, 230, 230);' type='submit' value=".$searchs[0]."></p></form></div>");
+}
+?>
     <script type="text/javascript" >
     function checkform(){
         if(document.getElementById('ipt').value.length==0){
@@ -22,8 +31,8 @@
     }
     </script>
     <p>第一次较慢，缓存后秒开。</p>
-    <p>如果没有搜到，请减少关键词。</p><br>
-</form>
+    <p>如果没有搜到，请减少关键词。 </p>
+    
 
 <?php
 $url=array("https://list.iqiyi.com/www/1/-------------11-1-1-iqiyi--.html","https://list.iqiyi.com/www/2/-------------11-1-1-iqiyi--.html");
@@ -71,8 +80,8 @@ x.style.color="black";
 ?>
 
 <p>暂时只支持输入视频名称 url功能待添加</p>
-<p>作者 <a href="https://zan7l.tk/">unkaer</a></p>
-<p>源码 <a href="https://github.com/unkaer/olvideo">olvideo</a></p>
+<p>作者 <a href="https://zan7l.tk/" target="_blank">unkaer</a></p>
+<p>源码 <a href="https://github.com/unkaer/olvideo" target="_blank">olvideo</a></p>
 
 </body>
 </html>

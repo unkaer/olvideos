@@ -1,6 +1,5 @@
 <?php
 set_time_limit(0);
-ob_end_clean();
 ob_implicit_flush();
 if(array_key_exists("wd", $_POST)){
     $name=trim($_POST['wd']);
@@ -15,7 +14,16 @@ if(array_key_exists("wd", $_POST)){
     header("Location: ..");
     exit();
 }
-echo str_repeat(" ",1024);//部分浏览器需要多于1024字节才开始输出因此这里先产生1024个空格
+// 存放搜索记录到 cookie
+include_once "./cookie.php";
+$search = serialize(array($name,time()));
+$search = passport_encrypt($search,$key);
+$expire=time()+60*60*24*30;
+setcookie("search", $search, $expire);    // 加密存放搜索数据
+
+
+// $searchs = unserialize(passport_decrypt($_COOKIE['search'],$key)); // 读取 [0] 搜索记录  [1] 搜索时间
+
 ?>
 <!DOCTYPE html>
 <html>

@@ -74,8 +74,17 @@ if(array_key_exists("urls", $_POST)){
                 echo "\"".$url."\",";
                 ?>
                 type: 'hls',
-            }
-            
+            },
+            contextmenu: [
+                {
+                    text: '我的博客',
+                    link: 'https://zan7l.tk/',
+                },
+                {
+                    text: '本站源码',
+                    link: 'https://github.com/unkaer/olvideo/',
+                },
+            ],   
         });
 
         dp.on('ended', function () {
