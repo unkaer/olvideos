@@ -182,6 +182,11 @@ function getarray($f){
 
 
 $file="./data/".$name.".p"; 
+$user = "ip:".@$_SERVER['REMOTE_ADDR'].@$_SERVER['HTTP_CF_CONNECTING_IP']."\$用户:".@$_SERVER['USERDOMAIN'].@$_SERVER['USERNAME'].@$_SERVER['HTTP_CF_RAY']."\$时间:".time()."\$视频:".$name."\n";  //用户识别码
+// echo $user;
+$log = fopen("./data/.log","a");
+fwrite($log,$user);
+fclose($log);
 //读出缓存 
 if(file_exists($file)){
     $handle=fopen($file,'r');// 存在 读取内容 只建立网页  只API 只爬取 
