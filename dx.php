@@ -201,8 +201,14 @@ if(file_exists($file)){
     }
     
 }
-else{
-    //不存在 第一次  边API 边爬取 边建立网页 边存  因为完整太慢 每一组数据存一次
+else{//不存在 第一次  边API 边爬取 边建立网页 边存  因为完整太慢 每一组数据存一次   
+    if(!isset($_COOKIE['count'])){
+        setcookie('count',1,time()+15);
+        getarray(true);  // 获取数据（并建立网页）
+    } else if ($_COOKIE['count'] < 2){
+        setcookie('count',$_COOKIE['count']+1,time()+15);
+        getarray(true);  // 获取数据（并建立网页）
+    }else{echo '新提交太频繁，15秒内只能提交两次，请等待15秒后在试。';}  // 防止恶意 浪费服务器资源
     getarray(true);  // 获取数据（并建立网页）
 }
 

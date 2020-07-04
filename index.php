@@ -14,8 +14,8 @@
     </form>
 <?php
 date_default_timezone_set("Asia/Shanghai");
+include_once "./cookie.php";
 if(isset($_COOKIE['search'])){
-    include_once "./cookie.php";
     $searchs = unserialize(passport_decrypt($_COOKIE['search'],$key));
     print_r("<div><form action='./dx.php' method='POST'><p>继续上一次搜素 ".date('m.d-H:i',$searchs[1])."<input id='ipt'  type='hidden' type='text' name='wd' value=".$searchs[0]."><input onmousemove='red(this)' onmouseout='black(this)' style='border:none;color=\"black\";background-color:rgb(230, 230, 230);' type='submit' value=".$searchs[0]."></p></form></div>");
 }
