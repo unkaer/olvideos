@@ -181,8 +181,9 @@ function getarray($f){
 }
 
 
-$file="./data/".$name.".p"; 
-$user = "ip:".@$_SERVER['REMOTE_ADDR'].@$_SERVER['HTTP_CF_CONNECTING_IP']."\$用户:".@$_SERVER['USERDOMAIN'].@$_SERVER['USERNAME'].@$_SERVER['HTTP_CF_RAY']."\$时间:".time()."\$视频:".$name."\n";  //用户识别码
+$file="./data/".$name.".p";
+preg_match_all("/\((.*?)\)/",$_SERVER['HTTP_USER_AGENT'],$llq);
+$user = "ip:".@$_SERVER['REMOTE_ADDR'].@$_SERVER['HTTP_CF_CONNECTING_IP']."\$用户:".@$_SERVER['USERDOMAIN'].@$_SERVER['USERNAME'].@$_SERVER['HTTP_CF_RAY'].$llq[1][0]."\$时间:".date("Y-m-d H:i:s",time())."\$视频:".$name;  //用户识别码
 // echo $user;
 $log = fopen("./data/.log","a");
 fwrite($log,$user);
