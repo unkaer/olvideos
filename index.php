@@ -9,7 +9,7 @@
 </head>
 <body>
     <form action="./dx.php" method='POST' onsubmit="return checkform();">
-    <p>请输入要看的电影 聚合缓存版：<input id="ipt" type="text" name="wd" autofocus value="">
+    <p>本 站 在 线 影 视：<input id="ipt" type="text" name="wd" autofocus value="">
     <input type="submit" value="搜索"></p>
     </form>
 <?php
@@ -46,7 +46,7 @@ if(isset($_COOKIE['dt'])){
 }
 ?>
     <form action="./dm.php" method='POST' onsubmit="return checkform1();">
-    <p>搜索第三方动漫视频站 聚合缓存版：<input id="ipt1" type="text" name="wd" value="">
+    <p>动 漫 视 频 站：<input id="ipt1" type="text" name="wd" value="">
     <input type="submit" value="搜索"></p>
     </form>
     <script type="text/javascript" >
