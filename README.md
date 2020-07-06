@@ -3,36 +3,41 @@
 基本原理 搜索（API或爬取）资源站视频 在线播放。
 
 ## 演示
-   演示站点：️[在线视频站](http://jx.unkaer.tk/)
+   演示站点：️[在线视频站](http://jx.unkaer.cf/)
 
 ## 结构
 ```
 .
 ├── README.md
-├── index.php   输入框
-├── dx.php  API+爬取 资源站 缓存 视频播放地址
-├── play.php    播放页面
-├── _data   存放缓存文件    
+├── index.php     输入框
+├── dx.php     API+爬取 资源站 的视频播放地址
+├── dm.php     搜索第三方播放 链接
+├── play.php      播放页面
+├── _data      存放缓存文件    
 ├── _css    
-|   ├── d.css   搜索页布局
-├── _dplayer   播放器文件
+|   ├── d.css     搜索页布局
+├── _dplayer      播放器文件
 |   ├── DPlayer.min.css
 |   ├── DPlayer.min.js
 |   └── hls.min.js
 ```
 ## 运行流程
 index.php
- 视频搜索框  热门电影、电视剧  
-![首页](https://gitee.com/unkaer/blog/raw/master/images/material/20200701173611.webp)
+ 视频搜索框  热门电影、电视剧 
+![首页](https://gitee.com/unkaer/blog/raw/master/images/material/20200706101406.webp)
 
 dx.php
 返回 视频列表
 点击播放  + 迅雷P2P下载链接
-![播放列表](https://gitee.com/unkaer/blog/raw/master/images/material/20200701174024.webp)
+![播放列表](https://gitee.com/unkaer/blog/raw/master/images/material/20200706101457.webp)
+
+dm.php
+返回 第三方链接 跳转到第三方视频站
+![第三方](https://gitee.com/unkaer/blog/raw/master/images/material/20200706101949.webp)
 
 play.php
 自动播放下一集  手动切换集数
-![播放页](https://gitee.com/unkaer/blog/raw/master/images/material/20200701174347.webp)
+![播放页](https://gitee.com/unkaer/blog/raw/master/images/material/20200706101624.webp)
 
 
 ## 计划

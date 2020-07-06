@@ -45,11 +45,23 @@ if(isset($_COOKIE['dt'])){
     }
 }
 ?>
+    <form action="./dm.php" method='POST' onsubmit="return checkform1();">
+    <p>搜索第三方动漫视频站 聚合缓存版：<input id="ipt1" type="text" name="wd" value="">
+    <input type="submit" value="搜索"></p>
+    </form>
     <script type="text/javascript" >
     function checkform(){
         if(document.getElementById('ipt').value.length==0){
             alert('输入不能为空！！！');
             document.getElementById('ipt').focus();
+            return false;
+        }
+        else{return true}
+    }
+    function checkform1(){
+        if(document.getElementById('ipt1').value.length==0){
+            alert('输入不能为空！！！');
+            document.getElementById('ipt1').focus();
             return false;
         }
         else{return true}

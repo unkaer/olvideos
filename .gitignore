@@ -1,5 +1,6 @@
 
 olvideo.zip
 *.p
+*.dp
 data/.log
 ceshi/**
