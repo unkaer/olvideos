@@ -74,7 +74,7 @@ setcookie("dt", $dt, $expire);
                     player(i);
                 }</script>";
                     ?>
-        <p id="jishu" style="display: none;">0</p></div>
+        <p id="jishu" style="display: none;"><?php echo $jishu;?></p></div>
         <div id="dplayer"></div>
         <script type="text/javascript" >
         const dp = new DPlayer({
