@@ -99,7 +99,6 @@ setcookie("dt", $dt, $expire);
                 },
             ],   
         });
-
         dp.on('ended', function () {
             video_next();
         });
@@ -109,6 +108,7 @@ setcookie("dt", $dt, $expire);
             d.setTime(d.getTime() + (30*24*60*60*1000));
             document.cookie = "jishu =" + jishu + ";expires="+ d.toUTCString() + ";path=/";
         }
+        jsc();
         </script>
     </body>
     

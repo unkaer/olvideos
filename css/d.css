@@ -1,19 +1,32 @@
-ul{
-    float: left;
-    width: 182px;
-}
 li{
-    float: left;
     list-style: none;
-    margin: 20px 12px;
-    width: 12%;
 }
 li div{
     margin: 0;
     padding: 0;
 }
 #head{
+    width: 100%;
     background-color: #D8D8D8;
+}
+#head1{
+    width: 100%;
+    height: 38px;
+    background-color: #5bb7fe;
+}
+#head2{
+    width: 72%;
+    margin:0 auto;
+}
+#playlist{
+    width: 88%;
+    height: 300px;
+    margin:0 auto;
+}
+#playul{
+    width: 18%;
+    height: 300px;
+    float: left;
 }
 #cover{
     display: block;
