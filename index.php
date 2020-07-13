@@ -19,10 +19,9 @@
         </form>
 <?php
 date_default_timezone_set("Asia/Shanghai");
-include_once "./cookie.php";
 if(isset($_COOKIE['search'])){
     $searchs = unserialize($_COOKIE['search']);
-    print_r("<div><form action='./dx.php' method='POST'><p>继续上一次搜素<input type='hidden' type='text' name='wd' value=".$searchs[0]."> <input id='ipt' onmousemove='red(this)' onmouseout='black(this)' type='submit' value=".$searchs[0].">".date('Y/m/d/H/i',$searchs[1])."</p></form></div>");
+    print_r("<div><form action='./dx.php' method='POST'><p>继续上一次搜素<input type='hidden' type='text' name='wd' value=".$searchs[0]."> <input id='ipt' onmousemove='red(this)' onmouseout='black(this)' type='submit' value=".$searchs[0].">".date('Y/m/d/H:i',$searchs[1])."</p></form></div>");
 }
 if(isset($_COOKIE['dt'])){
     $dt = unserialize($_COOKIE['dt']);
@@ -31,19 +30,13 @@ if(isset($_COOKIE['dt'])){
     if(file_exists($file)){
         $handle=fopen($file,'r');
         $array=unserialize(fread($handle,filesize($file)));
-        $urls=array();
-        for($j=0;$j<sizeof($array[$n]["tag"]);$j++){
-            $urls[0][$j]=$array[$n]["tag"][$j];  // 集数 or 画质
-            $urls[1][$j]=$array[$n]["url"][$j];  // 播放地址
-        }
         print_r("<div><form action=\"./play.php\" method='POST'><p>继续上一次观看");
-        print_r("<input type=\"hidden\" name=\"urls\" value=".json_encode($urls).">");
-        print_r("<input type=\"hidden\" name=\"dt\" value=".json_encode($dt).">");
-        print_r("<input type=\"hidden\" name=\"name\" value=".$array[$n]['title'].">");
+        print_r("<input type=\"hidden\" name=\"wd\" value=".$dt[0].">");
+        print_r("<input type=\"hidden\" name=\"id\" value=".$n.">");
         if(isset($_COOKIE['jishu'])){
-            print_r("<input type=\"hidden\" name=\"jishu\" value=".@$_COOKIE['jishu'].">");
+            print_r("<input type=\"hidden\" name=\"js\" value=".$_COOKIE['jishu'].">");
         }
-        print_r("<input id='ipt' onmousemove='red(this)' onmouseout='black(this)' type=\"submit\" value=".$array[$n]['title'].@$urls[0][$_COOKIE['jishu']]."></p></form></div>");
+        print_r("<input id='ipt' onmousemove='red(this)' onmouseout='black(this)' type=\"submit\" value=".$array[$n]['title'].@$array[$n]["tag"][$_COOKIE['jishu']]."></p></form></div>");
         
     }
 }

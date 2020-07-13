@@ -7,15 +7,28 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
         if(file_exists($file)){
             $handle=fopen($file,'r');// 存在 读取内容 只建立网页  只API 只爬取 
             $array=unserialize(fread($handle,filesize($file)));
-            for($j=0;$j<sizeof($array[$n]["tag"]);$j++){
-                $urls[0][$j]=$array[$n]["tag"][$j];  // 集数 or 画质
-                $urls[1][$j]=$array[$n]["url"][$j];  // 播放地址
+            if(isset($array[$n]["tag"])){
+                for($j=0;$j<sizeof($array[$n]["tag"]);$j++){
+                    $urls[0][$j]=$array[$n]["tag"][$j];  // 集数 or 画质
+                    $urls[1][$j]=$array[$n]["url"][$j];  // 播放地址
+                }
+                $name = $array[$n]['title'];
+            }else{
+                header("Location: ./error.php?error_code=2&wd=".$wd."&id=".$n);
+                exit();
             }
-            $name = $array[$n]['title'];
+        }else{
+            header("Location: ./error.php?error_code=1&wd=".$wd);
+            exit();
         }
         if(array_key_exists("js", $_POST)|array_key_exists("js", $_GET)){
             if(isset($_POST["js"])){$js = $_POST["js"];}else{$js = $_GET["js"];}
-            $url=$urls[1][$js];
+            if(isset($urls[1][$js])){
+                $url=$urls[1][$js];
+            }else{
+                header("Location: ./error.php?error_code=3&wd=".$wd."&id=".$n."&js=".$js);
+                exit();
+            }
         }
         else{$url=$urls[1][0];$js=0;}
     }
