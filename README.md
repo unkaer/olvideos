@@ -9,11 +9,12 @@
 ```
 .
 ├── README.md
-├── index.php     输入框
+├── index.php     搜索首页
 ├── dx.php     API+爬取 资源站 的视频播放地址
 ├── dm.php     搜索第三方播放 链接
 ├── play.php      播放页面
-├── _data      存放缓存文件    
+├── error.php     错误页
+├── _data      存放缓存文件 
 ├── _css    
 |   ├── d.css     搜索页布局
 ├── _dplayer      播放器文件
@@ -67,5 +68,11 @@ php 环境
 
 演示用的网站，就运行在这上面
 
-## 
+## 支持
 如果你觉得这个项目不错，欢迎 `star` 支持一下。
+
+### 微信
+![微信捐赠](https://gitee.com/Unkaer/blog/raw/master/images/wechatpayqr.webp)
+
+### 支付宝
+![支付宝捐赠](https://gitee.com/Unkaer/blog/raw/master/images/alipayqr.webp)
