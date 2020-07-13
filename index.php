@@ -21,11 +21,11 @@
 date_default_timezone_set("Asia/Shanghai");
 include_once "./cookie.php";
 if(isset($_COOKIE['search'])){
-    $searchs = unserialize(passport_decrypt($_COOKIE['search'],$key));
+    $searchs = unserialize($_COOKIE['search']);
     print_r("<div><form action='./dx.php' method='POST'><p>继续上一次搜素<input type='hidden' type='text' name='wd' value=".$searchs[0]."> <input id='ipt' onmousemove='red(this)' onmouseout='black(this)' type='submit' value=".$searchs[0].">".date('Y/m/d/H/i',$searchs[1])."</p></form></div>");
 }
 if(isset($_COOKIE['dt'])){
-    $dt = unserialize(passport_decrypt($_COOKIE['dt'],$key));
+    $dt = unserialize($_COOKIE['dt']);
     $n = $dt[1];
     $file="./data/".$dt[0].".p";  //读出缓存 
     if(file_exists($file)){

@@ -15,21 +15,16 @@ if(array_key_exists("wd", $_POST)){
     exit();
 }
 // 存放搜索记录到 cookie
-include_once "./cookie.php";
 $search = serialize(array($name,time()));
-$search = passport_encrypt($search,$key);
 $expire=time()+60*60*24*30;
-setcookie("search", $search, $expire);    // 加密存放搜索数据
-
-
-// $searchs = unserialize(passport_decrypt($_COOKIE['search'],$key)); // 读取 [0] 搜索记录  [1] 搜索时间
+setcookie("search", $search, $expire);    // 存放搜索数据
 
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-        <title>APCI视频列表</title>
+        <title><?php echo $name;?>·搜索结果</title>
         <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
         <link rel="bookmark" href="./favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="./css/d.css" type="text/css" />
@@ -141,23 +136,16 @@ function geturl($id,$api,$f){
 
 function build(){
     global $array,$n,$file,$name;
-    $dt = array($name,$n);
     $luanma=array("<",">","rgb","(17, 17, 17)","&nbsp","span","style","="," ","color",":","13px","font-family","Helvetica",",","Arial","sans-serif",";","font-size","\"","/","br"); //部分简介乱码
     for($i=0;$i<sizeof($luanma);$i++){
         $array[$n]["des"]=str_replace($luanma[$i],"",$array[$n]["des"]);
     }
-    print_r('<div id="playul"><div><a id="cover" title="'.$array[$n]["des"].'" style="background-image: url('.$array[$n]["cover"].')">');  // 封面
+    print_r('<div id="playul"><div><a id="cover" href="./play.php?wd='.$name.'&id='.$n.'" target="_blank" title="'.$array[$n]["des"].'" style="background-image: url('.$array[$n]["cover"].')">');  // 封面
     print_r("<span class=\"type\" >".$array[$n]["type"]."</span>");
     print_r("<span class=\"year\" >".$array[$n]["year"]."</span></a>");
     print_r("<form action=\"./play.php\" method='POST'>");
-    $urls=array();
-    for($j=0;$j<sizeof($array[$n]["tag"]);$j++){
-        $urls[0][$j]=$array[$n]["tag"][$j];  // 集数 or 画质
-        $urls[1][$j]=$array[$n]["url"][$j];  // 播放地址
-    }
-    print_r("<input type=\"hidden\" name=\"urls\" value=".json_encode($urls).">");
-    print_r("<input type=\"hidden\" name=\"dt\" value=".json_encode($dt).">");
-    print_r("<input type=\"hidden\" name=\"name\" value=".$array[$n]['title'].">");
+    print_r("<input type=\"hidden\" name=\"wd\" value=".$name.">");
+    print_r("<input type=\"hidden\" name=\"id\" value=".$n.">");
     print_r("<input type=\"submit\" value=播放·".$array[$n]['title']."></form>");
     if($array[$n]["download"][0]!="暂无"){
         print_r("<P>迅雷p2p下载：<textarea>");
