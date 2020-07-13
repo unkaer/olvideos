@@ -35,11 +35,17 @@ setcookie("search", $search, $expire);    // 加密存放搜索数据
         <link rel="stylesheet" href="./css/d.css" type="text/css" />
 </head>
 <body>
-<div id="head"><ul class="active"><a href="..">首页</a></ul>
-<form action="./dx.php" method='POST' onsubmit="return checkform();">
-    <p>请输入要看的电影 聚合缓存版：<input id="ipt" type="text" name="wd" autofocus value="<?php echo $name;?>">
-    <input type="submit" value="搜索"></form>
-    <p>如果没有搜到，请适当减少关键词后再试。</p></div>
+<div id="head">
+    <div id="head1">
+        <a href="..">首页</a>
+    </div>
+    <div id="head2">
+        <form action="./dx.php" method='POST' onsubmit="return checkform();">
+            <p>本 站 在 线 影 视：<input id="ipt" type="text" name="wd" autofocus value="<?php echo $name;?>">
+            <input type="submit" value="搜索"></p>
+        </form>
+    </div>
+</div>
     <script type="text/javascript" >
     function checkform(){
         if(document.getElementById('ipt').value.length==0){
@@ -140,7 +146,7 @@ function build(){
     for($i=0;$i<sizeof($luanma);$i++){
         $array[$n]["des"]=str_replace($luanma[$i],"",$array[$n]["des"]);
     }
-    print_r('<li id="play"><div><a id="cover" title="'.$array[$n]["des"].'" style="background-image: url('.$array[$n]["cover"].')">');  // 封面
+    print_r('<div id="playul"><div><a id="cover" title="'.$array[$n]["des"].'" style="background-image: url('.$array[$n]["cover"].')">');  // 封面
     print_r("<span class=\"type\" >".$array[$n]["type"]."</span>");
     print_r("<span class=\"year\" >".$array[$n]["year"]."</span></a>");
     print_r("<form action=\"./play.php\" method='POST'>");
@@ -160,7 +166,7 @@ function build(){
         }
         print_r("</textarea></p>");
     }
-    print_r("</div></li>");
+    print_r("</div></div>");
     if(false!==fopen($file,'w+')){ 
         file_put_contents($file,serialize($array));//写入缓存 
     }

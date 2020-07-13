@@ -26,7 +26,7 @@ setcookie("dt", $dt, $expire);
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
         <title id="title"><?php
         if(array_key_exists("name", $_POST)){
-            echo $urls[0][$jishu].$_POST['name'];
+            echo $_POST['name'].$urls[0][$jishu];
         }else{
             echo "DPlayer视频播放页";
         }
@@ -59,7 +59,7 @@ setcookie("dt", $dt, $expire);
                         dp.switchVideo({
                             url: '".$urls[1][$i]."',
                             type: 'hls'
-                            });dp.play();document.getElementById('title').innerHTML ='".$urls[0][$i].$_POST['name']."';document.getElementById('jishu').innerHTML ='".$i."';jsc();
+                            });dp.play();document.getElementById('title').innerHTML ='".$_POST['name'].$urls[0][$i]."';document.getElementById('jishu').innerHTML ='".$i."';jsc();
                         }";
                 }
                 echo "}</script><br><button type=\"button\" onclick=\"video_front()\">上一集</button>"; 
