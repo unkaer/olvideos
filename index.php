@@ -106,9 +106,9 @@ for($i=0;$i<sizeof($url);$i++){
     echo "</li></div>";
 }
 $url ="https://v.qq.com/";
-$name=array('电影排行榜','腾讯视频电视剧');
-$rlue1=array('/<div class="mod_hd mod_column_hd">\s*?<h2 class="mod_title">电影排行榜[\S\s]*?<\/span>\s*?<\/a>\s*?<\/div>\s*?<\/div>\s*?<\/div>\s*?<\/div>/','/<div class="mod_hd mod_column_hd">\s*?<h2 class="mod_title">电视剧频道排行[\S\s]*?<\/span>\s*?<\/a>\s*?<\/div>\s*?<\/div>\s*?<\/div>\s*?<\/div>/');
-$rlue2='/<span class="rank_title">(.*?)<\/span>\s*?<span class="rank_desc">.*?<\/span>\s*?<span class="rank_update">(.*?)<\/span>/';
+$name=array('腾讯电影','腾讯电视剧','腾讯综艺','腾讯动漫');
+$rlue1=array('/<div class="mod_hd mod_column_hd">\s*?<h2 class="mod_title">电影排行榜[\S\s]*?<\/span>\s*?<\/a>\s*?<\/div>\s*?<\/div>\s*?<\/div>\s*?<\/div>/','/<div class="mod_hd mod_column_hd">\s*?<h2 class="mod_title">电视剧频道排行[\S\s]*?<\/span>\s*?<\/a>\s*?<\/div>\s*?<\/div>\s*?<\/div>\s*?<\/div>/','/<div class="mod_hd mod_column_hd">\s*?<h2 class="mod_title">综艺排行榜[\S\s]*?<\/span>\s*?<\/a>\s*?<\/div>\s*?<\/div>\s*?<\/div>\s*?<\/div>/','/<div class="mod_hd mod_column_hd">\s*?<h2 class="mod_title">动漫排行榜[\S\s]*?<\/span>\s*?<\/a>\s*?<\/div>\s*?<\/div>\s*?<\/div>\s*?<\/div>/');
+$rlue2='/<span class="rank_title">(.*?)<\/span>\s*?<span class="rank_desc">.*?<\/span>\s*?<span class="rank_update">([\s\S]*?)<\/span>/';
 for($i=0;$i<sizeof($rlue1);$i++){
     $file="./data/txsp".$i.".p"; 
     //读出缓存 
@@ -138,7 +138,7 @@ for($i=0;$i<sizeof($rlue1);$i++){
     for($j=0;$j<sizeof($py2[1])&$j<10;$j++){
         print_r("<li><form action='./dx.php' method='POST'>
         <input id='ipt'  type='hidden' type='text' name='wd' value=".$py2[1][$j].">
-        <input id='button' onmousemove='red(this)' onmouseout='black(this)' style='color=\"black\";background-color:rgb(255, 255, 255);' type='submit' value=".($j+1).".".$py2[1][$j].$py2[2][$j]."></form>");
+        <input id='button' onmousemove='red(this)' onmouseout='black(this)' style='color=\"black\";background-color:rgb(255, 255, 255);' type='submit' value='".($j+1).".".$py2[1][$j].$py2[2][$j]."'></form>");
     }
     echo "</li></div>";
 }
