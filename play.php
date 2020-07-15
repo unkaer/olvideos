@@ -61,7 +61,6 @@ setcookie("dt", $dt, $expire);
                 padding: 10px;
                 margin: 0px 100px 5px;
                 color:#999;
-                overflow:hidden;
             }
         </style>
     </head>
