@@ -140,21 +140,23 @@ function build(){
     for($i=0;$i<sizeof($luanma);$i++){
         $array[$n]["des"]=str_replace($luanma[$i],"",$array[$n]["des"]);
     }
-    print_r('<div id="playul"><div><a id="cover" href="./play.php?wd='.$name.'&id='.$n.'" target="_blank" title="'.$array[$n]["des"].'" style="background-image: url('.$array[$n]["cover"].')">');  // 封面
-    print_r("<span class=\"type\" >".$array[$n]["type"]."</span>");
-    print_r("<span class=\"year\" >".$array[$n]["year"]."</span></a>");
-    print_r("<form action=\"./play.php\" method='POST'>");
-    print_r("<input type=\"hidden\" name=\"wd\" value=".$name.">");
-    print_r("<input type=\"hidden\" name=\"id\" value=".$n.">");
-    print_r("<input type=\"submit\" value=播放·".$array[$n]['title']."></form>");
-    if($array[$n]["download"][0]!="暂无"){
-        print_r("<P>迅雷p2p下载：<textarea>");
-        for($j=0;$j<sizeof($array[$n]["tag"]);$j++){
-            print_r($array[$n]["tag"][$j]."$".$array[$n]["download"][$j]."\n");
+    if(isset($array[$n]["title"])){
+        print_r('<div id="playul"><div><a id="cover" href="./play.php?wd='.$name.'&id='.$n.'" target="_blank" title="'.$array[$n]["des"].'" style="background-image: url('.$array[$n]["cover"].')">');  // 封面
+        print_r("<span class=\"type\" >".$array[$n]["type"]."</span>");
+        print_r("<span class=\"year\" >".$array[$n]["year"]."</span></a>");
+        print_r("<form action=\"./play.php\" method='POST'>");
+        print_r("<input type=\"hidden\" name=\"wd\" value=".$name.">");
+        print_r("<input type=\"hidden\" name=\"id\" value=".$n.">");
+        print_r("<input type=\"submit\" value=播放·".$array[$n]['title']."></form>");
+        if($array[$n]["download"][0]!="暂无"){
+            print_r("<P>迅雷p2p下载：<textarea>");
+            for($j=0;$j<sizeof($array[$n]["tag"]);$j++){
+                print_r($array[$n]["tag"][$j]."$".$array[$n]["download"][$j]."\n");
+            }
+            print_r("</textarea></p>");
         }
-        print_r("</textarea></p>");
+        print_r("</div></div>");
     }
-    print_r("</div></div>");
     if(false!==fopen($file,'w+')){ 
         file_put_contents($file,serialize($array));//写入缓存 
     }

@@ -142,6 +142,14 @@ for($i=0;$i<sizeof($rlue1);$i++){
     }
     echo "</li></div>";
 }
+// 待添加 每日推荐
+echo "<div id='playul'></div>";
+// 爱奇艺、腾讯视频链接
+print_r('<div id="playul">
+<p><a href="https://www.iqiyi.com/" target="_blank">爱奇艺</a></p>
+<p><a href="https://v.qq.com/" target="_blank">腾讯视频</a></p></div>');
+
+// 鼠标移动选择 变红特效
 echo '<script>
 function red(x){
 x.style.color="red";
