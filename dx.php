@@ -128,13 +128,13 @@ function geturl($id,$api,$f){
         $array[$n]["des"]=$des;  // 简介
         $array[$n]["cover"]=$pic;  // 封面
         if($f){
-            build();
+            build($f);
         }
         $n++;
     }
 }
 
-function build(){
+function build($f){
     global $array,$n,$file,$name;
     $luanma=array("<",">","rgb","(17, 17, 17)","&nbsp","span","style","="," ","color",":","13px","font-family","Helvetica",",","Arial","sans-serif",";","font-size","\"","/","br"); //部分简介乱码
     for($i=0;$i<sizeof($luanma);$i++){
@@ -157,8 +157,10 @@ function build(){
         }
         print_r("</div></div>");
     }
-    if(false!==fopen($file,'w+')){ 
-        file_put_contents($file,serialize($array));//写入缓存 
+    if($f){
+        if(false!==fopen($file,'w+')){ 
+            file_put_contents($file,serialize($array));//写入缓存 
+        }
     }
 }
 
@@ -188,7 +190,7 @@ if(file_exists($file)){
     $handle=fopen($file,'r');// 存在 读取内容 只建立网页  只API 只爬取 
     $array=unserialize(fread($handle,filesize($file)));
     for($n=0;$n<sizeof($array);$n++){
-        build();  // 建立网页
+        build(false);  // 只建立网页，不更新内容
     }
     date_default_timezone_set("Asia/Shanghai");
     $time=time()-filemtime($file);
