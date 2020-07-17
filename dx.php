@@ -3,6 +3,11 @@ set_time_limit(0);
 ob_implicit_flush();
 if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
     if(isset($_POST["wd"])){$name = $_POST["wd"];}else{$name = $_GET["wd"];}
+    preg_match_all('/https?:\/\/.*/',$name,$jx);  // 判断输入的是url
+    if(isset($jx[0][0])){
+        header("Location: ./dx.php?url=".$name);
+        exit();
+    }
     $js = 0;
 }else{
     if(array_key_exists("url", $_POST)|array_key_exists("url", $_GET)){
@@ -11,7 +16,7 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
         if(!isset($jx1[0][0])){
             $jx = "https://".$jx;
         }
-        $url = array("/iqiyi.com\/.+/","/v.qq.com\/.+/");
+        $url = array("/iqiyi.com\/.+/","/v.qq.com\/.+/","/v.youku.com\/.+/","/v.pptv.com\/.+/","/mgtv.com\/.+/");
         for($i=0;$i<sizeof($url);$i++){
             preg_match_all($url[$i],$jx,$py);
             if(isset($py[0][0])){
@@ -27,7 +32,7 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
         preg_match_all('/<title>(.*?)<\/title>/',$html,$py1);
         if(isset($py1[1][0])){
             $py1=$py1[1][0];
-            $teshu=array("1080P在线观看平台_腾讯视频","爱奇艺","高清","全集","完整版视频在线观看","电影","电视剧","-","_");
+            $teshu=array("腾讯","爱奇艺","优酷","PP视频","原PPTV聚力视频","芒果TV","高清","全集","完整","卫视版","视频","在线","观看","电影","电视剧","1080P","平台","正版","-","_");
             for($i=0;$i<sizeof($teshu);$i++){
                 $py1=str_replace($teshu[$i],"",$py1);
             }
