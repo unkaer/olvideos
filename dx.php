@@ -99,8 +99,8 @@ setcookie("search", $search, $expire);    // 存放搜索数据
     </script>
 <?php
 
-$api=array('http://cj.wlzy.tv/inc/api_mac_m3u8.php','http://api.iokzy.com/inc/apickm3u8.php');  // API方式 资源站API
-$url=array("http://www.zuidazy3.net/index.php","http://www.okzyw.com/index.php");    // 爬虫方式 资源站的搜索页
+$api=array('http://www.zdziyuan.com/inc/api.php','http://api.iokzy.com/inc/apickm3u8.php');  // API方式 资源站API
+$url=array("http://www.zuidazy5.com//index.php","http://www.okzyw.com/index.php");    // 爬虫方式 资源站的搜索页
 $n = 0;
 
 // 爬虫资源站页面
