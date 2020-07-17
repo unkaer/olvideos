@@ -13,9 +13,13 @@
         <a href="..">首页</a>
     </div>
     <div id="head2">
-        <form action="./dx.php" method='POST' onsubmit="return checkform();">
+        <form action="./dx.php" method='POST' onsubmit="return checkform(this);">
             <p>本 站 在 线 影 视：<input id="ipt" type="text" name="wd" autofocus value="">
             <input type="submit" value="搜索"></p>
+        </form>
+        <form action="./dx.php" method='POST' onsubmit="return checkform(this);">
+            <p>url视频解析：<input id="ipt" type="text" name="url" autofocus value="">
+            <input type="submit" value="解析"></p>
         </form>
 <?php
 date_default_timezone_set("Asia/Shanghai");
@@ -46,10 +50,10 @@ if(isset($_COOKIE['dt'])){
     <input type="submit" value="搜索"></p>
     </form>
     <script type="text/javascript" >
-    function checkform(){
-        if(document.getElementById('ipt').value.length==0){
+    function checkform(x){
+        if(x.value.length==0){
             alert('输入不能为空！！！');
-            document.getElementById('ipt').focus();
+            x.focus();
             return false;
         }
         else{return true}

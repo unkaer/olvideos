@@ -3,17 +3,40 @@ set_time_limit(0);
 ob_implicit_flush();
 if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
     if(isset($_POST["wd"])){$name = $_POST["wd"];}else{$name = $_GET["wd"];}
-    $teshu=array(array(",","!",":"),array("，","！","："),array("(",")","普通话","粤语","版","[","]","\"","\'"));  // 0替换为1，2删除
-    for($i=0;$i<sizeof($teshu[0]);$i++){
-        $name=str_replace($teshu[0][$i],$teshu[1][$i],$name);
-    }
-    for($i=0;$i<sizeof($teshu[2]);$i++){
-        $name=str_replace($teshu[2][$i],'',$name);
-    }
+    $js = 0;
 }else{
-    header("Location: ..");
-    exit();
+    if(array_key_exists("url", $_POST)|array_key_exists("url", $_GET)){
+        if(isset($_POST["url"])){$jx = $_POST["url"];}else{$jx = $_GET["url"];}
+        $html = file_get_contents($jx);
+        preg_match_all('/<title>(.*?)<\/title>/',$html,$py1);
+        $py1=$py1[1][0];
+        $teshu=array("1080P在线观看平台_腾讯视频","爱奇艺","高清","全集","完整版视频在线观看","电影","电视剧","-","_");
+        for($i=0;$i<sizeof($teshu);$i++){
+            $py1=str_replace($teshu[$i],"",$py1);
+        }
+        $name = $py1;
+        preg_match_all('/第([0-9]*?)集/',$py1,$py2);
+        if(isset($py2[1][0])){
+            $js = $py2[1][0]-1;
+            $name=str_replace($py2[0][0],"",$name);
+        }
+        else{
+            $js = 0;
+        }
+    }
+    else{
+        header("Location: ..");
+        exit();
+    }
 }
+$teshu=array(array(",","!",":"),array("，","！","："),array("(",")","普通话","粤语","版","[","]","\"","\'"," "));  // 0替换为1，2删除
+for($i=0;$i<sizeof($teshu[0]);$i++){
+    $name=str_replace($teshu[0][$i],$teshu[1][$i],$name);
+}
+for($i=0;$i<sizeof($teshu[2]);$i++){
+    $name=str_replace($teshu[2][$i],'',$name);
+}
+
 // 存放搜索记录到 cookie
 $search = serialize(array($name,time()));
 $expire=time()+60*60*24*30;
@@ -87,7 +110,7 @@ function playdetail($detailurl,$f){
     $array[$n]["type"]=$type[1][0];  // 类型
     $array[$n]["des"]=$des[1][0];  // 简介
     if($f){
-        build();
+        build($f);
     }
     $n++;
     
