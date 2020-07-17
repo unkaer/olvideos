@@ -7,21 +7,44 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
 }else{
     if(array_key_exists("url", $_POST)|array_key_exists("url", $_GET)){
         if(isset($_POST["url"])){$jx = $_POST["url"];}else{$jx = $_GET["url"];}
+        preg_match_all('/https?:\/\/.*/',$jx,$jx1);  // 确保输入的是正确的url
+        if(!isset($jx1[0][0])){
+            $jx = "https://".$jx;
+        }
+        $url = array("/iqiyi.com\/.+/","/v.qq.com\/.+/");
+        for($i=0;$i<sizeof($url);$i++){
+            preg_match_all($url[$i],$jx,$py);
+            if(isset($py[0][0])){
+                $f = 1;
+            }
+        }
+        if($f!=1){
+            // url有误或者暂不支持
+            header("Location: ./error.php?error_code=5&url=".$jx);
+            exit();
+        }
         $html = file_get_contents($jx);
         preg_match_all('/<title>(.*?)<\/title>/',$html,$py1);
-        $py1=$py1[1][0];
-        $teshu=array("1080P在线观看平台_腾讯视频","爱奇艺","高清","全集","完整版视频在线观看","电影","电视剧","-","_");
-        for($i=0;$i<sizeof($teshu);$i++){
-            $py1=str_replace($teshu[$i],"",$py1);
-        }
-        $name = $py1;
-        preg_match_all('/第([0-9]*?)集/',$py1,$py2);
-        if(isset($py2[1][0])){
-            $js = $py2[1][0]-1;
-            $name=str_replace($py2[0][0],"",$name);
+        if(isset($py1[1][0])){
+            $py1=$py1[1][0];
+            $teshu=array("1080P在线观看平台_腾讯视频","爱奇艺","高清","全集","完整版视频在线观看","电影","电视剧","-","_");
+            for($i=0;$i<sizeof($teshu);$i++){
+                $py1=str_replace($teshu[$i],"",$py1);
+            }
+            $name = $py1;
+            preg_match_all('/第([0-9]*?)集/',$py1,$py2);
+            if(isset($py2[1][0])){
+                $js = $py2[1][0]-1;
+                $name=str_replace($py2[0][0],"",$name);
+            }
+            else{
+                $js = 0;
+            }
         }
         else{
-            $js = 0;
+            // url有误或者暂不支持
+            header("Location: ./error.php?error_code=4&url=".$jx);
+            exit();
         }
     }
     else{

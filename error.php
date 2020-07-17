@@ -24,4 +24,18 @@ if($_GET['error_code']=='3'){
         <input type="submit" value="搜索"></p>
     </form>';
 }
+if($_GET['error_code']=='4'){
+    echo '<h2>url有误</h2><p>请检查 输入的是否是正确的url</p><p>可能是暂不支持，有问题请反馈</p>
+    <form action="./dx.php" method="POST" onsubmit="return checkform();">
+        <p>url解析：<input id="ipt" type="text" name="url" autofocus value='.$_GET['url'].'>
+        <input type="submit" value="搜索"></p>
+    </form>';
+}
+if($_GET['error_code']=='5'){
+    echo '<h2>url 不 支 持</h2><p>你输入的url 暂不支持</p><p>暂时只支持腾讯视频、爱奇艺</p>
+    <form action="./dx.php" method="POST" onsubmit="return checkform();">
+        <p>url解析：<input id="ipt" type="text" name="url" autofocus value='.$_GET['url'].'>
+        <input type="submit" value="搜索"></p>
+    </form>';
+}
 ?>
