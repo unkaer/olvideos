@@ -14,7 +14,13 @@ $admin = false;
 session_start();
 //  判断是否登陆
 if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
-    echo "<p>您已经成功登陆</p><h3>用户访问记录：</h3>";
+    echo "<p>您已经成功登陆</p>";
+
+    // 更新系统
+
+
+    // <h3>用户访问记录：</h3>
+    echo "<h3>用户访问记录：</h3>";
     $file="../data/.log";
     if(file_exists($file)){
         $handle=fopen($file,'r');
