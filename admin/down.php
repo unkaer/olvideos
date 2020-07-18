@@ -8,6 +8,7 @@ if($_GET['id']=='1'){
 $html = file_get_contents($url);
 file_put_contents($file,$html);
 echo "下载成功";
+echo '<div><a href="./down.php?id=2">解压文件</a></div>';
 }
 // 解压文件
 if($_GET['id']=='2'){
@@ -21,6 +22,8 @@ $zip->extractTo('./');
 $zip->close();
 echo '解压成功'; 
 unlink($file); //删除压缩文件
+echo '已删除压缩包';
+echo '<div><a href="./down.php?id=3">安装</a></div>';
 }
 
 if($_GET['id']=='3'){
@@ -77,7 +80,7 @@ function delDirAndFile($dirName){
 } 
 echo "<p>删除旧目录:</p>";
 delDirAndFile("olvideo-master");  // 删除旧目录
-
+echo '<div><a href="./">回到管理页</a></div>';
 }
 
 ?>
