@@ -39,15 +39,12 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
             $name = $py1;
             //几种情况  第1季xxx 第1集 第22期xx
             preg_match_all('/(.*?)第/',$py1,$py2);
-            print_r($py1);
-            print_r($py2);
             if(isset($py2[1][0])){
                 $name = $py2[1][0];
             }
             preg_match_all('/第([0-9]*?)集/',$py1,$py2);
             if(isset($py2[1][0])){
                 $js = $py2[1][0]-1;
-                print_r($js);
             }
             else{
                 $js = 0;
