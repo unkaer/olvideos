@@ -61,7 +61,7 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
         exit();
     }
 }
-$teshu=array(array(",","!",":"),array("，","！","："),array("(",")","普通话","粤语","版","[","]","\"","\'"," "));  // 0替换为1，2删除
+$teshu=array(array(",","!",":"),array("，","！","："),array("(",")","普通话","粤语","版","[","]","《","》","\"","\'"," "));  // 0替换为1，2删除
 for($i=0;$i<sizeof($teshu[0]);$i++){
     $name=str_replace($teshu[0][$i],$teshu[1][$i],$name);
 }
