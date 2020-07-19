@@ -37,10 +37,17 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
                 $py1=str_replace($teshu[$i],"",$py1);
             }
             $name = $py1;
+            //几种情况  第1季xxx 第1集 第22期xx
+            preg_match_all('/(.*?)第/',$py1,$py2);
+            print_r($py1);
+            print_r($py2);
+            if(isset($py2[1][0])){
+                $name = $py2[1][0];
+            }
             preg_match_all('/第([0-9]*?)集/',$py1,$py2);
             if(isset($py2[1][0])){
                 $js = $py2[1][0]-1;
-                $name=str_replace($py2[0][0],"",$name);
+                print_r($js);
             }
             else{
                 $js = 0;
@@ -63,6 +70,11 @@ for($i=0;$i<sizeof($teshu[0]);$i++){
 }
 for($i=0;$i<sizeof($teshu[2]);$i++){
     $name=str_replace($teshu[2][$i],'',$name);
+}
+if($name==""){
+    // url暂不支持
+    header("Location: ./error.php?error_code=5&url=".$jx);
+    exit();
 }
 
 // 存放搜索记录到 cookie

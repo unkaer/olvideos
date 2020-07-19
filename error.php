@@ -32,7 +32,7 @@ if($_GET['error_code']=='4'){
     </form>';
 }
 if($_GET['error_code']=='5'){
-    echo '<h2>url 不 支 持</h2><p>你输入的url 暂不支持</p><p>暂时只支持 腾讯视频、爱奇艺、优酷、芒果TV、PPTV</p>
+    echo '<h2>url 不 支 持</h2><p>你输入的url 暂不支持</p><p>暂时只支持 腾讯视频、爱奇艺、优酷、PPTV</p>
     <form action="./dx.php" method="POST" onsubmit="return checkform();">
         <p>url解析：<input id="ipt" type="text" name="url" autofocus value='.$_GET['url'].'>
         <input type="submit" value="搜索"></p>
