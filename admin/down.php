@@ -73,7 +73,26 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
                     }
                     else{
                     //是文件就拷贝到目标目录
-                    if(copy($srcfile, $tofile))echo "成功拷贝文件：$srcfile--->$tofile<br/>\n";
+                    if(file_exists($tofile)){  // 如果文件存在，判读是否相同。不同的才改变
+                        $md51 = md5_file($srcfile);
+                        $md52 = md5_file($tofile);
+                        if($md51!=$md52){
+                            if(copy($srcfile, $tofile)){
+                                echo "成功拷贝文件：$srcfile--->$tofile<br/>\n";
+                            }
+                            else{
+                                echo "拷贝文件失败：$srcfile--->$tofile<br/>\n";
+                            }
+                        }
+                    }
+                    else{
+                        if(copy($srcfile, $tofile)){
+                            echo "成功拷贝文件：$srcfile--->$tofile<br/>\n";
+                        }
+                        else{
+                            echo "拷贝文件失败：$srcfile--->$tofile<br/>\n";
+                        }
+                    }
                     }
                 }
             }
