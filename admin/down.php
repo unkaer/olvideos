@@ -1,4 +1,8 @@
 <?php
+//  防止全局变量造成安全隐患
+$admin = false;
+//  启动会话，这步必不可少
+session_start();
 if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
     $url = "https://github.com/unkaer/olvideo/archive/master.zip";  // 下载地址
     $file = "./olvideo.zip";  // 下载压缩包，存放位置
