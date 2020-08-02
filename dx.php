@@ -1,6 +1,6 @@
 <?php
-set_time_limit(0);
-ob_implicit_flush();
+// set_time_limit(0);
+// ob_implicit_flush();
 if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
     if(isset($_POST["wd"])){$name = $_POST["wd"];}else{$name = $_GET["wd"];}
     preg_match_all('/https?:\/\/.*/',$name,$jx);  // 判断输入的是url
@@ -73,7 +73,7 @@ if($name==""){
     header("Location: ./error.php?error_code=5&url=".$jx);
     exit();
 }
-
+if(array_key_exists("gx", $_POST)|array_key_exists("gx", $_GET)){if(isset($_POST["gx"])){$gx = $_POST["gx"];}else{$gx = $_GET["gx"];}}
 // 存放搜索记录到 cookie
 $search = serialize(array($name,time()));
 $expire=time()+60*60*24*30;
@@ -97,7 +97,12 @@ setcookie("search", $search, $expire);    // 存放搜索数据
     <div id="head2">
         <form action="./dx.php" method='POST' onsubmit="return checkform();">
             <p>本 站 在 线 影 视：<input id="ipt" type="text" name="wd" autofocus value="<?php echo $name;?>">
-            <input type="submit" value="搜索"></p>
+            <input type="submit" value="搜索">
+        <form action="./dx.php" method='POST' onsubmit="return checkform();">
+            <input type="hidden" name="wd" autofocus value="<?php echo $name;?>">
+            <input type="hidden" name="gx" value="1">
+            <input type="submit" value="检查更新">
+        </form></p>
             <p>如果没有搜索结果，请减少关键词</p>
         </form>
     </div>
@@ -115,11 +120,13 @@ setcookie("search", $search, $expire);    // 存放搜索数据
 <?php
 
 $api=array('http://www.zdziyuan.com/inc/api.php','http://api.iokzy.com/inc/apickm3u8.php');  // API方式 资源站API
+$api1=array('最大资源API','ok资源API');  // API方式 资源站API
 $url=array("http://www.zuidazy5.com//index.php","http://www.okzyw.com/index.php");    // 爬虫方式 资源站的搜索页
+$url1=array("最大资源爬取","ok资源爬取");    // 爬虫方式 资源站的搜索页
 $n = 0;
 
 // 爬虫资源站页面
-function playdetail($detailurl,$f){
+function playdetail($detailurl,$url1,$f){
     global $array,$n;
     $html = file_get_contents($detailurl);
     preg_match_all("/https?:\/\/.*\.jpe?g/",$html,$cover); // 封面 $cover[0][0]
@@ -147,6 +154,7 @@ function playdetail($detailurl,$f){
     $array[$n]["year"]=$year[1][0];  // 上映时间
     $array[$n]["type"]=$type[1][0];  // 类型
     $array[$n]["des"]=$des[1][0];  // 简介
+    $array[$n]["zy"]=$url1;  // 资源来源
     if($f){
         build($f);
     }
@@ -155,17 +163,17 @@ function playdetail($detailurl,$f){
 }
 
 //API 获取视频id geturl视频信息
-function getname($api,$f){
+function getname($api,$api1,$f){
     global $name;
     $data = file_get_contents($api."?wd=".$name);
     $xml = simplexml_load_string($data);
     foreach($xml->list->video as $video){
         $id=(string)$video->id;
-        geturl($id,$api,$f);
+        geturl($id,$api,$api1,$f);
     }
 }
 
-function geturl($id,$api,$f){
+function geturl($id,$api,$api1,$f){
     $data = file_get_contents($api."?ac=videolist&ids=".$id);
     $xml = simplexml_load_string($data);
     foreach($xml->list->video as $video){
@@ -188,6 +196,7 @@ function geturl($id,$api,$f){
         $array[$n]["year"]=$year;  // 上映时间
         $array[$n]["des"]=$des;  // 简介
         $array[$n]["cover"]=$pic;  // 封面
+        $array[$n]["zy"]=$api1;  // 资源来源
         if($f){
             build($f);
         }
@@ -202,7 +211,7 @@ function build($f){
         $array[$n]["des"]=str_replace($luanma[$i],"",$array[$n]["des"]);
     }
     if(isset($array[$n]["title"])){
-        print_r('<div id="playul"><div><a id="cover" href="./play.php?wd='.$name.'&id='.$n.'" target="_blank" title="'.$array[$n]["des"].'" style="background-image: url('.$array[$n]["cover"].')">');  // 封面
+        print_r('<div id="playul"><p>"'.$array[$n]["zy"].'"</p><div><a id="cover" href="./play.php?wd='.$name.'&id='.$n.'" target="_blank" title="'.$array[$n]["des"].'" style="background-image: url('.$array[$n]["cover"].')">');  // 封面
         print_r("<span class=\"type\" >".$array[$n]["type"]."</span>");
         print_r("<span class=\"year\" >".$array[$n]["year"]."</span></a>");
         print_r("<form action=\"./play.php\" method='POST'>");
@@ -226,15 +235,15 @@ function build($f){
 }
 
 function getarray($f){
-    global $api,$url,$name;
+    global $api,$api1,$url,$url1,$name;
     for($i=0;$i<sizeof($api);$i++){    // API 方式
-        getname($api[$i],$f);
+        getname($api[$i],$api1[$i],$f);
     }
     for($i=0;$i<sizeof($url);$i++){   // 爬虫方式
         $html = file_get_contents($url[$i]."?m=vod-search&wd=".$name);
         preg_match_all("/\?m=vod-detail-id-.+.html/",$html,$detail);
         foreach($detail[0] as $x=>$x_value){
-            playdetail($url[$i].$x_value,$f);
+            playdetail($url[$i].$x_value,$url1[$i],$f);
         }
     }
 }
@@ -255,15 +264,15 @@ if(file_exists($file)){
     }
     date_default_timezone_set("Asia/Shanghai");
     $time=time()-filemtime($file);
-    echo "<br><p>更新时间：".date("Y-m-d H:i:s",filemtime($file))."</p>";
-    if($time>86400){    // 缓存文件太久才会更新  86400 24H
+    echo "<br><p>更新时间：".date("Y-m-d H:i:s",filemtime($file))."</p>";    
+    if($time>86400|$gx==1){    // 缓存文件太久才会更新  86400 24H
         $n=0;
         getarray(false);  // 获取数据（不建立网页）
         if(false!==fopen($file,'w+')){ 
             file_put_contents($file,serialize($array));//写入缓存 
         }
     }
-    
+
 }
 else{//不存在 第一次  边API 边爬取 边建立网页 边存  因为完整太慢 每一组数据存一次   
     if(!isset($_COOKIE['count'])){
@@ -274,7 +283,6 @@ else{//不存在 第一次  边API 边爬取 边建立网页 边存  因为完�
         getarray(true);  // 获取数据（并建立网页）
     }else{echo '新提交太频繁，15秒内只能提交两次，请等待15秒后在试。';}  // 防止恶意 浪费服务器资源
 }
-
 ?>
 </body>
 </html>
