@@ -3,6 +3,9 @@
 $admin = false;
 //  启动会话，这步必不可少
 session_start();
+print_r('
+<a href="..">首页</a>
+<a href="./admin">后台</a><br>');
 if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
     $url = "https://github.com/unkaer/olvideos/archive/master.zip";  // 下载地址
     $file = "./olvideos.zip";  // 下载压缩包，存放位置
@@ -124,6 +127,20 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
         delDirAndFile("olvideos-master");  // 删除旧目录
         echo '<div><a href="./">回到管理页</a></div>';
     }
+
+
+    if($_GET['id']=='4'){   // 清除首页缓存
+
+        if(unlink("../data/aqy0.p"))echo "成功删除文件：\"../data/aqy0.p\"<br/>\n";
+        if(unlink("../data/aqy1.p"))echo "成功删除文件：\"../data/aqy1.p\"<br/>\n";
+        if(unlink("../data/txsp0.p"))echo "成功删除文件：\"../data/txsp0.p\"<br/>\n";
+        if(unlink("../data/txsp1.p"))echo "成功删除文件：\"../data/txsp1.p\"<br/>\n";
+        if(unlink("../data/txsp2.p"))echo "成功删除文件：\"../data/txsp2.p\"<br/>\n";
+        if(unlink("../data/txsp3.p"))echo "成功删除文件：\"../data/txsp3.p\"<br/>\n";
+        echo "理论上清除首页缓存";
+    }
+
+
 }
 else{
     echo("您无权访问，请登录");

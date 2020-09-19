@@ -11,6 +11,7 @@
 <div id="head">
     <div id="head1">
         <a href="..">首页</a>
+        <a href="./admin">后台</a>   
     </div>
     <div id="head2">
         <form action="./dx.php" method='POST' onsubmit="return checkform(this);">
