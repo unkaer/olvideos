@@ -73,9 +73,9 @@ setcookie("dt", $dt, $expire);
         </form></p>
         </div>
 
-        <div id="menu"><?php
+        <div id="menu"><div class="title"><?php
                 for($i=0;$i<sizeof($urls[0]);$i++){
-                    echo "<button type=\"button\" onclick=\"player(".$i.")\">".$urls[0][$i]."</button>";
+                    echo $wd."</div><button type=\"button\" onclick=\"player(".$i.")\">".$urls[0][$i]."</button>";
                 }
                 echo "<script type=\"text/javascript\" >
                 function player(n) {";
