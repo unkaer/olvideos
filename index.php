@@ -170,7 +170,7 @@ x.style.color="black";
 <div>
 <p>暂时只支持输入视频名称 url功能待添加</p>
 <p>作者 <a href="https://zan7l.tk/" target="_blank">unkaer</a></p>
-<p>源码 <a href="https://github.com/unkaer/olvideo" target="_blank">olvideo</a></p>
+<p>源码 <a href="https://github.com/unkaer/olvideos" target="_blank">olvideo</a></p>
 </div>
 
 </body>

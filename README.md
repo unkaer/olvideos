@@ -4,8 +4,8 @@
 
 ## 演示
    演示站点：️
-   [在线视频站](http://jx.unkaer.cf/)
-   [备用站点](http://jx.unkaer.tk/)
+   [在线视频站](https://jx.unkaer.cf/)  (彩虹云+cfCDN)
+   [备用站点](https://jx.unkaer.tk/) (Heroku+cfCDN)
 
 ## 结构
 ```

@@ -117,12 +117,13 @@ setcookie("search", $search, $expire);    // 存放搜索数据
         else{return true}
     }
     </script>
+<div>
 <?php
 
-$api=array('http://www.zdziyuan.com/inc/api.php','http://api.iokzy.com/inc/apickm3u8.php');  // API方式 资源站API
-$api1=array('最大资源API','ok资源API');  // API方式 资源站API
-$url=array("http://www.zuidazy5.com//index.php","http://www.okzyw.com/index.php");    // 爬虫方式 资源站的搜索页
-$url1=array("最大资源爬取","ok资源爬取");    // 爬虫方式 资源站的搜索页
+$api=array('http://api.iokzy.com/inc/apickm3u8.php','http://www.zdziyuan.com/inc/api.php');  // API方式 资源站API
+$api1=array('ok资源API','最大资源API');  // API方式 资源站API
+$url=array("http://www.okzyw.com/index.php","http://www.zuidazy5.com//index.php");    // 爬虫方式 资源站的搜索页
+$url1=array("ok资源爬取","最大资源爬取");    // 爬虫方式 资源站的搜索页
 $n = 0;
 
 // 爬虫资源站页面
@@ -214,17 +215,12 @@ function build($f){
         print_r('<div id="playul"><p>"'.$array[$n]["zy"].'"</p><div><a id="cover" href="./play.php?wd='.$name.'&id='.$n.'" target="_blank" title="'.$array[$n]["des"].'" style="background-image: url('.$array[$n]["cover"].')">');  // 封面
         print_r("<span class=\"type\" >".$array[$n]["type"]."</span>");
         print_r("<span class=\"year\" >".$array[$n]["year"]."</span></a>");
-        print_r("<form action=\"./play.php\" method='POST'>");
-        print_r("<input type=\"hidden\" name=\"wd\" value=".$name.">");
-        print_r("<input type=\"hidden\" name=\"id\" value=".$n.">");
-        print_r("<input type=\"submit\" value=播放·".$array[$n]['title']."></form>");
-        if($array[$n]["download"][0]!="暂无"){
-            print_r("<P>迅雷p2p下载：<textarea>");
-            for($j=0;$j<sizeof($array[$n]["tag"]);$j++){
-                print_r($array[$n]["tag"][$j]."$".$array[$n]["download"][$j]."\n");
-            }
-            print_r("</textarea></p>");
-        }
+        // if($array[$n]["download"][0]!="暂无"){
+        //     print_r("<<span class=\"p2p\">迅雷p2p下载</span>");
+        //     for($j=0;$j<sizeof($array[$n]["tag"]);$j++){
+        //         print_r($array[$n]["tag"][$j]."$".$array[$n]["download"][$j]."\n");
+        //     }
+        // }
         print_r("</div></div>");
     }
     if($f){
@@ -236,14 +232,27 @@ function build($f){
 
 function getarray($f){
     global $api,$api1,$url,$url1,$name;
-    for($i=0;$i<sizeof($api);$i++){    // API 方式
-        getname($api[$i],$api1[$i],$f);
-    }
-    for($i=0;$i<sizeof($url);$i++){   // 爬虫方式
-        $html = file_get_contents($url[$i]."?m=vod-search&wd=".$name);
-        preg_match_all("/\?m=vod-detail-id-.+.html/",$html,$detail);
-        foreach($detail[0] as $x=>$x_value){
-            playdetail($url[$i].$x_value,$url1[$i],$f);
+    // 旧的排版爬取方式
+    // for($i=0;$i<sizeof($api);$i++){    // API 方式
+    //     getname($api[$i],$api1[$i],$f);
+    // }
+    // for($i=0;$i<sizeof($url);$i++){   // 爬虫方式
+    //     $html = file_get_contents($url[$i]."?m=vod-search&wd=".$name);
+    //     preg_match_all("/\?m=vod-detail-id-.+.html/",$html,$detail);
+    //     foreach($detail[0] as $x=>$x_value){
+    //         playdetail($url[$i].$x_value,$url1[$i],$f);
+    //     }
+    // }
+    for($i=0;$i<sizeof($api)||$i<sizeof($url);$i++){
+        if($i<sizeof($api)){
+            getname($api[$i],$api1[$i],$f);   // 第i 个 API 方式 
+        }
+        if($i<sizeof($url)){
+            $html = file_get_contents($url[$i]."?m=vod-search&wd=".$name);   // 爬虫方式
+            preg_match_all("/\?m=vod-detail-id-.+.html/",$html,$detail);
+            foreach($detail[0] as $x=>$x_value){
+                playdetail($url[$i].$x_value,$url1[$i],$f);
+            }
         }
     }
 }
@@ -284,5 +293,6 @@ else{//不存在 第一次  边API 边爬取 边建立网页 边存  因为完�
     }else{echo '新提交太频繁，15秒内只能提交两次，请等待15秒后在试。';}  // 防止恶意 浪费服务器资源
 }
 ?>
-</body>
+        </div>
+    </body>
 </html>

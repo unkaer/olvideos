@@ -57,16 +57,22 @@ setcookie("dt", $dt, $expire);
         <script type="text/javascript" src="./dplayer/DPlayer.min.js" ></script> 
         <style type="text/css">
             html,body{
-                background-color:#000;
+                background-color:rgba(28,28,28,.8);
                 padding: 10px;
                 margin: 0px 100px 5px;
                 color:#999;
+                border-radius: 8px;
             }
         </style>
     </head>
     
     <body>
-        <a href="..">回到首页</a><div id="menu"><?php
+        <a href="..">回到首页</a>
+        <form action="./dx.php" method='POST' onsubmit="return checkform(this);">
+            <p>本 站 在 线 影 视：<input id="ipt" type="text" name="wd" style="background-color:#999;" autofocus value="">
+            </p>
+        </form>
+        <div id="menu"><?php
                 for($i=0;$i<sizeof($urls[0]);$i++){
                     echo "<button type=\"button\" onclick=\"player(".$i.")\">".$urls[0][$i]."</button>";
                 }
@@ -91,6 +97,7 @@ setcookie("dt", $dt, $expire);
                 }
                 echo "}</script><br><button type=\"button\" onclick=\"video_front()\">上一集</button>"; 
                 echo "<button type=\"button\" onclick=\"video_next()\">下一集</button>";
+                echo '<p>作者 <a href="https://zan7l.tk/" target="_blank">unkaer</a></p><p>源码 <a href="https://github.com/unkaer/olvideos" target="_blank">olvideo</a></p> ';
                 echo "<script type=\"text/javascript\" >
                 function video_front() {
                         var i = Number(document.getElementById('jishu').innerHTML)-1;
@@ -115,16 +122,16 @@ setcookie("dt", $dt, $expire);
                 ?>
                 type: 'hls',
             },
-            contextmenu: [
-                {
-                    text: '作者博客',
-                    link: 'https://zan7l.tk/',
-                },
-                {
-                    text: '本站源码',
-                    link: 'https://github.com/unkaer/olvideo/',
-                },
-            ],   
+            // contextmenu: [
+            //     {
+            //         text: '作者博客',
+            //         link: 'https://zan7l.tk/',
+            //     },
+            //     {
+            //         text: '本站源码',
+            //         link: 'https://github.com/unkaer/olvideo/',
+            //     },
+            // ],   
         });
         dp.on('ended', function () {
             video_next();
