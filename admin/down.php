@@ -4,9 +4,9 @@ $admin = false;
 //  启动会话，这步必不可少
 session_start();
 if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
-    $url = "https://github.com/unkaer/olvideo/archive/master.zip";  // 下载地址
-    $file = "./olvideo.zip";  // 下载压缩包，存放位置
-    $dirsrc = "olvideo-master";  // 解压后目录
+    $url = "https://github.com/unkaer/olvideos/archive/master.zip";  // 下载地址
+    $file = "./olvideos.zip";  // 下载压缩包，存放位置
+    $dirsrc = "olvideos-master";  // 解压后目录
     $dirto = "..";  // 覆盖安装目录
     
     if($_GET['id']=='1'){   // 下载最新版系统
@@ -121,7 +121,7 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
             }
         }
         echo "<p>删除旧目录:</p>";
-        delDirAndFile("olvideo-master");  // 删除旧目录
+        delDirAndFile("olvideos-master");  // 删除旧目录
         echo '<div><a href="./">回到管理页</a></div>';
     }
 }
