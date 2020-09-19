@@ -37,18 +37,29 @@ li{
     width: 150px;
     height: 200px;
     border-radius: 8px;
+    text-decoration: none;
 }
 #cover .type{
+    display: block;
     color: #fff;
-    background-color: #5bb7fe6b;
+    background-color:rgb(255 92 138 / 79%);
     font-size: 12px;
-    padding: 0px 20px;
+    text-align: center;
+    border-radius: 8px;
+    padding: 4px 12px;
+    margin: 6px 0px 3px;
+    width: 46px;
 }
 #cover .year{
+    display: block;
     color: #fff;
-    background-color: #5bb7fe6b;
+    background-color: rgb(91 183 254 / 73%);
     font-size: 12px;
-    padding: 0px 20px;
+    text-align: center;
+    border-radius: 8px;
+    padding: 4px 12px;
+    margin: 6px 0px 3px;
+    width: 46px;
 }
 #cover .title{
     color: #fff;
