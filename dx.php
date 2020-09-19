@@ -85,9 +85,9 @@ setcookie("search", $search, $expire);    // 存放搜索数据
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
         <title><?php echo $name;?>·搜索结果</title>
-        <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
-        <link rel="bookmark" href="./favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" href="./css/d.css" type="text/css" />
+        <link rel="shortcut icon" href="./src/favicon.ico" type="image/x-icon">
+        <link rel="bookmark" href="./src/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="./src/css/d.css" type="text/css" />
 </head>
 <body>
 <div id="head">
@@ -221,6 +221,7 @@ function build($f){
         //         print_r($array[$n]["tag"][$j]."$".$array[$n]["download"][$j]."\n");
         //     }
         // }
+        print_r("<div class=\"title\" >".$array[$n]['title']."</div>");
         print_r("</div></div>");
     }
     if($f){

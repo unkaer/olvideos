@@ -51,10 +51,10 @@ setcookie("dt", $dt, $expire);
         echo $name.$urls[0][$js];
         ?>
         </title>
-        <link rel="stylesheet" href="./css/d.css" type="text/css" />
-        <link rel="stylesheet" href="./dplayer/DPlayer.min.css"> 
-		<script type="text/javascript"  src="./dplayer/hls.min.js" ></script>
-        <script type="text/javascript" src="./dplayer/DPlayer.min.js" ></script> 
+        <link rel="stylesheet" href="./src/css/d.css" type="text/css" />
+        <link rel="stylesheet" href="./src/dplayer/DPlayer.min.css"> 
+		<script type="text/javascript"  src="./src/dplayer/hls.min.js" ></script>
+        <script type="text/javascript" src="./src/dplayer/DPlayer.min.js" ></script> 
         <style type="text/css">
             html,body{
                 background-color:rgba(28,28,28,.8);
@@ -67,11 +67,12 @@ setcookie("dt", $dt, $expire);
     </head>
     
     <body>
-        <a href="..">回到首页</a>
+        <div ><p>
         <form action="./dx.php" method='POST' onsubmit="return checkform(this);">
-            <p>本 站 在 线 影 视：<input id="ipt" type="text" name="wd" style="background-color:#999;" autofocus value="">
-            </p>
-        </form>
+        <a href="..">回到首页</a><img style="height: 25px;" src="./src/ss.svg"><input id="ipt" type="text" name="wd" style="background-color:#999;" autofocus value="">
+        </form></p>
+        </div>
+
         <div id="menu"><?php
                 for($i=0;$i<sizeof($urls[0]);$i++){
                     echo "<button type=\"button\" onclick=\"player(".$i.")\">".$urls[0][$i]."</button>";

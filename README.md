@@ -17,12 +17,15 @@
 ├── play.php      播放页面
 ├── error.php     错误页
 ├── _data      存放缓存文件 
-├── _css    
-|   ├── d.css     搜索页布局
-├── _dplayer      播放器文件
-|   ├── DPlayer.min.css
-|   ├── DPlayer.min.js
-|   └── hls.min.js
+├── _src      存放缓存文件 
+|   ├── _css
+|   |   ├── favicon.ico 网站图标
+|   |   ├── ss.svg 搜索图案
+|   |   └── d.css     搜索页布局
+|   └ _dplayer      播放器文件
+|     ├── DPlayer.min.css
+|     ├── DPlayer.min.js
+|     └── hls.min.js
 ```
 ## 运行流程
 index.php

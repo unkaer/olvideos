@@ -54,6 +54,15 @@ li{
     font-size: 12px;
     overflow: hidden;
 }
+#cover .title{
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    bottom: 0;
+    padding: 5px 10px;
+    font-size: 12px;
+    overflow: hidden;
+}
 #button{
     float: left;
     border:none;

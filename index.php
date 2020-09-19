@@ -3,9 +3,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
         <title>在线视频站</title>
-        <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
-        <link rel="bookmark" href="./favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" href="./css/d.css" type="text/css" />
+        <link rel="shortcut icon" href="./src/favicon.ico" type="image/x-icon">
+        <link rel="bookmark" href="./src/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="./src/css/d.css" type="text/css" />
 </head>
 <body>
 <div id="head">
