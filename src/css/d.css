@@ -39,20 +39,16 @@ li{
     border-radius: 8px;
 }
 #cover .type{
-    top: 5px;
-    left: 5px;
-    width: 100%;
-    height: 100%;
-    background-color: #5bb7fe
+    color: #fff;
+    background-color: #5bb7fe6b;
+    font-size: 12px;
+    padding: 0px 20px;
 }
 #cover .year{
     color: #fff;
-    text-align: right;
-    width: 100%;
-    bottom: 0;
-    padding: 5px 10px;
+    background-color: #5bb7fe6b;
     font-size: 12px;
-    overflow: hidden;
+    padding: 0px 20px;
 }
 #cover .title{
     color: #fff;
