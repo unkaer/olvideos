@@ -130,7 +130,6 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
 
 
     if($_GET['id']=='4'){   // 清除首页缓存
-
         if(unlink("../data/aqy0.p"))echo "成功删除文件：\"../data/aqy0.p\"<br/>\n";
         if(unlink("../data/aqy1.p"))echo "成功删除文件：\"../data/aqy1.p\"<br/>\n";
         if(unlink("../data/txsp0.p"))echo "成功删除文件：\"../data/txsp0.p\"<br/>\n";
@@ -140,6 +139,38 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
         echo "理论上清除首页缓存";
     }
 
+    if($_GET['id']=='5'){   // 搜索数据管理
+        function list_files($dir){
+            if(is_dir($dir)){
+                if($handle = opendir($dir)){
+                    while(($file = readdir($handle)) !== false){
+                        if($file != "." && $file != ".."){
+                            echo '<br>'.$file.'<a href="./down.php?id=6&n='.$file.'">查看</a><a href="./down.php?id=7&n='.$file.'">删除</a>';
+                        }
+                    }
+                    closedir($handle);
+                }
+            }
+        }
+
+        list_files("../data/");
+    }
+    
+    if($_GET['id']=='6'){   // 搜索数据查看
+        echo '<a href="./down.php?id=5">返回数据管理</a><br>';
+        if(array_key_exists("n", $_POST)|array_key_exists("n", $_GET)){
+            if(isset($_POST["n"])){$n = $_POST["n"];}else{$n = $_GET["n"];}
+        }
+        print_r(unserialize(file_get_contents("../data/".$n)));
+    }
+    
+    if($_GET['id']=='7'){   // 搜索数据删除
+        if(array_key_exists("n", $_POST)|array_key_exists("n", $_GET)){
+            if(isset($_POST["n"])){$n = $_POST["n"];}else{$n = $_GET["n"];}
+        }
+        if(unlink("../data/".$n))echo "成功删除文件：\"../data/".$n."\"<br/>\n";
+        echo '<br><a href="./down.php?id=5">返回数据管理</a>';
+    }
 
 }
 else{

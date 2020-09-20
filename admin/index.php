@@ -19,6 +19,7 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
     // 更新系统
     echo '<div><a href="./down.php?id=1">更新系统</a></div>';
     echo '<div><a href="./down.php?id=4">清除首页缓存</a></div>';
+    echo '<div><a href="./down.php?id=5">搜索数据管理</a></div>';
 
     // <h3>用户访问记录：</h3>
     echo "<h3>用户访问记录：</h3>";
