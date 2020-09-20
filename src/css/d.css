@@ -76,11 +76,11 @@ li{
     width: 180px;
 }
 #menu{
-    width: 195px;
+    /* width: 195px;
     border-radius: 8px;
     float: right;
     direction: ltr;
-    overflow: auto;
+    overflow: auto; */
     
 }
 #menu button{

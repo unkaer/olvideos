@@ -73,43 +73,7 @@ setcookie("dt", $dt, $expire);
         </form></p>
         </div>
 
-        <div id="menu"><div class="title"><?php
-                for($i=0;$i<sizeof($urls[0]);$i++){
-                    echo $wd."</div><button type=\"button\" onclick=\"player(".$i.")\">".$urls[0][$i]."</button>";
-                }
-                echo "<script type=\"text/javascript\" >
-                function player(n) {";
-                for($i=0;$i<sizeof($urls[0]);$i++){
-                    echo "
-                        if(n==".$i."){
-                        dp.switchVideo({
-                            url: '".$urls[1][$i]."',
-                            type: 'hls'
-                        });
-                        dp.play();document.getElementById('title').innerHTML ='".$name.$urls[0][$i]."';
-                        document.getElementById('jishu').innerHTML ='".$i."';
-                        url =changeURLPar(document.URL,'wd','".$wd."');
-                        url =changeURLPar(url,'id','".$n."');
-                        url =changeURLPar(url,'js',document.getElementById('jishu').innerHTML);
-                        var newUrl =url.replace(new RegExp('&amp;','g'),'&');
-                        history.pushState(null,null,newUrl)
-                        jsc();
-                        }";
-                }
-                echo "}</script><br><button type=\"button\" onclick=\"video_front()\">上一集</button>"; 
-                echo "<button type=\"button\" onclick=\"video_next()\">下一集</button>";
-                echo '<p>作者 <a href="https://zan7l.tk/" target="_blank">unkaer</a></p><p>源码 <a href="https://github.com/unkaer/olvideos" target="_blank">olvideo</a></p> ';
-                echo "<script type=\"text/javascript\" >
-                function video_front() {
-                        var i = Number(document.getElementById('jishu').innerHTML)-1;
-                        player(i);
-                }
-                function video_next() {
-                    var i = Number(document.getElementById('jishu').innerHTML)+1;
-                    player(i);
-                }</script>";
-                    ?>
-        <p id="jishu" style="display: none;"><?php echo $js;?></p></div>
+        </div>
         <div id="dplayer"></div>
         <script type="text/javascript" >
         const dp = new DPlayer({
@@ -163,6 +127,48 @@ setcookie("dt", $dt, $expire);
             return destiny+'\n'+par+'\n'+par_value;
         }
         </script>
+        
+        <div id="menu">
+        <div class="title">
+            <?php
+            echo $wd."</div>";
+                for($i=0;$i<sizeof($urls[0]);$i++){
+                    echo "<button type=\"button\" onclick=\"player(".$i.")\">".$urls[0][$i]."</button>";
+                }
+                echo "<script type=\"text/javascript\" >
+                function player(n) {";
+                for($i=0;$i<sizeof($urls[0]);$i++){
+                    echo "
+                        if(n==".$i."){
+                        dp.switchVideo({
+                            url: '".$urls[1][$i]."',
+                            type: 'hls'
+                        });
+                        dp.play();document.getElementById('title').innerHTML ='".$name.$urls[0][$i]."';
+                        document.getElementById('jishu').innerHTML ='".$i."';
+                        url =changeURLPar(document.URL,'wd','".$wd."');
+                        url =changeURLPar(url,'id','".$n."');
+                        url =changeURLPar(url,'js',document.getElementById('jishu').innerHTML);
+                        var newUrl =url.replace(new RegExp('&amp;','g'),'&');
+                        history.pushState(null,null,newUrl)
+                        jsc();
+                        }";
+                }
+                echo "}</script><br><button type=\"button\" onclick=\"video_front()\">上一集</button>"; 
+                echo "<button type=\"button\" onclick=\"video_next()\">下一集</button>";
+                echo '<p>作者 <a href="https://zan7l.tk/" target="_blank">unkaer</a></p><p>源码 <a href="https://github.com/unkaer/olvideos" target="_blank">olvideo</a></p> ';
+                echo "<script type=\"text/javascript\" >
+                function video_front() {
+                        var i = Number(document.getElementById('jishu').innerHTML)-1;
+                        player(i);
+                }
+                function video_next() {
+                    var i = Number(document.getElementById('jishu').innerHTML)+1;
+                    player(i);
+                }</script>";
+                    ?>
+        <p id="jishu" style="display: none;"><?php echo $js;?></p>
+        </div>
     </body>
     
 </html>
