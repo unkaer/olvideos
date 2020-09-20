@@ -122,8 +122,8 @@ setcookie("search", $search, $expire);    // 存放搜索数据
 
 $api=array('http://api.iokzy.com/inc/apickm3u8.php','http://www.zdziyuan.com/inc/api.php');  // API方式 资源站API
 $api1=array('ok资源API','最大资源API');  // API方式 资源站API
-$url=array("http://www.okzyw.com/index.php","http://www.zuidazy5.com//index.php");    // 爬虫方式 资源站的搜索页
-$url1=array("ok资源爬取","最大资源爬取");    // 爬虫方式 资源站的搜索页
+$url=array("http://www.okzyw.com/index.php","http://www.zuidazy5.com//index.php");    // 爬虫方式 资源站的搜索页  "http://kankanzy.com/index.php",
+$url1=array("ok资源爬取","最大资源爬取");    // 爬虫方式 资源站的搜索页   "131资源爬取",
 $n = 0;
 
 // 爬虫资源站页面
@@ -212,7 +212,7 @@ function build($f){
         $array[$n]["des"]=str_replace($luanma[$i],"",$array[$n]["des"]);
     }
     if(isset($array[$n]["title"])){
-        print_r('<div id="playul"><p>"'.$array[$n]["zy"].'"</p><div><a id="cover" href="./play.php?wd='.$name.'&id='.$n.'" target="_blank" title="'.$array[$n]["des"].'" style="background-image: url('.$array[$n]["cover"].')">');  // 封面
+        print_r('<div id="playul"><p>'.$array[$n]["zy"].'</p><div><a id="cover" href="./play.php?wd='.$name.'&id='.$n.'" target="_blank" title="'.$array[$n]["des"].'" style="background-image: url('.$array[$n]["cover"].')">');  // 封面
         print_r("<span class=\"type\" >".$array[$n]["type"]."</span>");
         print_r("<span class=\"year\" >".$array[$n]["year"]."</span></a>");
         // if($array[$n]["download"][0]!="暂无"){
@@ -244,18 +244,23 @@ function getarray($f){
     //         playdetail($url[$i].$x_value,$url1[$i],$f);
     //     }
     // }
-    for($i=0;$i<sizeof($api)||$i<sizeof($url);$i++){
-        if($i<sizeof($api)){
-            getname($api[$i],$api1[$i],$f);   // 第i 个 API 方式 
-        }
-        if($i<sizeof($url)){
-            $html = file_get_contents($url[$i]."?m=vod-search&wd=".$name);   // 爬虫方式
-            preg_match_all("/\?m=vod-detail-id-.+.html/",$html,$detail);
-            foreach($detail[0] as $x=>$x_value){
-                playdetail($url[$i].$x_value,$url1[$i],$f);
-            }
-        }
-    }
+
+    // 方案2
+    // for($i=0;$i<sizeof($api)||$i<sizeof($url);$i++){
+    //     if($i<sizeof($api)){
+    //         getname($api[$i],$api1[$i],$f);   // 第i 个 API 方式 
+    //     }
+    //     if($i<sizeof($url)){
+    //         $html = file_get_contents($url[$i]."?m=vod-search&wd=".$name);   // 爬虫方式
+    //         preg_match_all("/\?m=vod-detail-id-.+.html/",$html,$detail);
+    //         foreach($detail[0] as $x=>$x_value){
+    //             playdetail($url[$i].$x_value,$url1[$i],$f);
+    //         }
+    //     }
+    // }
+
+    // 只ok API   // 节约服务器
+    getname($api[0],"",$f);
 }
 
 
