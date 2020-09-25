@@ -97,15 +97,11 @@ setcookie("search", $search, $expire);    // 存放搜索数据
     <div id="head2">
         <form action="./dx.php" method='POST' onsubmit="return checkform();">
             <p>本 站 在 线 影 视：<input id="ipt" type="text" name="wd" autofocus value="<?php echo $name;?>">
-            <input type="submit" value="搜索">
-        </form>
-        <form action="./dx.php" method='POST'>
-            <input type="hidden" name="wd" autofocus value="<?php echo $name;?>">
             <input type="hidden" name="gx" value="1">
-            <input type="submit" value="检查更新">
+            <input type="submit" value="搜索">
         </p>
-            <p>如果没有搜索结果，请减少关键词</p>
         </form>
+            <p>如果没有搜索结果，请减少关键词</p>
     </div>
 </div>
     <script type="text/javascript" >

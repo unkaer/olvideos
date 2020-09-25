@@ -144,7 +144,7 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
             if(is_dir($dir)){
                 if($handle = opendir($dir)){
                     while(($file = readdir($handle)) !== false){
-                        if($file != "." && $file != ".."){
+                        if($file != "." && $file != ".."&& $file != ".data"&& $file != ".log"){
                             echo '<br>'.$file.'<a href="./down.php?id=6&n='.$file.'">查看</a><a href="./down.php?id=7&n='.$file.'">删除</a>';
                         }
                     }
