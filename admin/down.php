@@ -5,7 +5,73 @@ $admin = false;
 session_start();
 print_r('
 <a href="..">首页</a>
-<a href="./admin">后台</a><br>');
+<a href="../admin">后台</a><br>');
+
+// 复制目录函数
+function copydir($dirsrc,$dirto){
+    //如果原来的文件存在， 判断是不是一个目录
+    if(file_exists($dirto)) {
+        if(!is_dir($dirto)) {
+            echo "目标不是一个目录，不能copy进去<br>";
+            exit;
+        }
+    }
+    else{
+        mkdir($dirto);
+    }
+    $dir = opendir($dirsrc);
+    while($filename = readdir($dir)) {
+        if($filename != "." && $filename !="..") {
+            $srcfile = $dirsrc."/".$filename; //原文件
+            $tofile = $dirto."/".$filename; //目标文件
+            if(is_dir($srcfile)) {
+            if(copydir($srcfile, $tofile))echo "成功拷贝目录：$srcfile--->$tofile<br/>\n"; //递归处理所有子目录
+            }
+            else{
+            //是文件就拷贝到目标目录
+            if(file_exists($tofile)){  // 如果文件存在，判读是否相同。不同的才改变
+                $md51 = md5_file($srcfile);
+                $md52 = md5_file($tofile);
+                if($md51!=$md52){
+                    if(copy($srcfile, $tofile)){
+                        echo "成功拷贝文件：$srcfile--->$tofile<br/>\n";
+                    }
+                    else{
+                        echo "拷贝文件失败：$srcfile--->$tofile<br/>\n";
+                    }
+                }
+            }
+            else{
+                if(copy($srcfile, $tofile)){
+                    echo "成功拷贝文件：$srcfile--->$tofile<br/>\n";
+                }
+                else{
+                    echo "拷贝文件失败：$srcfile--->$tofile<br/>\n";
+                }
+            }
+            }
+        }
+    }
+}
+
+// 删除函数
+function delDirAndFile($dirName){ 
+    if ($handle=opendir($dirName)){
+        while(false!==($item=readdir($handle))){
+            if($item!="."&&$item!=".."){
+                if(is_dir("$dirName/$item")){
+                    delDirAndFile("$dirName/$item");
+                }
+                else{
+                    if(unlink("$dirName/$item"))echo "成功删除文件：$dirName/$item<br/>\n";
+                }
+            }
+        }
+        closedir($handle);
+        if(rmdir($dirName))echo "成功删除目录：$dirName<br/>\n"; 
+    }
+}
+
 if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
     $url = "https://github.com/unkaer/olvideos/archive/master.zip";  // 下载地址
     $file = "./olvideos.zip";  // 下载压缩包，存放位置
@@ -55,74 +121,12 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
     }
 
     if($_GET['id']=='3'){   // 复制文件，删除旧文件
-        function copydir($dirsrc,$dirto){
-            //如果原来的文件存在， 判断是不是一个目录
-            if(file_exists($dirto)) {
-                if(!is_dir($dirto)) {
-                    echo "目标不是一个目录，不能copy进去<br>";
-                    exit;
-                }
-            }
-            else{
-                mkdir($dirto);
-            }
-            $dir = opendir($dirsrc);
-            while($filename = readdir($dir)) {
-                if($filename != "." && $filename !="..") {
-                    $srcfile = $dirsrc."/".$filename; //原文件
-                    $tofile = $dirto."/".$filename; //目标文件
-                    if(is_dir($srcfile)) {
-                    if(copydir($srcfile, $tofile))echo "成功拷贝目录：$srcfile--->$tofile<br/>\n"; //递归处理所有子目录
-                    }
-                    else{
-                    //是文件就拷贝到目标目录
-                    if(file_exists($tofile)){  // 如果文件存在，判读是否相同。不同的才改变
-                        $md51 = md5_file($srcfile);
-                        $md52 = md5_file($tofile);
-                        if($md51!=$md52){
-                            if(copy($srcfile, $tofile)){
-                                echo "成功拷贝文件：$srcfile--->$tofile<br/>\n";
-                            }
-                            else{
-                                echo "拷贝文件失败：$srcfile--->$tofile<br/>\n";
-                            }
-                        }
-                    }
-                    else{
-                        if(copy($srcfile, $tofile)){
-                            echo "成功拷贝文件：$srcfile--->$tofile<br/>\n";
-                        }
-                        else{
-                            echo "拷贝文件失败：$srcfile--->$tofile<br/>\n";
-                        }
-                    }
-                    }
-                }
-            }
-        }
         echo "<p>拷贝文件夹:</p>";
         if(!is_dir($dirsrc)){
             echo $dirsrc."文件目录不存在";
             exit;
         }
         copydir($dirsrc, $dirto);
-
-        function delDirAndFile($dirName){ 
-            if ($handle=opendir($dirName)){
-                while(false!==($item=readdir($handle))){
-                    if($item!="."&&$item!=".."){
-                        if(is_dir("$dirName/$item")){
-                            delDirAndFile("$dirName/$item");
-                        }
-                        else{
-                            if(unlink("$dirName/$item"))echo "成功删除文件：$dirName/$item<br/>\n";
-                        }
-                    }
-                }
-                closedir($handle);
-                if(rmdir($dirName))echo "成功删除目录：$dirName<br/>\n"; 
-            }
-        }
         echo "<p>删除旧目录:</p>";
         delDirAndFile("olvideos-master");  // 删除旧目录
         echo '<div><a href="./">回到管理页</a></div>';
@@ -172,13 +176,57 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
         echo '<br><a href="./down.php?id=5">返回数据管理</a>';
     }
 
+    if($_GET['id']=='8'){   // 系统设置
+        echo "<br>设置文件 ../config.php <br>下载修改编辑好后重新上传";
+        $file = "../config.php";
+        $config=fopen($file,'r');// 读取设置文件
+        echo "<br><textarea rows=\"10\" cols=\"80\">";
+        echo fread($config,filesize($file));
+        echo "</textarea>";
+        print_r('<br><form action="upload_file.php" method="post" enctype="multipart/form-data">
+        <label for="file">本地 config.php 文件：</label>
+        <input type="file" name="file" id="file"><br>
+        <input type="submit" name="submit" value="提交">
+    </form>');
+    }
+
+    if($_GET['id']=='9'){   // 复制文件
+        if(array_key_exists("dir1", $_POST)|array_key_exists("dir1", $_GET)){
+            if(isset($_POST["dir1"])){$dir1 = $_POST["dir1"];}else{$dir1 = $_GET["dir1"];}
+            if(array_key_exists("dir2", $_POST)|array_key_exists("dir2", $_GET)){
+                if(isset($_POST["dir2"])){$dir2 = $_POST["dir2"];}else{$dir2 = $_GET["dir2"];}
+                if(file_exists($dir2)){  // 如果文件存在，判读是否相同。不同的才改变
+                        $md51 = md5_file($dir1);
+                        $md52 = md5_file($dir2);
+                        if($md51!=$md52){
+                            if(copy($dir1, $dir2)){
+                                echo "成功拷贝文件：$dir1--->$dir2<br/>\n";
+                            }
+                            else{
+                                echo "拷贝文件失败：$dir1--->$dir2<br/>\n";
+                            }
+                        }else{echo "$dir1--->$dir2 文件相同，不拷贝，";}
+                    }
+                    else{
+                        if(copy($dir1, $dir2)){
+                            echo "成功拷贝文件：$dir1--->$dir2<br/>\n";
+                        }
+                        else{
+                            echo "拷贝文件失败：$dir1--->$dir2<br/>\n";
+                        }
+                    }
+                    if(unlink($dir1))echo "成功删除原文件：$dir1<br/>\n";
+            }else{echo "未传入dir2 复制到目录";}
+        }else{echo "未传入dir1 原文件目录";}
+    }
+
 }
 else{
     echo("您无权访问，请登录");
     print_r('
     <form action="./login.php" method="POST">
     <p>用户：<input id="ipt" type="text" name="username" autofocus value="">
-    <p>密码：<input id="ipt" type="text" name="password" autofocus value="">
+    <p>密码：<input id="ipt" type="password" name="password" autofocus value="">
         <input type="submit" value="登录"></p>
     </form>');
 }
