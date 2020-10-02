@@ -1,8 +1,8 @@
 <?php
-set_time_limit(0);
-ob_implicit_flush();
-if(array_key_exists("wd", $_POST)){
-    $name=trim($_POST['wd']);
+
+if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
+    if(isset($_POST["wd"])){$name = $_POST["wd"];}else{$name = $_GET["wd"];}
+    if(array_key_exists("gx", $_POST)|array_key_exists("gx", $_GET)){if(isset($_POST["gx"])){$gx = $_POST["gx"];}else{$gx = $_GET["gx"];}}
     // $teshu=array(array(",","!",":"),array("，","！","："),array("(",")","普通话","粤语"));
     // for($i=0;$i<sizeof($teshu[0]);$i++){
     //     $name=str_replace($teshu[0][$i],$teshu[1][$i],$name);
@@ -64,23 +64,7 @@ if(array_key_exists("wd", $_POST)){
         <div class="row">
             <div class="stui-pannel clearfix">
 <?php
-$dm1=array('http://flvweb.com','http://www.nicotv.me','http://www.zzzfun.com','https://www.agefans.tv');
-$dm2=array('/index.php/vod/search.html?wd=xxx','/video/search/xxx.html','/vod-search.html?wd=xxx.html','/search?query=xxx&page=1');
-$dm3=array('flv','妮可动漫','zzzfun动漫视频网','AGE动漫');
-$rule1=array("/href=\"(.*?)\" title=\"(.*?)\" data-original=/","/<a href=\"(.*?)\" title=\"(.*?)\">/","/<a href=\"(\/vod-detail.*?)\">(.*?)<\/a>/","/<a href=\"(.*?)\" class=\"cell_imform_name\">(.*?)<\/a>/");
-$rule3=array('/<span class="pic-text text-right">([\S\s]*?)<\/span>/','/<span class="continu">([\S\s]*?)<\/span>/','/<span class="color">([\S\s]*?)<\/span>/','/<span class="newname">(.*?)<\/span>/');
-
-$post1=array('http://www.tv6box.com');
-$post2=array('/index.php?s=vod-search-name');
-$post3=array('电影盒子');
-$rule5=array("/href=\"(.*?)\" target=\"_blank\" title=\"(.*?)\"/",);
-$rule6=array('/<span  class=\"v_bottom_tips\">([\S\s]*?)<\/span>/',);
-
-$search1=array('http://www.dm530.net','http://www.tldm.net','http://www.imomoe.in');
-$search2=array('风车动漫','天乐动漫','樱花动漫');
-$rule2=array("/<a href=\"([^>]*?)\" target=\"_blank\" title=\"(.*?)\">/","/<a href=\"(.*?)\" target=\"_blank\"><img src=\".*?\" alt=\"(.*?)\">/","/<a href=\"([^>]*?)\" target=\"_blank\" title=\"(.*?)\">/");
-$rule4=array('/<span>别名：.*?<\/span><span><font color="red">(.*?)<\/font>　类型：/','/<abbr>(.*?)<\/abbr>/','/<span>别名：.*?<\/span><span>(.*?)　类型：/');
-
+include './config.php';
 $n = 0;
 // http://www.zzzfun.com/vod-search.html?wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B
 // <a href="/vod-detail-id-18.html">海贼王</a>
