@@ -3,7 +3,7 @@ include './config.php';
 if($fdm){
     set_time_limit(0);  
     ob_end_clean();  
-    ob_implicit_flush();    
+    ob_implicit_flush();
     header('X-Accel-Buffering: no');
 }
 
@@ -178,16 +178,29 @@ function buildlb($f){
 }
 
 function getarray($f){
-    global $dm1,$dm2,$dm3,$rule1,$rule3,$post1,$post2,$post3,$search1,$search2,$rule2,$rule4,$rule5,$rule6;
-    for($i=0;$i<sizeof($dm1);$i++){    // get 方式
-        get_html($dm1[$i],$dm2[$i],$dm3[$i],$rule1[$i],$rule2[$i],$f);
+    include './config.php';
+
+    // get 方式
+    if($fget_html){
+        for($i=0;$i<sizeof($dm1);$i++){
+            get_html($dm1[$i],$dm2[$i],$dm3[$i],$rule1[$i],$rule2[$i],$f);
+        }
     }
-    for($i=0;$i<sizeof($post1);$i++){    // post  方式
-        post_html($post1[$i],$post2[$i],$post3[$i],$rule3[$i],$rule4[$i],$f);
+
+    // post  方式
+    if($fpost_html){
+        for($i=0;$i<sizeof($post1);$i++){
+            post_html($post1[$i],$post2[$i],$post3[$i],$rule3[$i],$rule4[$i],$f);
+        }
     }
-    for($i=0;$i<sizeof($search1);$i++){    // search.asp  方式
-        search($search1[$i],$search2[$i],$rule5[$i],$rule6[$i],$f);
+
+    // search.asp  方式
+    if($fsearch){
+        for($i=0;$i<sizeof($search1);$i++){
+            search($search1[$i],$search2[$i],$rule5[$i],$rule6[$i],$f);
+        }
     }
+
 }
 
 
