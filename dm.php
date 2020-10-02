@@ -1,4 +1,11 @@
 <?php
+include './config.php';
+if($fdm){
+    set_time_limit(0);  
+    ob_end_clean();  
+    ob_implicit_flush();    
+    header('X-Accel-Buffering: no');
+}
 
 if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
     if(isset($_POST["wd"])){$name = $_POST["wd"];}else{$name = $_GET["wd"];}
@@ -64,11 +71,11 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
         <div class="row">
             <div class="stui-pannel clearfix">
 <?php
-include './config.php';
+
 $n = 0;
 // http://www.zzzfun.com/vod-search.html?wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B
 // <a href="/vod-detail-id-18.html">海贼王</a>
-function pc($dm1,$dm2,$dm3,$rule,$rule3,$f){
+function get_html($dm1,$dm2,$dm3,$rule,$rule3,$f){
     global $array,$n,$name;
     $url=str_replace("xxx",$name,$dm2);
     // print_r($dm1.$url);
@@ -173,13 +180,13 @@ function buildlb($f){
 function getarray($f){
     global $dm1,$dm2,$dm3,$rule1,$rule3,$post1,$post2,$post3,$search1,$search2,$rule2,$rule4,$rule5,$rule6;
     for($i=0;$i<sizeof($dm1);$i++){    // get 方式
-        pc($dm1[$i],$dm2[$i],$dm3[$i],$rule1[$i],$rule3[$i],$f);
+        get_html($dm1[$i],$dm2[$i],$dm3[$i],$rule1[$i],$rule2[$i],$f);
     }
     for($i=0;$i<sizeof($post1);$i++){    // post  方式
-        post_html($post1[$i],$post2[$i],$post3[$i],$rule5[$i],$rule6[$i],$f);
+        post_html($post1[$i],$post2[$i],$post3[$i],$rule3[$i],$rule4[$i],$f);
     }
     for($i=0;$i<sizeof($search1);$i++){    // search.asp  方式
-        search($search1[$i],$search2[$i],$rule2[$i],$rule4[$i],$f);
+        search($search1[$i],$search2[$i],$rule5[$i],$rule6[$i],$f);
     }
 }
 
