@@ -130,10 +130,10 @@ setcookie("dt", $dt, $expire);
         </script>
         
         <div id="menu">
-        <div class="title">
+        <div class="title">《
             <?php
-            echo $wd."</div>";
-            echo '<div class="des">简介:<br>'.$urls[2].'</div>';
+            echo $wd."》</div>";
+            echo '<div class="des">'.$urls[2].'</div>';
                 for($i=0;$i<sizeof($urls[0]);$i++){
                     echo "<button type=\"button\" onclick=\"player(".$i.")\">".$urls[0][$i]."</button>";
                 }
