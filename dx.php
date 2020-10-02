@@ -181,7 +181,7 @@ function geturl($id,$api,$api1,$f){
         $des=(string)$video->des; //简介
         $pic=(string)$video->pic; //封面
         $url=(string)$video->dl->dd;   //播放地址
-        preg_match_all("/http?:\/\/[^#]*\/index.m3u8/",$url,$playurl);
+        preg_match_all("/https?:\/\/[^#]*\/index.m3u8/",$url,$playurl);
         preg_match_all("/#?([^#]+)[$]/",$url,$tag);
         $title=(string)$video->name;
         for($i=0;$i<sizeof($playurl[0]);$i++){

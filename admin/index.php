@@ -36,7 +36,7 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
     print_r('
     <form action="./login.php" method="POST">
     <p>用户：<input id="ipt" type="text" name="username" autofocus value="">
-    <p>密码：<input id="ipt" type="text" name="password" autofocus value="">
+    <p>密码：<input id="ipt" type="password" name="password" autofocus value="">
         <input type="submit" value="登录"></p>
     </form>');
 }
