@@ -277,14 +277,13 @@ fwrite($log,$user);
 fclose($log);
 //读出缓存 
 if(file_exists($file)){
+    date_default_timezone_set("Asia/Shanghai");
     $handle=fopen($file,'r');// 存在 读取内容 只建立网页  只API 只爬取 
     $array=unserialize(fread($handle,filesize($file)));
     for($n=0;$n<sizeof($array);$n++){
         build(false);  // 只建立网页，不更新内容
     }
-    date_default_timezone_set("Asia/Shanghai");
-    $time=time()-filemtime($file);
-    echo "<br><p>更新时间：".date("Y-m-d H:i:s",filemtime($file))."</p>";    
+    $time=time()-filemtime($file); 
     if($time>86400|$gx==1){    // 缓存文件太久才会更新  86400 24H
         $n=0;
         getarray(false);  // 获取数据（不建立网页）
@@ -292,6 +291,7 @@ if(file_exists($file)){
             file_put_contents($file,serialize($array));//写入缓存 
         }
     }
+    echo "<br><p>更新时间：".date("Y-m-d H:i:s",filemtime($file))."</p>";   
 
 }
 else{//不存在 第一次  边API 边爬取 边建立网页 边存  因为完整太慢 每一组数据存一次   
