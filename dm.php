@@ -9,26 +9,26 @@ if($fdm){
 if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
     if(isset($_POST["wd"])){$name = $_POST["wd"];}else{$name = $_GET["wd"];}
     if(array_key_exists("gx", $_POST)|array_key_exists("gx", $_GET)){if(isset($_POST["gx"])){$gx = $_POST["gx"];}else{$gx = $_GET["gx"];}}
-    // $teshu=array(array(",","!",":"),array("，","！","："),array("(",")","普通话","粤语"));
-    // for($i=0;$i<sizeof($teshu[0]);$i++){
-    //     $name=str_replace($teshu[0][$i],$teshu[1][$i],$name);
-    // }
-    // for($i=0;$i<sizeof($teshu[2]);$i++){
-    //     $name=str_replace($teshu[2][$i],'',$name);
-    // }
+    $teshu=array(array(",","!",":"),array("，","！","："),array("(",")","普通话","粤语","版","[","]","《","》","\"","\'"," "));  // 0替换为1，2删除
+    for($i=0;$i<sizeof($teshu[0]);$i++){
+        $name=str_replace($teshu[0][$i],$teshu[1][$i],$name);
+    }
+    for($i=0;$i<sizeof($teshu[2]);$i++){
+        $name=str_replace($teshu[2][$i],'',$name);
+    }
 }else{
     header("Location: ..");
     exit();
 }
-// // 存放搜索记录到 cookie
-// include_once "./cookie.php";
-// $search = serialize(array($name,time()));
-// $search = passport_encrypt($search,$key);
-// $expire=time()+60*60*24*30;
-// setcookie("search", $search, $expire);    // 加密存放搜索数据
-
-
-// $searchs = unserialize(passport_decrypt($_COOKIE['search'],$key)); // 读取 [0] 搜索记录  [1] 搜索时间
+if($name==""){
+    // url暂不支持
+    header("Location: ./error.php?error_code=5&url=".$jx);
+    exit();
+}    
+// 存放搜索记录到 cookie
+$search = serialize(array($name,time()));
+$expire=time()+60*60*24*30;
+setcookie("search1", $search, $expire);    // 存放搜索数据
 
 ?>
 <!DOCTYPE html>
