@@ -3,7 +3,6 @@
 *.p
 *.dp
 data/.log
-ceshi/**
 admin/olvideo-master/**
 .htaccess
 *.htaccess

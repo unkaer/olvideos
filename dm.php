@@ -4,7 +4,6 @@ if($fdm){
     set_time_limit(0);  
     ob_end_clean();  
     ob_implicit_flush();
-    header('X-Accel-Buffering: no');
 }
 
 if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
