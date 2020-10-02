@@ -8,27 +8,82 @@ if($fdm){
 
 if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
     if(isset($_POST["wd"])){$name = $_POST["wd"];}else{$name = $_GET["wd"];}
-    if(array_key_exists("gx", $_POST)|array_key_exists("gx", $_GET)){if(isset($_POST["gx"])){$gx = $_POST["gx"];}else{$gx = $_GET["gx"];}}
-    $teshu=array(array(",","!",":"),array("，","！","："),array("(",")","普通话","粤语","版","[","]","《","》","\"","\'"," "));  // 0替换为1，2删除
-    for($i=0;$i<sizeof($teshu[0]);$i++){
-        $name=str_replace($teshu[0][$i],$teshu[1][$i],$name);
+    preg_match_all('/https?:\/\/.*/',$name,$jx);  // 判断输入的是url
+    if(isset($jx[0][0])){
+        header("Location: ./dm.php?url=".$name);
+        exit();
     }
-    for($i=0;$i<sizeof($teshu[2]);$i++){
-        $name=str_replace($teshu[2][$i],'',$name);
-    }
+    $js = 0;
 }else{
-    header("Location: ..");
-    exit();
+    if(array_key_exists("url", $_POST)|array_key_exists("url", $_GET)){
+        if(isset($_POST["url"])){$jx = $_POST["url"];}else{$jx = $_GET["url"];}
+        preg_match_all('/https?:\/\/.*/',$jx,$jx1);  // 确保输入的是正确的url
+        if(!isset($jx1[0][0])){
+            $jx = "https://".$jx;
+        }
+        $url = array("/iqiyi.com\/.+/","/v.qq.com\/.+/","/v.youku.com\/.+/","/v.pptv.com\/.+/","/mgtv.com\/.+/");
+        for($i=0;$i<sizeof($url);$i++){
+            preg_match_all($url[$i],$jx,$py);
+            if(isset($py[0][0])){
+                $f = 1;
+            }
+        }
+        if($f!=1){
+            // url有误或者暂不支持
+            header("Location: ./error.php?error_code=5&url=".$jx);
+            exit();
+        }
+        $html = file_get_contents($jx);
+        preg_match_all('/<title>(.*?)<\/title>/',$html,$py1);
+        if(isset($py1[1][0])){
+            $py1=$py1[1][0];
+            $teshu=array("腾讯","爱奇艺","优酷","PP视频","原PPTV聚力视频","芒果TV","高清","全集","完整","卫视版","视频","在线","观看","电影","电视剧","1080P","平台","正版","-","_");
+            for($i=0;$i<sizeof($teshu);$i++){
+                $py1=str_replace($teshu[$i],"",$py1);
+            }
+            $name = $py1;
+            //几种情况  第1季xxx 第1集 第22期xx
+            preg_match_all('/(.*?)第/',$py1,$py2);
+            if(isset($py2[1][0])){
+                $name = $py2[1][0];
+            }
+            preg_match_all('/第([0-9]*?)集/',$py1,$py2);
+            if(isset($py2[1][0])){
+                $js = $py2[1][0]-1;
+            }
+            else{
+                $js = 0;
+            }
+        }
+        else{
+            // url有误或者暂不支持
+            header("Location: ./error.php?error_code=4&url=".$jx);
+            exit();
+        }
+    }
+    else{
+        header("Location: ..");
+        exit();
+    }
+}
+$teshu=array(array(",","!",":"),array("，","！","："),array("(",")","普通话","粤语","版","[","]","《","》","\"","\'"," "));  // 0替换为1，2删除
+for($i=0;$i<sizeof($teshu[0]);$i++){
+    $name=str_replace($teshu[0][$i],$teshu[1][$i],$name);
+}
+for($i=0;$i<sizeof($teshu[2]);$i++){
+    $name=str_replace($teshu[2][$i],'',$name);
 }
 if($name==""){
     // url暂不支持
     header("Location: ./error.php?error_code=5&url=".$jx);
     exit();
-}    
+}
+if(array_key_exists("gx", $_POST)|array_key_exists("gx", $_GET)){if(isset($_POST["gx"])){$gx = $_POST["gx"];}else{$gx = $_GET["gx"];}}
 // 存放搜索记录到 cookie
 $search = serialize(array($name,time()));
 $expire=time()+60*60*24*30;
 setcookie("search1", $search, $expire);    // 存放搜索数据
+
 
 ?>
 <!DOCTYPE html>

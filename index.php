@@ -43,7 +43,7 @@ if(isset($_COOKIE['dt'])){
 }
 ?>
     <form action="./dm.php" method='POST' onsubmit="return checkform1();">
-    <p>视 频 站 搜 索：<input id="ipt" type="text" name="wd" value="">
+    <p>站 外 视 频 聚 合：<input id="ipt" type="text" name="wd" value="">
     <input type="submit" value="搜索"></p>
     </form>
     <?php
