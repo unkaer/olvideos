@@ -257,7 +257,15 @@ function getarray($f){
     // }
 
     // 只ok API   // 节约服务器
-    getname($api[0],"",$f);
+    // getname($api[0],"",$f);
+
+    
+    // 只ok 爬取   // 节约服务器
+    $html = file_get_contents($url[0]."?m=vod-search&wd=".$name);   // 爬虫方式
+    preg_match_all("/\?m=vod-detail-id-.+.html/",$html,$detail);
+    foreach($detail[0] as $x=>$x_value){
+        playdetail($url[0].$x_value,$url1[0],$f);
+    }
 }
 
 
