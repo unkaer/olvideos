@@ -98,10 +98,13 @@ setcookie("search", $search, $expire);    // 存放搜索数据
         <form action="./dx.php" method='POST' onsubmit="return checkform();">
             <p>本 站 在 线 影 视：<input id="ipt" type="text" name="wd" autofocus value="<?php echo $name;?>">
             <input type="hidden" name="gx" value="1">
-            <input type="submit" value="搜索">
-        </p>
+            <input type="submit" value="重新搜索"></p>
         </form>
-            <p>如果没有搜索结果，请减少关键词</p>
+        <form action="./dm.php" method='POST'>
+            <input id="ipt" type="hidden" name="wd" autofocus value="<?php echo $name;?>">
+            <p>如果没有搜索结果，请减少关键词 或者尝试
+            <input type="submit" value="站外搜索"></p>
+        </form>
     </div>
 </div>
     <script type="text/javascript" >
@@ -257,14 +260,14 @@ function getarray($f){
     // }
 
     // 只最大 API   // 节约服务器
-    getname($api[1],"",$f);
+    getname($api[1],"路线-1",$f);
 
     
     // 只ok 爬取   // 节约服务器
     $html = file_get_contents($url[0]."?m=vod-search&wd=".$name);   // 爬虫方式
     preg_match_all("/\?m=vod-detail-id-.+.html/",$html,$detail);
     foreach($detail[0] as $x=>$x_value){
-        playdetail($url[0].$x_value,$url1[0],$f);
+        playdetail($url[0].$x_value,"路线-2",$f);
     }
 }
 
@@ -280,9 +283,6 @@ if(file_exists($file)){
     date_default_timezone_set("Asia/Shanghai");
     $handle=fopen($file,'r');// 存在 读取内容 只建立网页  只API 只爬取 
     $array=unserialize(fread($handle,filesize($file)));
-    for($n=0;$n<sizeof($array);$n++){
-        build(false);  // 只建立网页，不更新内容
-    }
     $time=time()-filemtime($file); 
     if($time>86400|$gx==1){    // 缓存文件太久才会更新  86400 24H
         $n=0;
@@ -290,6 +290,9 @@ if(file_exists($file)){
         if(false!==fopen($file,'w+')){ 
             file_put_contents($file,serialize($array));//写入缓存 
         }
+    }
+    for($n=0;$n<sizeof($array);$n++){
+        build(false);  // 只建立网页，不更新内容
     }
     echo "<br><p>更新时间：".date("Y-m-d H:i:s",filemtime($file))."</p>";   
 

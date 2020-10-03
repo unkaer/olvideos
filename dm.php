@@ -107,7 +107,11 @@ setcookie("search1", $search, $expire);    // 存放搜索数据
             <input type="submit" value="搜索">
         </p>
         </form>
-            <p>如果没有搜索结果，请减少关键词</p>
+        <form action="./dx.php" method='POST'>
+            <input id="ipt" type="hidden" name="wd" autofocus value="<?php echo $name;?>">
+            <p>如果没有搜索结果，请减少关键词 或者尝试
+            <input type="submit" value="本站搜索"></p>
+        </form>
     </div>
 </div>
 <script type="text/javascript" >

@@ -70,7 +70,7 @@ if(isset($_COOKIE['search1'])){
         else{return true}
     }
     </script>
-    <p>第一次较慢，缓存后秒开。</p>
+    <p>第 一 次 检 索 较 慢 ， 请 耐 心 等 待 。</p>
     <p>如果没有搜到，请减少关键词。</p>
     <p>下方排行榜，每次随机排序</p>
 </div></div>

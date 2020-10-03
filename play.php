@@ -11,7 +11,7 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
                 for($j=0;$j<sizeof($array[$n]["tag"]);$j++){
                     $urls[0][$j]=$array[$n]["tag"][$j];  // 集数 or 画质
                     $urls[1][$j]=$array[$n]["url"][$j];  // 播放地址
-                    $urls[2]=$array[$n]["des"];  // 播放地址
+                    $urls[2]=$array[$n]["des"];  // 简介
                 }
                 $name = $array[$n]['title'];
             }else{
@@ -35,8 +35,17 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
     }
 }
 else{
-    header("Location: ..");
-    exit();
+    if(array_key_exists("url", $_POST)|array_key_exists("url", $_GET)){
+        if(isset($_POST["url"])){$url = $_POST["url"];}else{$url = $_GET["url"];}
+        $name = "测试视频" ;
+        $urls[0][0] = "测试集数" ;  // 集数 or 画质
+        $urls[2] = "测试视频简介" ;  // 简介
+        $js = 0 ;
+    }
+    else{
+        header("Location: ..");
+        exit();
+    }
 }
 // 存放播放的数据位置到 cookie dt
 $dt = serialize(array($wd,$n));
@@ -132,7 +141,7 @@ setcookie("dt", $dt, $expire);
         <div id="menu">
         <div class="title">《
             <?php
-            echo $wd."》</div>";
+            echo $name."》</div>";
             echo '<div class="des">'.$urls[2].'</div>';
                 for($i=0;$i<sizeof($urls[0]);$i++){
                     echo "<button type=\"button\" onclick=\"player(".$i.")\">".$urls[0][$i]."</button>";
