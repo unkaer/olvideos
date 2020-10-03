@@ -72,9 +72,8 @@ if(isset($_COOKIE['search1'])){
     </script>
     <p>第 一 次 检 索 较 慢 ， 请 耐 心 等 待 。</p>
     <p>如果没有搜到，请减少关键词。</p>
-    <h2>分类查找视频</h2>
-    <p><a href="./fl.php?fw=0" target="_blank">视频服务器1 </a></p>
-    <p><a href="./fl.php?fw=1" target="_blank">视频服务器2 </a></p>
+    <p><a href="./fl.php?fw=0">视频服务器1 </a></p>
+    <p><a href="./fl.php?fw=1">视频服务器2 </a></p>
     <p>下方排行榜，每次随机排序</p>
 </div></div>
 <div id='playlist'>
@@ -83,7 +82,7 @@ if(isset($_COOKIE['search1'])){
 $url=array("https://list.iqiyi.com/www/1/-------------11-1-1-iqiyi--.html","https://list.iqiyi.com/www/2/-------------11-1-1-iqiyi--.html");
 $name=array("爱奇艺电影","爱奇艺电视剧");
 for($i=0;$i<sizeof($url);$i++){
-    $file="./data/aqy".$i.".h"; 
+    $file="./data/aqy".$i.".dp"; 
     //读出缓存 
     if(file_exists($file)){
         date_default_timezone_set("Asia/Shanghai");
@@ -120,7 +119,7 @@ $name=array('腾讯电影','腾讯电视剧','腾讯综艺','腾讯动漫');
 $rlue1=array('/<div class="mod_hd mod_column_hd">\s*?<h2 class="mod_title">电影排行榜[\S\s]*?<\/span>\s*?<\/a>\s*?<\/div>\s*?<\/div>\s*?<\/div>\s*?<\/div>/','/<div class="mod_hd mod_column_hd">\s*?<h2 class="mod_title">电视剧频道排行[\S\s]*?<\/span>\s*?<\/a>\s*?<\/div>\s*?<\/div>\s*?<\/div>\s*?<\/div>/','/<div class="mod_hd mod_column_hd">\s*?<h2 class="mod_title">综艺排行榜[\S\s]*?<\/span>\s*?<\/a>\s*?<\/div>\s*?<\/div>\s*?<\/div>\s*?<\/div>/','/<div class="mod_hd mod_column_hd">\s*?<h2 class="mod_title">动漫排行榜[\S\s]*?<\/span>\s*?<\/a>\s*?<\/div>\s*?<\/div>\s*?<\/div>\s*?<\/div>/');
 $rlue2='/<span class="rank_title">(.*?)<\/span>\s*?<span class="rank_desc">.*?<\/span>\s*?<span class="rank_update">([\s\S]*?)<\/span>/';
 for($i=0;$i<sizeof($rlue1);$i++){
-    $file="./data/txsp".$i.".h"; 
+    $file="./data/txsp".$i.".dp"; 
     //读出缓存 
     if(file_exists($file)){
         date_default_timezone_set("Asia/Shanghai");

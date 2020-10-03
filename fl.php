@@ -26,6 +26,11 @@ else{
 <div id="head">
     <div id="head1">
         <a href="..">首页</a>
+        <?php 
+        if(isset($cid)){
+            echo '<a href="./fl.php?fw='.$fw.'">返回分类页</a>';
+        }
+        ?>
     </div>
     <div id="head2">
         <form action="./dx.php" method='POST' onsubmit="return checkform();">
@@ -198,7 +203,7 @@ else{  // 服务器分类页  1
     }
     // 构建 页面
     foreach($array as $key=>$value){
-        echo '<a href="./fl.php?fw='.$fw.'&cid='.$value["list_id"].'" target="_blank">'.$value["list_name"].'   </a>  ';
+        echo '<a href="./fl.php?fw='.$fw.'&cid='.$value["list_id"].'">'.$value["list_name"].'   </a>  ';
     }
 
 }
