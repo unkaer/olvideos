@@ -38,4 +38,11 @@ if($_GET['error_code']=='5'){
         <input type="submit" value="搜索"></p>
     </form>';
 }
+if($_GET['error_code']=='6'){
+    echo '<h2>未选择视频服务器</h2>
+    <p>1.未选择视频服务器</p>
+    <p>2.视频服务器不存在</p>
+    <p><a href="./fl.php?fw=0" target="_blank">视频服务器1 </a></p>
+    <p><a href="./fl.php?fw=1" target="_blank">视频服务器2 </a></p>';
+}
 ?>

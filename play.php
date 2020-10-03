@@ -1,7 +1,11 @@
 <?php
 if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
     if(isset($_POST["wd"])){$wd = $_POST["wd"];}else{$wd = $_GET["wd"];}
-    $file="./data/".$wd.".p";
+    if(array_key_exists("f", $_POST)|array_key_exists("f", $_GET)){
+        $file = "./data/".$wd.".dp";
+    }else{
+        $file = "./data/".$wd.".p";
+    }
     if(array_key_exists("id", $_POST)|array_key_exists("id", $_GET)){
         if(isset($_POST["id"])){$n = $_POST["id"];}else{$n = $_GET["id"];}
         if(file_exists($file)){
