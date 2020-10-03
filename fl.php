@@ -114,7 +114,6 @@ function geturl($id,$api,$api1,$f){
         $type=(string)$video->type; //类型
         $year=(string)$video->year; //上映时间
         $des=(string)$video->des; //简介
-        // $pic=str_replace("https","http",$pic);    // 解决部分封面
         $pic=(string)$video->pic; //封面
         $url=(string)$video->dl->dd;   //播放地址
         preg_match_all("/https?:\/\/[^#]*\/index.m3u8/",$url,$playurl);
@@ -129,6 +128,7 @@ function geturl($id,$api,$api1,$f){
         $array[$n]["type"]=$type;  // 类型
         $array[$n]["year"]=$year;  // 上映时间
         $array[$n]["des"]=$des;  // 简介
+        // $pic=str_replace("https","http",$pic);    // 解决部分封面
         $array[$n]["cover"]=$pic;  // 封面
         $array[$n]["zy"]=$api1;  // 资源来源
         if($f){
