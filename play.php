@@ -167,6 +167,12 @@ setcookie("dt", $dt, $expire);
                 }
                 echo "}</script><br><button type=\"button\" onclick=\"video_front()\">上一集</button>"; 
                 echo "<button type=\"button\" onclick=\"video_next()\">下一集</button>";
+                if($array[$n]["download"][0]!="暂无"){
+                    print_r("<p>迅雷p2p下载:<br>");
+                    for($j=0;$j<sizeof($array[$n]["tag"]);$j++){
+                        print_r($array[$n]["tag"][$j]."$".$array[$n]["download"][$j]."\n</p>");
+                    }
+                }
                 echo '<p>作者 <a href="https://zan7l.tk/" target="_blank">unkaer</a></p><p>源码 <a href="https://github.com/unkaer/olvideos" target="_blank">olvideo</a></p> ';
                 echo "<script type=\"text/javascript\" >
                 function video_front() {
@@ -177,7 +183,8 @@ setcookie("dt", $dt, $expire);
                     var i = Number(document.getElementById('jishu').innerHTML)+1;
                     player(i);
                 }</script>";
-                    ?>
+                
+                ?>
         <p id="jishu" style="display: none;"><?php echo $js;?></p>
         </div>
     </body>
