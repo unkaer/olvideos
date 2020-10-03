@@ -256,8 +256,8 @@ function getarray($f){
     //     }
     // }
 
-    // 只ok API   // 节约服务器
-    // getname($api[0],"",$f);
+    // 只最大 API   // 节约服务器
+    getname($api[1],"",$f);
 
     
     // 只ok 爬取   // 节约服务器

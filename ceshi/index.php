@@ -17,4 +17,8 @@
     <p>post网页：<input type="text" name="wd" value="">
     <input type="submit" value="搜索"></p>
 </form>
+<form action="./play.php" method='POST'>
+    <p>url m3u8播放：<input type="text" name="url" value="">
+    <input type="submit" value="搜索"></p>
+</form>
         
