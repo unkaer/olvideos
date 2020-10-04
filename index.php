@@ -124,7 +124,7 @@ for($i=0;$i<sizeof($rlue1);$i++){
     if(file_exists($file)){
         date_default_timezone_set("Asia/Shanghai");
         $time=time()-filemtime($file);
-        if($time>86400){    // 缓存文件太久才会更新  86400 24H
+        if($time>604800){    // 缓存文件太久才会更新  86400 24H*7 604800
             $html = file_get_contents($url);
             preg_match_all($rlue1[$i],$html,$py1);
             preg_match_all($rlue2,$py1[0][0],$py2);

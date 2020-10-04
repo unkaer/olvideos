@@ -78,7 +78,6 @@ if($name==""){
     header("Location: ./error.php?error_code=5&url=".$jx);
     exit();
 }
-if(array_key_exists("gx", $_POST)|array_key_exists("gx", $_GET)){if(isset($_POST["gx"])){$gx = $_POST["gx"];}else{$gx = $_GET["gx"];}}
 // 存放搜索记录到 cookie
 $search = serialize(array($name,time()));
 $expire=time()+60*60*24*30;
@@ -86,7 +85,6 @@ setcookie("search1", $search, $expire);    // 存放搜索数据
 
 
 ?>
-<!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
@@ -104,7 +102,7 @@ setcookie("search1", $search, $expire);    // 存放搜索数据
         <form action="./dm.php" method='POST' onsubmit="return checkform();">
             <p>视 频 站 搜 索：<input id="ipt" type="text" name="wd" autofocus value="<?php echo $name;?>">
             <input type="hidden" name="gx" value="1">
-            <input type="submit" value="搜索">
+            <input type="submit" value="重新搜索">
         </p>
         </form>
         <form action="./dx.php" method='POST'>
@@ -130,6 +128,7 @@ setcookie("search1", $search, $expire);    // 存放搜索数据
             <div class="stui-pannel clearfix">
 <?php
 
+if(array_key_exists("gx", $_POST)|array_key_exists("gx", $_GET)){if(isset($_POST["gx"])){$gx = $_POST["gx"];}else{$gx = $_GET["gx"];}}
 $n = 0;
 // http://www.zzzfun.com/vod-search.html?wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B
 // <a href="/vod-detail-id-18.html">海贼王</a>
@@ -150,7 +149,9 @@ function get_html($dm1,$dm2,$dm3,$rule,$rule3,$f){
     }
     $array[$n]['name']=$dm3;
     // print_r($array);
-    buildlb(true);
+    if($f){
+        buildlb(true);
+    }
     $n++;
 }
 
@@ -188,7 +189,9 @@ function post_html($search1,$search2,$search3,$rule2,$rule4,$f){
         $array[$n]["state"][$i]=$state[1][$i];
     }
     $array[$n]['name']=$search3;
-    buildlb(true);
+    if($f){
+        buildlb(true);
+    }
     $n++;
 }
 
@@ -211,7 +214,9 @@ function search($search1,$search2,$rule2,$rule4,$f){
     }
     $array[$n]['name']=$search2;
     // print_r($array);
-    buildlb(true);
+    if($f){
+        buildlb(true);
+    }
     $n++;
 }
 

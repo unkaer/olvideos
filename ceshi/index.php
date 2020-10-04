@@ -13,10 +13,11 @@
     <input type="submit" value="搜索"></p>
 </form>
 
-<form action="./dm.php" method='POST'>
-    <p>post网页：<input type="text" name="wd" value="">
+<form action="./zz.php" method='POST'>
+    <p>正则网页：<input type="text" name="wd" value="">
     <input type="submit" value="搜索"></p>
 </form>
+
 <form action="./play.php" method='POST'>
     <p>url m3u8播放：<input type="text" name="url" value="">
     <input type="submit" value="搜索"></p>

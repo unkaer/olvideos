@@ -6,11 +6,11 @@ $fdm = true;  // 默认打开true，关闭 false
 // get 第三方视频链接
 $fget_html = true;
 // 完整版
-$dm1=array('https://flvweb.com','http://www.nicotv.me','http://www.zzzfun.com','https://www.agefans.tv');
-$dm2=array('/index.php/vod/search.html?wd=xxx','/video/search/xxx.html','/vod-search.html?wd=xxx.html','/search?query=xxx&page=1');
-$dm3=array('flv','妮可动漫','zzzfun动漫视频网','AGE动漫');
-$rule1=array("/href=\"(.*?)\" title=\"(.*?)\" data-original=/","/<a href=\"(.*?)\" title=\"(.*?)\">/","/<a href=\"(\/vod-detail.*?)\">(.*?)<\/a>/","/<a href=\"(.*?)\" class=\"cell_imform_name\">(.*?)<\/a>/");
-$rule2=array('/<span class="pic-text text-right">([\S\s]*?)<\/span>/','/<span class="continu">([\S\s]*?)<\/span>/','/<span class="color">([\S\s]*?)<\/span>/','/<span class="newname">(.*?)<\/span>/');
+$dm1=array('https://flvweb.com','http://1090ys1.com','http://www.nicotv.me','http://www.zzzfun.com','https://www.agefans.tv');
+$dm2=array('/index.php/vod/search.html?wd=xxx','/search.html?wd=xxx','/video/search/xxx.html','/vod-search.html?wd=xxx.html','/search?query=xxx&page=1');
+$dm3=array('flv','1090','妮可动漫','zzzfun动漫视频网','AGE动漫');
+$rule1=array("/href=\"(.*?)\" title=\"(.*?)\" data-original=/","/<a class=\"v-thumb stui-vodlist__thumb lazyload\" href=\"(.*?)\" title=\"(.*?)\" data-original/","/<a href=\"(.*?)\" title=\"(.*?)\">/","/<a href=\"(\/vod-detail.*?)\">(.*?)<\/a>/","/<a href=\"(.*?)\" class=\"cell_imform_name\">(.*?)<\/a>/"); // 地址+标题
+$rule2=array('/<span class="pic-text text-right">([\S\s]*?)<\/span>/','/<span class="pic-text text-right">([\S\s]*?)<\/span>/','/<span class="continu">([\S\s]*?)<\/span>/','/<span class="color">([\S\s]*?)<\/span>/','/<span class="newname">(.*?)<\/span>/'); // 集数
 // 精简版
 // $dm1=array('https://flvweb.com');
 // $dm2=array('/index.php/vod/search.html?wd=xxx');
@@ -18,6 +18,7 @@ $rule2=array('/<span class="pic-text text-right">([\S\s]*?)<\/span>/','/<span cl
 // $rule1=array("/href=\"(.*?)\" title=\"(.*?)\" data-original=/");
 // $rule2=array('/<span class="pic-text text-right">([\S\s]*?)<\/span>/');
 
+// https://www.zhenbuka.com/
 
 // post 第三方视频链接
 $fpost_html = true; //true

@@ -7,5 +7,10 @@ if(array_key_exists("url", $_POST)|array_key_exists("url", $_GET)){
 $html = file_get_contents($url);
 print_r($html);
 
+$file ="./ceshi.p";
+if(false!==fopen($file,'w+')){ 
+    file_put_contents($file,$html);//写入缓存 
+}
+
 
 ?>
