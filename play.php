@@ -1,4 +1,6 @@
 <?php
+include './src/function.php';
+
 if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
     if(isset($_POST["wd"])){$wd = $_POST["wd"];}else{$wd = $_GET["wd"];}
     if(array_key_exists("f", $_POST)|array_key_exists("f", $_GET)){
@@ -177,7 +179,6 @@ setcookie("dt", $dt, $expire);
                         print_r($array[$n]["tag"][$j]."$".$array[$n]["download"][$j]."\n</p>");
                     }
                 }
-                echo '<p>作者 <a href="https://zan7l.tk/" target="_blank">unkaer</a></p><p>源码 <a href="https://github.com/unkaer/olvideos" target="_blank">olvideos</a></p> ';
                 echo "<script type=\"text/javascript\" >
                 function video_front() {
                         var i = Number(document.getElementById('jishu').innerHTML)-1;
@@ -191,6 +192,7 @@ setcookie("dt", $dt, $expire);
                 ?>
         <p id="jishu" style="display: none;"><?php echo $js;?></p>
         </div>
+        <?php print_r($footer);?>
     </body>
     
 </html>
