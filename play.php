@@ -108,7 +108,7 @@ setcookie("dt", $dt, $expire);
             //     },
             //     {
             //         text: '本站源码',
-            //         link: 'https://github.com/unkaer/olvideo/',
+            //         link: 'https://github.com/unkaer/olvideos/',
             //     },
             // ],   
         });
@@ -177,7 +177,7 @@ setcookie("dt", $dt, $expire);
                         print_r($array[$n]["tag"][$j]."$".$array[$n]["download"][$j]."\n</p>");
                     }
                 }
-                echo '<p>作者 <a href="https://zan7l.tk/" target="_blank">unkaer</a></p><p>源码 <a href="https://github.com/unkaer/olvideos" target="_blank">olvideo</a></p> ';
+                echo '<p>作者 <a href="https://zan7l.tk/" target="_blank">unkaer</a></p><p>源码 <a href="https://github.com/unkaer/olvideos" target="_blank">olvideos</a></p> ';
                 echo "<script type=\"text/javascript\" >
                 function video_front() {
                         var i = Number(document.getElementById('jishu').innerHTML)-1;

@@ -1,6 +1,54 @@
 li{
     list-style: none;
 }
+#header{
+    margin: auto;
+    width: 95%;
+    position: fixed;
+    top: 0;
+    background-color: #5bb7fe;
+}
+#header-info{
+    display: inline-block;
+}
+#header-info ul li{
+    width:120px;
+    display: inline-block;
+
+}
+#header-info form{
+    display: inline-block;
+
+}
+#header-info input{
+    display: inline-block;
+
+}
+#content{
+    margin: auto;
+    width: 80%;
+    margin-top: 120px;
+}
+#movie{
+    width: 80%;
+}
+#movie-info{
+    width: 40%;
+    display: inline-block;
+}
+#footer{
+    text-align:center;
+    margin: auto;
+    display: flex;
+    width: 100%;
+    margin-top: 50px;
+    padding: 30px 0;
+}
+#head2{
+    width: 72%;
+    margin:0 auto;
+    background-color: #D8D8D8;
+}
 #head{
     width: 100%;
     background-color: #D8D8D8;
@@ -13,6 +61,7 @@ li{
 #head2{
     width: 72%;
     margin:0 auto;
+    background-color: #D8D8D8;
 }
 #playlist{
     width: 88%;
@@ -74,14 +123,6 @@ li{
     float: left;
     border:none;
     width: 180px;
-}
-#menu{
-    /* width: 195px;
-    border-radius: 8px;
-    float: right;
-    direction: ltr;
-    overflow: auto; */
-    
 }
 #menu button{
     width: 65px;

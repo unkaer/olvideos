@@ -4,7 +4,7 @@
 
 ## 演示
    演示站点：️
-   [在线视频站](https://jx.unkaer.cf/)  (彩虹云+cfCDN)
+   [在线视频站](https://jx.unkaer.cf/)  (~~彩虹云~~Heroku+cfCDN)
    [备用站点](https://jx.unkaer.tk/) (Heroku+cfCDN)
 
 ## 结构
@@ -60,7 +60,7 @@ play.php
 
 ## 安装使用
 php 环境
-1. 下载程序压缩包 [点我下载最新版](https://github.com/unkaer/olvideo/archive/master.zip)
+1. 下载程序压缩包 [点我下载最新版](https://github.com/unkaer/olvideos/archive/master.zip)
 2. 解压置于网站根目录
 
 ### 本地安装使用

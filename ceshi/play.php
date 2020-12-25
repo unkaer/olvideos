@@ -50,7 +50,7 @@ if(array_key_exists("url", $_POST)|array_key_exists("url", $_GET)){
             //     },
             //     {
             //         text: '本站源码',
-            //         link: 'https://github.com/unkaer/olvideo/',
+            //         link: 'https://github.com/unkaer/olvideos/',
             //     },
             // ],   
         });

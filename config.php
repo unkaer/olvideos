@@ -1,5 +1,11 @@
 <?php
-  
+
+$SiteName = "怡红院"; 
+
+// 百度统计
+
+// 谷歌统计
+
 // dm.php 实时更新
 $fdm = true;  // 默认打开true，关闭 false
 

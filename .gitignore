@@ -3,6 +3,6 @@
 *.p
 *.dp
 data/.log
-admin/olvideo-master/**
+admin/olvideos-master/**
 .htaccess
 *.htaccess
