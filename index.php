@@ -111,7 +111,7 @@ function drawlist($title){
     for($i=0;$i<sizeof($title)&$i<10;$i++){
         print_r("<li><form action='./dx.php' method='POST'>
         <input id='ipt'  type='hidden' type='text' name='wd' value=".$title[$i].">
-        <input id='button' onmousemove='red(this)' onmouseout='black(this)' style='color=\"black\";background-color:rgb(255, 255, 255);' type='submit' value='".($i+1).".".$title[$i].$title[$i]."'></form></li>");
+        <input id='button' onmousemove='red(this)' onmouseout='black(this)' style='color=\"black\";background-color:rgb(255, 255, 255);' type='submit' value='".($i+1).".".$title[$i]."'></form></li>");
     }
 }
 
