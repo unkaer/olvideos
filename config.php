@@ -1,6 +1,6 @@
 <?php
 
-$SiteName = "怡红院"; 
+$SiteName = "白嫖视频"; 
 
 // 百度统计
 
@@ -8,6 +8,9 @@ $SiteName = "怡红院";
 
 // dm.php 实时更新
 $fdm = true;  // 默认打开true，关闭 false
+
+// dx.php 本地图片 缓存图片到服务器
+$ftp = true;
 
 // get 第三方视频链接
 $fget_html = true;

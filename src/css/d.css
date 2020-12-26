@@ -7,6 +7,7 @@ li{
     position: fixed;
     top: 0;
     background-color: #5bb7fe;
+    text-align: center;
 }
 #header-info{
     display: inline-block;

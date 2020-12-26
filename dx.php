@@ -1,4 +1,6 @@
 <?php
+include './config.php';
+include './src/function.php';
 // set_time_limit(0);
 // ob_implicit_flush();
 if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
@@ -119,6 +121,7 @@ setcookie("search", $search, $expire);    // 存放搜索数据
     </script>
 <div>
 <?php
+include './config.php';
 
 $api=array('http://api.iokzy.com/inc/apickm3u8.php','http://www.zdziyuan.com/inc/api.php');  // API方式 资源站API
 $api1=array('ok资源API','最大资源API');  // API方式 资源站API
@@ -130,7 +133,20 @@ $n = 0;
 function playdetail($detailurl,$url1,$f){
     global $array,$n;
     $html = file_get_contents($detailurl);
+
     preg_match_all("/https?:\/\/.*\.jpe?g/",$html,$cover); // 封面 $cover[0][0]
+    echo "5551".$ftp;
+    if ($ftp) {
+        ob_start();
+        readfile($cover);
+        $img=ob_get_contents();ob_end_clean();
+        $cover = "./data/img/1.jpg";
+        if(false!==fopen($cover,'w+')){ 
+            file_put_contents($cover,$img);//写入缓存 
+        }
+        echo "55511".$ftp;
+    }
+
     preg_match_all("/<h2>(.*)<\/h2>/",$html,$title); // 标题 $title[1][0]
     preg_match_all("/([^>]+)[$](https?.*\/index.m3u8)/",$html,$playurl);  // 播放地址
     preg_match_all("/上映：<span>(.*?)</",$html,$year);  // 上映时间 上映：<span>2016</span>
@@ -183,6 +199,16 @@ function geturl($id,$api,$api1,$f){
         $year=(string)$video->year; //上映时间
         $des=(string)$video->des; //简介
         $pic=(string)$video->pic; //封面
+        echo "5552".$ftp;
+            ob_start();
+            readfile($pic);
+            $img=ob_get_contents();ob_end_clean();
+            $pic = "./data/img/".$type.$n."2.jpg";
+            if(false!==fopen($pic,'w+')){ 
+                file_put_contents($pic,$img);//写入缓存 
+            }
+            echo "55522".$ftp;
+
         $url=(string)$video->dl->dd;   //播放地址
         preg_match_all("/https?:\/\/[^#]*\/index.m3u8/",$url,$playurl);
         preg_match_all("/#?([^#]+)[$]/",$url,$tag);

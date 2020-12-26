@@ -116,14 +116,14 @@ function drawlist($title){
 }
 
 // 电影排行榜  爱奇艺、腾讯
-print_r("<div id='movie'>电影排行榜<ul id='movie-info'>爱奇艺");
+print_r("<div id='movie'>电影推荐<ul id='movie-info'>爱奇艺");
 drawlist($aqy[0]);
 echo "</ul><ul id='movie-info'>腾讯视频";
 drawlist($txsp[0]);
 echo "</ul></div>";
 
 // 电视剧排行  爱奇艺、腾讯
-print_r("<div id='movie'>电视剧排行榜<ul id='movie-info'>爱奇艺");
+print_r("<div id='movie'>电视剧<ul id='movie-info'>爱奇艺");
 drawlist($aqy[1]);
 echo "</ul><ul id='movie-info'>腾讯视频";
 drawlist($txsp[1]);
