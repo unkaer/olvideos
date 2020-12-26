@@ -63,7 +63,7 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
         exit();
     }
 }
-$teshu=array(array(",","!",":"),array("，","！","："),array("(",")","普通话","粤语","版","[","]","《","》","\"","\'"," "));  // 0替换为1，2删除
+$teshu=array(array(",","!",":"),array("，","！","："),array("(",")","普通话","粤语","版","[","]","《","》","\"","\'"," ","-"));  // 0替换为1，2删除
 for($i=0;$i<sizeof($teshu[0]);$i++){
     $name=str_replace($teshu[0][$i],$teshu[1][$i],$name);
 }
@@ -131,23 +131,21 @@ $n = 0;
 
 // 爬虫资源站页面
 function playdetail($detailurl,$url1,$f){
-    global $array,$n;
+    global $array,$n,$ftp;
     $html = file_get_contents($detailurl);
+    preg_match_all("/<h2>(.*)<\/h2>/",$html,$title); // 标题 $title[1][0]
 
     preg_match_all("/https?:\/\/.*\.jpe?g/",$html,$cover); // 封面 $cover[0][0]
-    echo "5551".$ftp;
     if ($ftp) {
         ob_start();
-        readfile($cover);
+        readfile($cover[0][0]);
         $img=ob_get_contents();ob_end_clean();
-        $cover = "./data/img/1.jpg";
-        if(false!==fopen($cover,'w+')){ 
-            file_put_contents($cover,$img);//写入缓存 
+        $cover[0][0] = "./data/img/".$title[1][0].$n.".jpg";
+        if(false!==fopen($cover[0][0],'w+')){ 
+            file_put_contents($cover[0][0],$img);//写入缓存 
         }
-        echo "55511".$ftp;
     }
 
-    preg_match_all("/<h2>(.*)<\/h2>/",$html,$title); // 标题 $title[1][0]
     preg_match_all("/([^>]+)[$](https?.*\/index.m3u8)/",$html,$playurl);  // 播放地址
     preg_match_all("/上映：<span>(.*?)</",$html,$year);  // 上映时间 上映：<span>2016</span>
     preg_match_all("/类型：<span>(.*?)</",$html,$type);  // 类型：<span>恐怖片 <
@@ -198,21 +196,21 @@ function geturl($id,$api,$api1,$f){
         $type=(string)$video->type; //类型
         $year=(string)$video->year; //上映时间
         $des=(string)$video->des; //简介
-        $pic=(string)$video->pic; //封面
-        echo "5552".$ftp;
-            ob_start();
-            readfile($pic);
-            $img=ob_get_contents();ob_end_clean();
-            $pic = "./data/img/".$type.$n."2.jpg";
-            if(false!==fopen($pic,'w+')){ 
-                file_put_contents($pic,$img);//写入缓存 
-            }
-            echo "55522".$ftp;
-
         $url=(string)$video->dl->dd;   //播放地址
         preg_match_all("/https?:\/\/[^#]*\/index.m3u8/",$url,$playurl);
         preg_match_all("/#?([^#]+)[$]/",$url,$tag);
         $title=(string)$video->name;
+        $pic=(string)$video->pic; //封面
+        if ($ftp) {
+            ob_start();
+            readfile($pic);
+            $img=ob_get_contents();ob_end_clean();
+            $pic = "./data/img/".$title.$n.".jpg";
+            if(false!==fopen($pic,'w+')){ 
+                file_put_contents($pic,$img);//写入缓存 
+            }
+        }
+
         for($i=0;$i<sizeof($playurl[0]);$i++){
             $array[$n]["tag"][$i]=$tag[1][$i];  // 集数
             $array[$n]["url"][$i]=$playurl[0][$i];  // 播放地址
