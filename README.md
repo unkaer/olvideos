@@ -4,8 +4,8 @@
 
 ## 演示
    演示站点：️
-   [在线视频站](https://jx.unkaer.cf/)  (~~彩虹云~~Heroku+cfCDN)
-   [备用站点](https://jx.unkaer.tk/) (Heroku+cfCDN)
+   [在线视频站](https://jx.unkaer.cf/)  (彩虹云+cfCDN)
+   [备用站点](https://jx.unkaer.tk/) (Heroku+cfCDN 自动更新最新版)
 
 ## 结构
 ```
@@ -16,16 +16,20 @@
 ├── dm.php     搜索第三方播放 链接
 ├── play.php      播放页面
 ├── error.php     错误页
-├── _data      存放缓存文件 
+├── _data      存放缓存数据 
+|   └── _img    存放缓存图片
 ├── _src      存放缓存文件 
 |   ├── _css
-|   |   ├── favicon.ico 网站图标
-|   |   ├── ss.svg 搜索图案
 |   |   └── d.css     搜索页布局
+|   ├── _js
+|   |   └── settime.js     建站时间
 |   └ _dplayer      播放器文件
-|     ├── DPlayer.min.css
-|     ├── DPlayer.min.js
-|     └── hls.min.js
+|   | ├── DPlayer.min.css
+|   | ├── DPlayer.min.js
+|   | └── hls.min.js
+|   ├── function.php  页面布局
+|   ├── favicon.ico   网站图标
+|   └── ss.svg 搜索图案
 ```
 ## 运行流程
 index.php
@@ -70,6 +74,8 @@ php 环境
 ### 服务器安装使用
 推荐免费服务器
 [彩虹云](https://www.unkaer.cf/free.html)
+
+[heroku](https://www.heroku.com/)
 
 演示用的网站，就运行在这上面(并添加 clouflare [CDN加速](https://dash.cloudflare.com/))。
 
