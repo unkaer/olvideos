@@ -42,7 +42,7 @@ $footer = '
         <p>作者：<a href="https://zan7l.tk/" target="_blank">unkaer</a> | 源码：<a href="https://github.com/unkaer/olvideos" target="_blank">olvideos</a> | <a rel="nofollow" target="_blank" href="https://tongji.baidu.com/web/10000045193/overview/index?siteId=14297073"> 网站统计</a></p>
         <p>免责声明:'.$SiteName.'所有视频均来自互联网收集而来，版权归原创者所有，如果侵犯了你的权益，请通知我们，我们会及时删除侵权内容，谢谢合作。</p>
         <p>版权声明:'.$SiteName.'是一个免费看电影非赢利性的网站，本站所有内容均来源于互联网相关站点自动搜索采集信息，相关链接已经注明来源。</p>
-        <p>Copyright © 2020 · <a href="http://jx.unkaer.cf/">怡红院</a> 版权所有 · 版权反馈邮箱:<a href="mailto:ababwbq@qq.com" target="_blank">ababwbq@qq.com</a></p>
+        <p>Copyright © 2020-'.date("Y").' · <a href="'.$SiteUrl.'">'.$SiteName.'</a> 版权所有 · 版权反馈邮箱:<a href="mailto:ababwbq@qq.com" target="_blank">ababwbq@qq.com</a></p>
         <p><span><a id="sitetime"></a></span>
         <script src="./src/js/settime.js"></script></p>
     </div>

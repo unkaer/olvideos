@@ -1,6 +1,7 @@
 <?php
 
 $SiteName = "白嫖视频"; 
+$SiteUrl = "http://jx.unkaer.cf/";
 
 // 百度统计
 
