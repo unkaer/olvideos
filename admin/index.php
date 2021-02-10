@@ -22,6 +22,8 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
     echo '<div><a href="./down.php?id=5">搜索数据管理</a></div>';
     echo '<div><a href="./down.php?id=8">系统设置</a></div>';
 
+    echo "<h3>服务器信息：</h3>";
+    echo(php_uname());
     echo "<h3>用户访问记录：</h3>";
     $file="../data/.log";
     if(file_exists($file)){
