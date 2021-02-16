@@ -68,9 +68,10 @@ setcookie("dt", $dt, $expire);
         ?>
         </title>
         <link rel="stylesheet" href="./src/css/d.css" type="text/css" />
-        <link rel="stylesheet" href="./src/dplayer/DPlayer.min.css"> 
-		<script type="text/javascript"  src="./src/dplayer/hls.min.js" ></script>
-        <script type="text/javascript" src="./src/dplayer/DPlayer.min.js" ></script> 
+        <!-- <link rel="stylesheet" href="./src/dplayer/DPlayer.min.css">  -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dplayer@1.25.0/dist/DPlayer.min.css">
+		<!-- <script type="text/javascript"  src="./src/dplayer/hls.min.js" ></script>
+        <script type="text/javascript" src="./src/dplayer/DPlayer.min.js" ></script> -->
         <style type="text/css">
             html,body{
                 background-color:rgba(28,28,28,.8);
@@ -91,7 +92,15 @@ setcookie("dt", $dt, $expire);
 
         </div>
         <div id="dplayer"></div>
-        <script type="text/javascript" >
+        <div id="stats"></div>
+        <script src="https://cdn.jsdelivr.net/npm/cdnbye@latest"></script>
+        <script src="https://cdn.jsdelivr.net/npm/dplayer@1.25.0"></script>
+        <script>
+        var _peerId = '', _peerNum = 0, _totalP2PDownloaded = 0, _totalP2PUploaded = 0;
+        var type = 'normal';
+        if(Hls.isSupported() && Hls.WEBRTC_SUPPORT) {
+            type = 'customHls';
+        }
         const dp = new DPlayer({
             container: document.getElementById('dplayer'),
             hotkey: true,
@@ -101,8 +110,32 @@ setcookie("dt", $dt, $expire);
                 url: <?php
                 echo "\"".$url."\",";
                 ?>
-                type: 'hls',
-            },
+                type: type,
+                customType: {
+                    'customHls': function (video, player) {
+                        const hls = new Hls({
+                            debug: false,
+                            // Other hlsjsConfig options provided by hls.js
+                            p2pConfig: {
+                                live: false,        // 如果是直播设为true
+                                // Other p2pConfig options provided by CDNBye
+                            }
+                        });
+                        hls.loadSource(video.src);
+                        hls.attachMedia(video);
+                        hls.p2pEngine.on('stats', function (stats) {
+                            _totalP2PDownloaded = stats.totalP2PDownloaded;
+                            _totalP2PUploaded = stats.totalP2PUploaded;
+                            updateStats();
+                        }).on('peerId', function (peerId) {
+                            _peerId = peerId;
+                        }).on('peers', function (peers) {
+                            _peerNum = peers.length;
+                            updateStats();
+                        });
+                    }
+                }
+            }
             // contextmenu: [
             //     {
             //         text: '作者博客',
@@ -114,6 +147,11 @@ setcookie("dt", $dt, $expire);
             //     },
             // ],   
         });
+        function updateStats() {
+            var text = 'P2P正在为您加速' + (_totalP2PDownloaded/1024).toFixed(2)
+                + 'MB 已分享' + (_totalP2PUploaded/1024).toFixed(2) + 'MB' + ' 连接节点' + _peerNum + '个';
+            document.getElementById('stats').innerText = text
+        }
         dp.on('ended', function () {
             video_next();
         });
