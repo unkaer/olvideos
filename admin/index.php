@@ -18,6 +18,7 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
 
     // 更新系统
     echo '<div><a href="./down.php?id=1">更新系统</a></div>';
+    echo '<div><a href="./down.php?id=1&cdn=1">CDN更新系统</a></div>';
     echo '<div><a href="./down.php?id=4">清除首页缓存</a></div>';
     echo '<div><a href="./down.php?id=5">搜索数据管理</a></div>';
     echo '<div><a href="./down.php?id=8">系统设置</a></div>';

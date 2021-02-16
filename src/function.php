@@ -43,6 +43,16 @@ $header = '
         </ul>
     </div>
 </div>
+
+<script type="text/javascript" >
+function checkform(x){
+    if(x.value.length==0){
+        alert("输入不能为空！！！");
+        x.focus();
+        return false;
+    }
+    else{return true}
+}
 ';
 
 // 页脚

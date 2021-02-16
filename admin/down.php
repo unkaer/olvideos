@@ -74,6 +74,9 @@ function delDirAndFile($dirName){
 
 if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
     $url = "https://github.com/unkaer/olvideos/archive/master.zip";  // 下载地址
+    if($_GET['cdn']=='1'){   // CDNurl
+        // $url = "https://cdn.jsdelivr.net/gh/unkaer/olvideos/";  // 下载地址
+    }
     $file = "./olvideos.zip";  // 下载压缩包，存放位置
     $dirsrc = "olvideos-master";  // 解压后目录
     $dirto = "..";  // 覆盖安装目录
