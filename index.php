@@ -132,23 +132,39 @@ echo "</ul><ul id='movie-info'><li style='color: cornflowerblue;'>腾讯视频</
 drawlist($txsp[1]);
 echo "</ul></div>";
 
-
+$url = "https://www.bilibili.com/v/popular/rank/guochan";
+$rlue1 = '/<a href="\/\/www.bilibili.com\/bangumi\/play\/.*?" target="_blank" class="title">(.*?)<\/a>/';
 $file="./data/everyday.dp"; 
 //读出缓存 
 if(file_exists($file)){
     $handle = fopen($file,'r');// 存在 读取内容 只建立网页  只API 只爬取 
     $title = unserialize(fread($handle,filesize($file)));
+
+    $time=time()-filemtime($file);
+    if($time>604800){    // 缓存文件太久才会更新  86400 24H*7 604800
+        $html = file_get_contents($url);
+        preg_match_all($rlue1,$html,$py1);
+        $title = $py1[1];
+        if(false!==fopen($file,'w+')){ 
+            file_put_contents($file,serialize($title));//写入缓存 
+        }
+    }
 }
 else{
-    $title = array("凡人修仙传","元龙");
+    $html = file_get_contents($url);
+    preg_match_all($rlue1,$html,$py1);
+    $title = $py1[1];
     if(false!==fopen($file,'w+')){ 
         file_put_contents($file,serialize($title));//写入缓存 
     }
 }
 
 // 待添加 精彩推荐
-print_r("<div id='movie'><ul id='movie-info'style='width:20px;'>其他</ul><ul id='movie-info'><li style='color: cornflowerblue;'>每日推荐</li>");
-drawlist($title);
+print_r("<div id='movie'><ul id='movie-info'style='width:20px;'>其他</ul><ul id='movie-info'><li style='color: cornflowerblue;'>哔哩哔哩动漫推荐</li>");
+for($i=0;$i<5;$i++){
+    $title5[$i] =  $title[$i];
+}
+drawlist($title5);
 echo "</ul><ul id='movie-info'><li style='color: cornflowerblue;'>官方链接</li>";
 
 // 爱奇艺、腾讯视频链接
