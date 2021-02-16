@@ -134,8 +134,8 @@ include './config.php';
 
 $api=array('http://api.iokzy.com/inc/apickm3u8.php','http://www.zdziyuan.com/inc/api.php');  // API方式 资源站API
 $api1=array('ok资源API','最大资源API');  // API方式 资源站API
-$url=array("http://www.okzyw.com/index.php","http://www.zuidazy5.com//index.php");    // 爬虫方式 资源站的搜索页  "http://kankanzy.com/index.php",
-$url1=array("ok资源爬取","最大资源爬取");    // 爬虫方式 资源站的搜索页   "131资源爬取",
+$url=array("http://www.okzyw.com/index.php","http://www.zuidazy5.com//index.php");    // 爬虫方式 资源站的搜索页
+$url1=array("ok资源爬取","最大资源爬取");    // 爬虫方式 资源站的搜索页
 $n = 0;
 
 // 爬虫资源站页面
@@ -272,6 +272,7 @@ function getarray($f){
     // for($i=0;$i<sizeof($api);$i++){    // API 方式
     //     getname($api[$i],$api1[$i],$f);
     // }
+    //
     // for($i=0;$i<sizeof($url);$i++){   // 爬虫方式
     //     $html = file_get_contents($url[$i]."?m=vod-search&wd=".$name);
     //     preg_match_all("/\?m=vod-detail-id-.+.html/",$html,$detail);
@@ -296,14 +297,15 @@ function getarray($f){
 
     // 只最大 API   // 节约服务器
     getname($api[1],"路线-1",$f);
+    getname($api[0],"路线-0",$f);
 
     
-    // 只ok 爬取   // 节约服务器
-    $html = file_get_contents($url[0]."?m=vod-search&wd=".$name);   // 爬虫方式
-    preg_match_all("/\?m=vod-detail-id-.+.html/",$html,$detail);
-    foreach($detail[0] as $x=>$x_value){
-        playdetail($url[0].$x_value,"路线-2",$f);
-    }
+    // 只ok 爬取   // 节约服务器  有 爬虫处理 暂时舍弃
+    // $html = file_get_contents($url[0]."?m=vod-search&wd=".$name);   // 爬虫方式
+    // preg_match_all("/\?m=vod-detail-id-.+.html/",$html,$detail);
+    // foreach($detail[0] as $x=>$x_value){
+    //     playdetail($url[0].$x_value,"路线-2",$f);
+    // }
 }
 
 

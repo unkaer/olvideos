@@ -173,7 +173,7 @@ setcookie("dt", $dt, $expire);
                 }
                 echo "}</script><br><button type=\"button\" onclick=\"video_front()\">上一集</button>"; 
                 echo "<button type=\"button\" onclick=\"video_next()\">下一集</button>";
-                if($array[$n]["download"][0]!="暂无"){
+                if($array[$n]["download"][0]!="暂无"&$array[$n]["download"][0]!=null){
                     print_r("<p>迅雷p2p下载:<br>");
                     for($j=0;$j<sizeof($array[$n]["tag"]);$j++){
                         print_r($array[$n]["tag"][$j]."$".$array[$n]["download"][$j]."\n</p>");
