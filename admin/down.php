@@ -76,6 +76,8 @@ if (isset($_SESSION["admin"]) && $_SESSION["admin"] === true) {
     $url = "https://github.com/unkaer/olvideos/archive/master.zip";  // 下载地址
     if($_GET['cdn']=='1'){   // CDNurl
         // $url = "https://cdn.jsdelivr.net/gh/unkaer/olvideos/";  // 下载地址
+        // https://data.jsdelivr.com/v1/package/gh/unkaer/olvideos  //版本查询地址
+        https://data.jsdelivr.com/v1/package/gh/unkaer/olvideos@$vi/tree
     }
     $file = "./olvideos.zip";  // 下载压缩包，存放位置
     $dirsrc = "olvideos-master";  // 解压后目录

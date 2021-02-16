@@ -53,6 +53,7 @@ function checkform(x){
     }
     else{return true}
 }
+</script>
 ';
 
 // 页脚
