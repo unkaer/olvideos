@@ -245,7 +245,10 @@ function build($f){
         $array[$n]["des"]=str_replace($luanma[$i],"",$array[$n]["des"]);
     }
     if(isset($array[$n]["title"])){
-        if(!strstr($array[$n]["type"],"伦理")){   // 屏蔽部分搜索结果
+        $pb = 1;
+        if(strstr($array[$n]["type"],"伦理")){$pb = 0;}
+        if(strstr($array[$n]["type"],"福利")){$pb = 0;}
+        if($pb){   // 屏蔽标签 代 “伦理” “福利”的搜索结果
             print_r('<div id="playul"><p>'.$array[$n]["zy"].'</p><div><a id="cover" href="./play.php?wd='.$name.'&id='.$n.'" target="_blank" title="'.$array[$n]["des"].'" style="background-image: url('.$array[$n]["cover"].')">');  // 封面
             print_r("<span class=\"type\" >".$array[$n]["type"]."</span>");
             print_r("<span class=\"year\" >".$array[$n]["year"]."</span></a>");
@@ -257,6 +260,9 @@ function build($f){
             // }
             print_r("<div class=\"title\" >".$array[$n]['title']."</div>");
             print_r("</div></div>");
+        }
+        else{
+            // print_r("部分结果违规");
         }
     }
     if($f){
