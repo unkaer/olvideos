@@ -4,6 +4,7 @@ $SiteName = "白嫖视频";
 $SiteUrl = "http://jx.unkaer.cf/";
 
 // 百度统计
+$baiduid = "cc7e8b361e68dfd22992e1e9b8ec835c";
 
 // 谷歌统计
 

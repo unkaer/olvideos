@@ -12,6 +12,16 @@ $head = '
     <link rel="shortcut icon" href="./src/favicon.ico" type="image/x-icon">
     <link rel="bookmark" href="./src/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="./src/css/d.css" type="text/css" />
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?'+$baiduid+'";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
 </head>
 ';
 
