@@ -248,6 +248,7 @@ function build($f){
         $pb = 1;
         if(strstr($array[$n]["type"],"伦理")){$pb = 0;}
         if(strstr($array[$n]["type"],"福利")){$pb = 0;}
+        if(strstr($array[$n]["type"],"电影解说")){$pb = 0;}
         if($pb){   // 屏蔽标签 代 “伦理” “福利”的搜索结果
             print_r('<div id="playul"><p>'.$array[$n]["zy"].'</p><div><a id="cover" href="./play.php?wd='.$name.'&id='.$n.'" target="_blank" title="'.$array[$n]["des"].'" style="background-image: url('.$array[$n]["cover"].')">');  // 封面
             print_r("<span class=\"type\" >".$array[$n]["type"]."</span>");

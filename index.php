@@ -114,7 +114,7 @@ for($i=0;$i<sizeof($rlue1);$i++){
 
 function drawlist($title){
     for($i=0;$i<sizeof($title)&$i<10;$i++){
-        print_r('<li><a href="./dx.php?wd='.$title[$i].'" onmousemove="red(this)" onmouseout="black(this)" target="_blank" style="color: black;text-decoration:none;">'.$title[$i].'</a></li>');
+        print_r('<li><a href="./dx.php?wd='.$title[$i].'" onmousemove="red(this)" onmouseout="black(this)" target="_blank" style="color: black;text-decoration:none;">'.($i+1).'.'.$title[$i].'</a></li>');
     }
 }
 
