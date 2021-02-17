@@ -94,13 +94,7 @@ openssl.cafile=/***php可读目录***/cert.pem
 ### user_agent
 默认的 `user_agent` 是 PHP，把它改成Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)来模拟浏览器。
 ```ini
-user_agent="Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)"
-```
-
-### allow_url_fopen
-把 `allow_url_fopen` 给启用，表示可以通过 url 打开远程文件。
-```ini
-allow_url_fopen =on
+user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
 ```
 
 ## 支持

@@ -59,6 +59,15 @@ $dt = serialize(array($wd,$n));
 $expire=time()+60*60*24*30;
 setcookie("dt", $dt, $expire);
 
+// http 播放地址加密为 https
+if($_SERVER['HTTPS'] == 'on'){
+    // print('是加密连接');
+    $url = str_replace('http','https',$url);
+    for($i=0;$i<sizeof($urls[1]);$i++){
+        $urls[1][$i] = str_replace('http','https',$urls[1][$i]);
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
