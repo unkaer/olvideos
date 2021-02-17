@@ -1,7 +1,7 @@
 <?php
 include './config.php';
 include './src/function.php';
-ini_set('user_agent', 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)');
+ini_set('user_agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 Edg/88.0.705.68');
 // set_time_limit(0);
 // ob_implicit_flush();
 if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
@@ -64,7 +64,7 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
         exit();
     }
 }
-$teshu=array(array(",",":",),array("，","："),array("(",")","普通话","粤语","版","[","]","《","》","\"","\'"," ","-","`","~","·"));  // 0替换为1，2删除
+$teshu=array(array(",",":",),array("，","："),array("(",")","普通话","粤语","版","[","]","《","》","\"","\'"," ","-","`","~","·","独家纪录片"));  // 0替换为1，2删除
 for($i=0;$i<sizeof($teshu[0]);$i++){
     $name=str_replace($teshu[0][$i],$teshu[1][$i],$name);
 }
