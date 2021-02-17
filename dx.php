@@ -1,6 +1,7 @@
 <?php
 include './config.php';
 include './src/function.php';
+ini_set('user_agent', 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)');
 // set_time_limit(0);
 // ob_implicit_flush();
 if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
@@ -18,7 +19,7 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
         if(!isset($jx1[0][0])){
             $jx = "https://".$jx;
         }
-        $url = array("/iqiyi.com\/.+/","/v.qq.com\/.+/","/v.youku.com\/.+/","/v.pptv.com\/.+/","/mgtv.com\/.+/");
+        $url = array("/iqiyi.com\/.+/","/v.qq.com\/.+/","/v.youku.com\/.+/","/v.pptv.com\/.+/","/mgtv.com\/.+/","/bilibili.com\/.+/");
         for($i=0;$i<sizeof($url);$i++){
             preg_match_all($url[$i],$jx,$py);
             if(isset($py[0][0])){
@@ -34,7 +35,7 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
         preg_match_all('/<title>(.*?)<\/title>/',$html,$py1);
         if(isset($py1[1][0])){
             $py1=$py1[1][0];
-            $teshu=array("腾讯","爱奇艺","优酷","PP视频","原PPTV聚力视频","芒果TV","高清","全集","完整","卫视版","视频","在线","观看","电影","电视剧","1080P","平台","正版","-","_");
+            $teshu=array("腾讯","爱奇艺","优酷","PP视频","原PPTV聚力视频","芒果TV","高清","全集","完整","卫视版","视频","在线","观看","电影","电视剧","1080P","平台","正版","-","_","：","正片","bilibili","哔哩哔哩","番剧","全片");
             for($i=0;$i<sizeof($teshu);$i++){
                 $py1=str_replace($teshu[$i],"",$py1);
             }
@@ -63,7 +64,7 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
         exit();
     }
 }
-$teshu=array(array(",","!",":"),array("，","！","："),array("(",")","普通话","粤语","版","[","]","《","》","\"","\'"," ","-","`","~","·"));  // 0替换为1，2删除
+$teshu=array(array(",",":",),array("，","："),array("(",")","普通话","粤语","版","[","]","《","》","\"","\'"," ","-","`","~","·"));  // 0替换为1，2删除
 for($i=0;$i<sizeof($teshu[0]);$i++){
     $name=str_replace($teshu[0][$i],$teshu[1][$i],$name);
 }
