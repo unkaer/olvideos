@@ -106,7 +106,7 @@ setcookie("dt", $dt, $expire);
         <div ><p>
         <form action="./dx.php" method='POST' onsubmit="return checkform(this);">
         <a href="..">回到首页</a><img style="height: 25px;" src="./src/ss.svg"><input id="ipt" type="text" name="wd" style="background-color:#999;" autofocus value="">
-        </form></p>
+        </form></p><p id="jishu" style="display: none;"><?php echo "$js"; ?></p>
         </div>
 
         </div>
@@ -114,6 +114,21 @@ setcookie("dt", $dt, $expire);
         <div id="stats"></div>
         <script src="https://cdn.jsdelivr.net/npm/cdnbye@latest"></script>
         <script src="https://cdn.jsdelivr.net/npm/dplayer@1.25.0"></script>
+        <script >
+    <?php echo "
+    var name = \"".$name."\";
+    var urls1 = new Array();
+    var urls2 = new Array();";
+    for($i=0;$i<sizeof($urls[0]);$i++){echo "urls1[$i] = \"".$urls[0][$i]."\";urls2[$i] = \"".$urls[1][$i]."\";";}  //var urls1 存播放集数 urls2 存播放地址
+    echo "
+    var ishttps = 'https:' == document.location.protocol ? true: false;
+    if(ishttps){
+        for (x in urls2){
+            urls2[x] = urls2[x].replace(/http/, \"https\");
+        };
+    };";
+    ?>
+        </script>
         <script>
         var _peerId = '', _peerNum = 0, _totalP2PDownloaded = 0, _totalP2PUploaded = 0;
         var type = 'normal';
@@ -126,9 +141,7 @@ setcookie("dt", $dt, $expire);
             autoplay: true,
             screenshot: true,
             video: {
-                url: <?php
-                echo "\"".$url."\",";
-                ?>
+                url: urls2[document.getElementById('jishu').innerHTML],
                 type: type,
                 customType: {
                     'customHls': function (video, player) {
@@ -154,7 +167,9 @@ setcookie("dt", $dt, $expire);
                         });
                     }
                 }
-            }
+            },
+            danmaku: {
+            },
             // contextmenu: [
             //     {
             //         text: '作者博客',
@@ -171,6 +186,44 @@ setcookie("dt", $dt, $expire);
                 + 'MB 已分享' + (_totalP2PUploaded/1024).toFixed(2) + 'MB' + ' 连接节点' + _peerNum + '个';
             document.getElementById('stats').innerText = text
         }
+        dp.on('loadeddata', function () {
+            dp.danmaku.draw({
+                text: '视频初始化完成',
+                color: '#b7daff',
+                type: 'right',
+            });
+            dp.danmaku.draw({
+                text: '请不要相信视频中的水印广告',
+                color: '#ee204d',
+                type: 'top',
+            });
+            dp.danmaku.draw({
+                text: '！！！！！！！！！！！！！',
+                color: '#ee204d',
+                type: 'top',
+            });
+            dp.danmaku.draw({
+                text: '请不要相信视频中的水印广告',
+                color: '#ee204d',
+                type: 'top',
+            });
+            dp.danmaku.draw({
+                text: '！！！！！！！！！！！！！',
+                color: '#ee204d',
+                type: 'top',
+            });
+            dp.danmaku.draw({
+                text: '请不要相信视频中的水印广告',
+                color: '#ee204d',
+                type: 'top',
+            });
+            dp.danmaku.draw({
+                text: '！！！！！！！！！！！！！',
+                color: '#ee204d',
+                type: 'top',
+            });
+        });
+        
         dp.on('ended', function () {
             video_next();
         });
@@ -207,20 +260,7 @@ setcookie("dt", $dt, $expire);
                 for($i=0;$i<sizeof($urls[0]);$i++){
                     echo "<button type=\"button\" onclick=\"player(".$i.")\">".$urls[0][$i]."</button>";
                 }
-                echo '<p id="jishu" >'.$js.'</p>'; //style="display: none;"
                 echo "<script type=\"text/javascript\" >
-    var name = \"".$name."\";
-    var urls1 = new Array();
-    var urls2 = new Array();";
-    for($i=0;$i<sizeof($urls[0]);$i++){echo "urls1[$i] = \"".$urls[0][$i]."\";urls2[$i] = \"".$urls[1][$i]."\";";}  //var urls1 存播放集数 urls2 存播放地址
-    echo "
-    var ishttps = 'https:' == document.location.protocol ? true: false;
-    if(ishttps){
-        for (x in urls2){
-            urls2[x] = urls2[x].replace(/http/, \"https\");
-        };
-        player(document.getElementById('jishu').innerHTML);
-    };
     function player(n) {
             dp.switchVideo({
                 url: urls2[n],
