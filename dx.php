@@ -102,6 +102,7 @@ setcookie("search", $search, $expire);    // 存放搜索数据
         </script>
 </head>
 <body>
+<?php include_once("./src/baidu_js_push.php"); ?>
 <div id="head">
     <div id="head1">
         <a href="..">首页</a>

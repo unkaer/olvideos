@@ -18,6 +18,9 @@ include './config.php';
             s.parentNode.insertBefore(hm, s);
             })();
         </script>
+    </head>
+    <body>
+    <?php include_once("./src/baidu_js_push.php"); ?>
 <a href="..">回到首页</a>
 <?php
 // 错误页
@@ -66,3 +69,5 @@ if($_GET['error_code']=='6'){
     <p><a href="./fl.php?fw=1" target="_blank">视频服务器2 </a></p>';
 }
 ?>
+</body>
+</html>

@@ -5,6 +5,7 @@ ini_set('user_agent', 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)');
 print_r($head);  //网页开头
 
 echo '<body>';
+include_once("./src/baidu_js_push.php");
 print_r($header);  //顶端导航
 
 ?>
