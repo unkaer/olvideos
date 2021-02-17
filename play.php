@@ -59,14 +59,14 @@ $dt = serialize(array($wd,$n));
 $expire=time()+60*60*24*30;
 setcookie("dt", $dt, $expire);
 
-// http 播放地址加密为 https
-if($_SERVER['HTTPS'] == 'on'){
-    // print('是加密连接');
-    $url = str_replace('http','https',$url);
-    for($i=0;$i<sizeof($urls[1]);$i++){
-        $urls[1][$i] = str_replace('http','https',$urls[1][$i]);
-    }
-}
+// http 播放地址加密为 https    由于cloudflare不是https访问的服务器，所以无效 ，改为js方式
+// if($_SERVER['HTTPS'] == 'on'){
+//     // print('是加密连接');
+//     $url = str_replace('http','https',$url);
+//     for($i=0;$i<sizeof($urls[1]);$i++){
+//         $urls[1][$i] = str_replace('http','https',$urls[1][$i]);
+//     }
+// }
 
 ?>
 <!DOCTYPE html>
@@ -202,33 +202,41 @@ if($_SERVER['HTTPS'] == 'on'){
         </script>
         
         <div id="menu">
-        <div class="title">《
-            <?php
-            echo $name."》</div>";
+        <div class="title">《<?php echo $name."》</div>";
             echo '<div class="des">'.$urls[2].'</div>';
                 for($i=0;$i<sizeof($urls[0]);$i++){
                     echo "<button type=\"button\" onclick=\"player(".$i.")\">".$urls[0][$i]."</button>";
                 }
+                echo '<p id="jishu" >'.$js.'</p>'; //style="display: none;"
                 echo "<script type=\"text/javascript\" >
-                function player(n) {";
-                for($i=0;$i<sizeof($urls[0]);$i++){
-                    echo "
-                        if(n==".$i."){
-                        dp.switchVideo({
-                            url: '".$urls[1][$i]."',
-                            type: 'hls'
-                        });
-                        dp.play();document.getElementById('title').innerHTML ='".$name.$urls[0][$i]."';
-                        document.getElementById('jishu').innerHTML ='".$i."';
-                        url =changeURLPar(document.URL,'wd','".$wd."');
-                        url =changeURLPar(url,'id','".$n."');
-                        url =changeURLPar(url,'js',document.getElementById('jishu').innerHTML);
-                        var newUrl =url.replace(new RegExp('&amp;','g'),'&');
-                        history.pushState(null,null,newUrl)
-                        jsc();
-                        }";
-                }
-                echo "}</script><br><button type=\"button\" onclick=\"video_front()\">上一集</button>"; 
+    var name = \"".$name."\";
+    var urls1 = new Array();
+    var urls2 = new Array();";
+    for($i=0;$i<sizeof($urls[0]);$i++){echo "urls1[$i] = \"".$urls[0][$i]."\";urls2[$i] = \"".$urls[1][$i]."\";";}  //var urls1 存播放集数 urls2 存播放地址
+    echo "
+    var ishttps = 'https:' == document.location.protocol ? true: false;
+    if(ishttps){
+        for (x in urls2){
+            urls2[x] = urls2[x].replace(/http/, \"https\");
+        };
+        player(document.getElementById('jishu').innerHTML);
+    };
+    function player(n) {
+            dp.switchVideo({
+                url: urls2[n],
+                type: type,
+            })
+            document.getElementById('title').innerHTML = name+urls1[n];
+            document.getElementById('jishu').innerHTML = n;
+            url =changeURLPar(document.URL,'wd','".$wd."');
+            url =changeURLPar(url,'id','".$n."');
+            url =changeURLPar(url,'js',document.getElementById('jishu').innerHTML);
+            var newUrl =url.replace(new RegExp('&amp;','g'),'&');
+            history.pushState(null,null,newUrl)
+            jsc();
+            dp.play();
+        };";
+                echo "</script><br><button type=\"button\" onclick=\"video_front()\">上一集</button>"; 
                 echo "<button type=\"button\" onclick=\"video_next()\">下一集</button>";
                 if($array[$n]["download"][0]!="暂无"&$array[$n]["download"][0]!=null){
                     print_r("<p>迅雷p2p下载:<br>");
@@ -247,7 +255,6 @@ if($_SERVER['HTTPS'] == 'on'){
                 }</script>";
                 
                 ?>
-        <p id="jishu" style="display: none;"><?php echo $js;?></p>
         </div>
         <?php print_r($footer);?>
     </body>
