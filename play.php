@@ -1,4 +1,5 @@
 <?php
+include './config.php';
 include './src/function.php';
 
 if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
@@ -81,6 +82,15 @@ setcookie("dt", $dt, $expire);
                 border-radius: 8px;
             }
         </style>
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?<?php echo($baiduid); ?>";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
     </head>
     
     <body>

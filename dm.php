@@ -1,5 +1,6 @@
 <?php
 include './config.php';
+
 if($fdm){
     set_time_limit(0);  
     ob_end_clean();  
@@ -92,6 +93,15 @@ setcookie("search1", $search, $expire);    // 存放搜索数据
         <link rel="shortcut icon" href="./src/favicon.ico" type="image/x-icon">
         <link rel="bookmark" href="./src/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="./src/css/d.css" type="text/css" />
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?<?php echo($baiduid); ?>";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
 </head>
 <body>
 <div id="head">
