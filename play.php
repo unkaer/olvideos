@@ -54,51 +54,7 @@ else{
         exit();
     }
 }
-function curl_get($type, $url, $cookie) {//type与url为必传、若无cookie则传空字符串
 
-    if (empty($url)) {
-           return false;
-       }
-  
-       $ch = curl_init();//初始化curl
-       curl_setopt($ch, CURLOPT_URL,$url);//抓取指定网页
-       curl_setopt($ch, CURLOPT_HEADER, 0);//设置header
-       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//要求结果为字符串且输出到屏幕上
-       if($type){  //判断请求协议http或https
-       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
-       curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);  // 从证书中检查SSL加密算法是否存在
-       }
-       curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)"); // 模拟用户使用的浏览器 $_SERVER['HTTP_USER_AGENT'];
-       if(!empty($cookie))curl_setopt($ch,CURLOPT_COOKIE,$cookie);  //设置cookie
-       $data = curl_exec($ch);//运行curl
-       curl_close($ch);
-       return $data;
-}
-
-function blcid($wd){
-
-    $url = "https://search.bilibili.com/bangumi?keyword=".urlencode($wd);
-    // echo $url;
-    $data = curl_get(true,$url,"");
-    // echo ($data);
-    preg_match_all('/<a href="\/\/www.bilibili.com\/bangumi\/play\/ss([0-9]*?)\/\?from=search" title="([^"]*?)" target="_blank" class="title">/',$data,$season); // 标题 
-    if(!isset($season[1][0])){return ;}
-    $season_id =$season[1][0];
-    // $title =$season[2][0];
-    // print_r($season_id);
-    $url = "http://api.bilibili.com/pgc/view/web/season?season_id=".urlencode($season_id);
-    $data = curl_get(true,$url,"");
-    // echo $url;
-    $data = json_decode($data);
-    // print_r($data->code);  // 0 请求成功  -404失败
-    if($data->code=='-404'){return ;}
-    $episodes = $data->result->episodes;
-    for($i=0;$i<sizeof($episodes);$i++){
-        // print_r($episodes[$i]->cid);
-        $cids[$i]=$episodes[$i]->cid;
-    }
-    return $cids;
-}
 $cids = blcid($wd);
 // if(isset($cids)){
 //     print_r($cids);

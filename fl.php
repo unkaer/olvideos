@@ -1,6 +1,6 @@
 <?php
 include './config.php';
-ini_set('user_agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 Edg/88.0.705.68');
+include './src/function.php';
 
 // set_time_limit(0);
 // ob_implicit_flush();
@@ -87,7 +87,7 @@ $api1=array('ok资源API','最大资源API');  // API方式 资源站API  'ok资
 function getcid($api,$api1){
     global $name,$file;
     $array_list = array();
-    $data = file_get_contents($api);
+    $data = curl_get($api);
     $xml = simplexml_load_string($data);
     $key = 0;
     foreach($xml->class->ty as $list){
@@ -104,7 +104,7 @@ function getcid($api,$api1){
 //API 获取视频id geturl视频信息
 function getlist($api,$t,$f){
     global $array,$pg;
-    $data = file_get_contents($api."?ac=list&t=".$t."&pg=".$pg);
+    $data = curl_get($api."?ac=list&t=".$t."&pg=".$pg);
     // print_r($api."?ac=list&t=".$t."&pg=".$pg);
     $xml = simplexml_load_string($data);
     foreach($xml->list->attributes() as $a => $b){
@@ -120,7 +120,7 @@ function getlist($api,$t,$f){
 }
 
 function geturl($id,$api,$api1,$f){
-    $data = file_get_contents($api."?ac=videolist&ids=".$id);
+    $data = curl_get($api."?ac=videolist&ids=".$id);
     $xml = simplexml_load_string($data);
     foreach($xml->list->video as $video){
         global $array,$n;
@@ -198,7 +198,7 @@ function getarray($f){
     // 只最大 API   // 节约服务器
     getname($api[1],"路线-1",$f);
     // 只ok 爬取   // 节约服务器
-    $html = file_get_contents($url[0]."?m=vod-search&wd=".$name);   // 爬虫方式
+    $html = curl_get($url[0]."?m=vod-search&wd=".$name);   // 爬虫方式
     preg_match_all("/\?m=vod-detail-id-.+.html/",$html,$detail);
     foreach($detail[0] as $x=>$x_value){
         playdetail($url[0].$x_value,"路线-2",$f);

@@ -1,7 +1,7 @@
 <?php
 include './config.php';
 include './src/function.php';
-ini_set('user_agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 Edg/88.0.705.68');
+
 // set_time_limit(0);
 // ob_implicit_flush();
 if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
@@ -31,7 +31,7 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
             header("Location: ./error.php?error_code=5&url=".$jx);
             exit();
         }
-        $html = file_get_contents($jx);
+        $html = curl_get($jx);
         preg_match_all('/<title>(.*?)<\/title>/',$html,$py1);
         if(isset($py1[1][0])){
             $py1=$py1[1][0];
@@ -157,7 +157,7 @@ function img_to_file($imgurl,$file){  //图片保存到本地
 // 爬虫资源站页面
 function playdetail($detailurl,$url1,$f){
     global $array,$n,$ftp;
-    $html = file_get_contents($detailurl);
+    $html = curl_get($detailurl);
     preg_match_all("/<h2>(.*)<\/h2>/",$html,$title); // 标题 $title[1][0]
 
     preg_match_all("/https?:\/\/.*\.jpe?g/",$html,$cover); // 封面 $cover[0][0]
@@ -199,7 +199,7 @@ function playdetail($detailurl,$url1,$f){
 //API 获取视频id geturl视频信息
 function getname($api,$api1,$f){
     global $name;
-    $data = file_get_contents($api."?wd=".$name);
+    $data = curl_get($api."?wd=".$name);
     $xml = simplexml_load_string($data);
     foreach($xml->list->video as $video){
         $id=(string)$video->id;
@@ -209,7 +209,7 @@ function getname($api,$api1,$f){
 
 function geturl($id,$api,$api1,$f){
     global $ftp;
-    $data = file_get_contents($api."?ac=videolist&ids=".$id);
+    $data = curl_get($api."?ac=videolist&ids=".$id);
     $xml = simplexml_load_string($data);
     foreach($xml->list->video as $video){
         global $array,$n;
@@ -280,40 +280,13 @@ function build($f){
 
 function getarray($f){
     global $api,$api1,$url,$url1,$name;
-    // 旧的排版爬取方式
-    // for($i=0;$i<sizeof($api);$i++){    // API 方式
-    //     getname($api[$i],$api1[$i],$f);
-    // }
-    //
-    // for($i=0;$i<sizeof($url);$i++){   // 爬虫方式
-    //     $html = file_get_contents($url[$i]."?m=vod-search&wd=".$name);
-    //     preg_match_all("/\?m=vod-detail-id-.+.html/",$html,$detail);
-    //     foreach($detail[0] as $x=>$x_value){
-    //         playdetail($url[$i].$x_value,$url1[$i],$f);
-    //     }
-    // }
-
-    // 方案2
-    // for($i=0;$i<sizeof($api)||$i<sizeof($url);$i++){
-    //     if($i<sizeof($api)){
-    //         getname($api[$i],$api1[$i],$f);   // 第i 个 API 方式 
-    //     }
-    //     if($i<sizeof($url)){
-    //         $html = file_get_contents($url[$i]."?m=vod-search&wd=".$name);   // 爬虫方式
-    //         preg_match_all("/\?m=vod-detail-id-.+.html/",$html,$detail);
-    //         foreach($detail[0] as $x=>$x_value){
-    //             playdetail($url[$i].$x_value,$url1[$i],$f);
-    //         }
-    //     }
-    // }
-
     // 只最大 API   // 节约服务器
     getname($api[1],"路线-1",$f);
     getname($api[0],"路线-0",$f);
 
     
     // 只ok 爬取   // 节约服务器  有 爬虫处理 暂时舍弃
-    // $html = file_get_contents($url[0]."?m=vod-search&wd=".$name);   // 爬虫方式
+    // $html = curl_get($url[0]."?m=vod-search&wd=".$name);   // 爬虫方式
     // preg_match_all("/\?m=vod-detail-id-.+.html/",$html,$detail);
     // foreach($detail[0] as $x=>$x_value){
     //     playdetail($url[0].$x_value,"路线-2",$f);

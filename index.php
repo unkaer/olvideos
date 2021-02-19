@@ -1,7 +1,7 @@
 <?php
 include './config.php';
 include './src/function.php';
-ini_set('user_agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 Edg/88.0.705.68');
+
 print_r($head);  //网页开头
 
 echo '<body>';
@@ -52,7 +52,7 @@ $rlue1=array('/<div id="dianying" class="qy-mod-wrap-side">[\s\S]*?<\/p><\/div><
 $rlue2='/<img src=".*\.j?pn?g" srcset="[^<]*alt="([^<]*)" class="qy-mod-cover">/';
 
 function updata($url,$rlue1,$rlue2){
-    $html = file_get_contents($url);
+    $html = curl_get($url);
     preg_match_all($rlue1,$html,$py1);
     preg_match_all($rlue2,$py1[0][0],$py2);
     return $py2[1]; //名称集合
@@ -133,7 +133,9 @@ echo "</ul><ul id='movie-info'><li style='color: cornflowerblue;'>腾讯视频</
 drawlist($txsp[1]);
 echo "</ul></div>";
 
-$url = "https://www.bilibili.com/v/popular/rank/guochan";
+// 哔哩哔哩番剧榜
+$url = "https://www.bilibili.com/v/popular/rank/bangumi";
+// $url = "https://www.bilibili.com/v/popular/rank/guochan";
 $rlue1 = '/<a href="\/\/www.bilibili.com\/bangumi\/play\/.*?" target="_blank" class="title">(.*?)<\/a>/';
 $file="./data/everyday.dp"; 
 //读出缓存 
@@ -143,7 +145,7 @@ if(file_exists($file)){
 
     $time=time()-filemtime($file);
     if($time>604800){    // 缓存文件太久才会更新  86400 24H*7 604800
-        $html = file_get_contents($url);
+        $html = curl_get($url);
         preg_match_all($rlue1,$html,$py1);
         $title = $py1[1];
         if(false!==fopen($file,'w+')){ 
@@ -152,16 +154,16 @@ if(file_exists($file)){
     }
 }
 else{
-    $html = file_get_contents($url);
+    $html = curl_get($url);
     preg_match_all($rlue1,$html,$py1);
     $title = $py1[1];
     if(false!==fopen($file,'w+')){ 
         file_put_contents($file,serialize($title));//写入缓存 
     }
 }
-
+// print_r($title);
 // 待添加 精彩推荐
-print_r("<div id='movie'><ul id='movie-info'style='width:20px;'>其他</ul><ul id='movie-info'><li style='color: cornflowerblue;'>哔哩哔哩动漫推荐</li>");
+print_r("<div id='movie'><ul id='movie-info'style='width:20px;'>其他</ul><ul id='movie-info'><li style='color: cornflowerblue;'>哔哩哔哩番剧榜</li>");
 for($i=0;$i<5;$i++){
     $title5[$i] =  $title[$i];
 }

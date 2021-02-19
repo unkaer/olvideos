@@ -82,22 +82,8 @@ php 环境
 演示用的网站，就运行在这上面(并添加 clouflare [CDN加速](https://dash.cloudflare.com/))。
 
 ## 常见错误
-因为部分信息通过爬虫获得，所以可能需要修改部分php.ini，并重启服务器
 
-### SSL
-1. 抢完<a href="https://curl.haxx.se/docs/caextract.html">ca证书下载地址</a>下载，或者直接下载<a href="https://curl.se/ca/cacert-2021-01-19.pem">cacert-2021-01-19.pem</a>；
-2. 上传到PHP可读目录；
-3. 修改 `php.ini`。
-```ini
-[openssl]
-openssl.cafile=/***php可读目录***/cert.pem
-```
-
-### user_agent
-默认的 `user_agent` 是 PHP，把它改成Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)来模拟浏览器。
-```ini
-user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
-```
+### 好像没了
 
 ## 支持
 如果你觉得这个项目不错，欢迎 `star` 支持一下。

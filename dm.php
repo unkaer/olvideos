@@ -1,6 +1,6 @@
 <?php
 include './config.php';
-ini_set('user_agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36 Edg/88.0.705.68');
+include './src/function.php';
 
 if($fdm){
     set_time_limit(0);  
@@ -35,7 +35,7 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
             header("Location: ./error.php?error_code=5&url=".$jx);
             exit();
         }
-        $html = file_get_contents($jx);
+        $html = curl_get($jx);
         preg_match_all('/<title>(.*?)<\/title>/',$html,$py1);
         if(isset($py1[1][0])){
             $py1=$py1[1][0];
@@ -148,7 +148,7 @@ function get_html($dm1,$dm2,$dm3,$rule,$rule3,$f){
     global $array,$n,$name;
     $url=str_replace("xxx",$name,$dm2);
     // print_r($dm1.$url);
-    $html = file_get_contents($dm1.$url);
+    $html = curl_get($dm1.$url);
     // print_r($rule);
     preg_match_all($rule,$html,$cms);
     for($i=0;$i<sizeof($cms[0]);$i++){
@@ -179,7 +179,7 @@ function send_post($url, $post_data) {
       )
     );
     $context = stream_context_create($options);
-    $result = file_get_contents($url, false, $context);
+    $result = curl_get($url, false, $context);
     return $result;
 }
 
