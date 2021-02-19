@@ -43,7 +43,7 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
 }
 else{
     if(array_key_exists("url", $_POST)|array_key_exists("url", $_GET)){
-        if(isset($_POST["url"])){$url = $_POST["url"];}else{$url = $_GET["url"];}
+        if(isset($_POST["url"])){$urls[1][0] = $_POST["url"];}else{$urls[1][0] = $_GET["url"];}
         $name = "测试视频" ;
         $urls[0][0] = "测试集数" ;  // 集数 or 画质
         $urls[2] = "测试视频简介" ;  // 简介
@@ -106,7 +106,6 @@ setcookie("dt", $dt, $expire);
         <div ><p>
         <form action="./dx.php" method='POST' onsubmit="return checkform(this);">
         <a href="..">回到首页</a><img style="height: 25px;" src="./src/ss.svg"><input id="ipt" type="text" name="wd" style="background-color:#999;" autofocus value="">
-        </form></p><p id="jishu" style="display: none;"><?php echo "$js"; ?></p>
         </div>
 
         </div>
@@ -127,6 +126,11 @@ setcookie("dt", $dt, $expire);
             urls2[x] = urls2[x].replace(/http/, \"https\");
         };
     };";
+    // $id = md5($name.$js);
+    // echo "var name = \"".$name."\";";
+    echo "var js = \"".$js."\";";
+    echo "var dmid = \"".md5($name)."\"";
+    
     ?>
         </script>
         <script>
@@ -141,7 +145,7 @@ setcookie("dt", $dt, $expire);
             autoplay: true,
             screenshot: true,
             video: {
-                url: urls2[document.getElementById('jishu').innerHTML],
+                url: urls2[js],
                 type: type,
                 customType: {
                     'customHls': function (video, player) {
@@ -169,7 +173,9 @@ setcookie("dt", $dt, $expire);
                 }
             },
             danmaku: {
-            },
+                    id: dmid+js,  //'183f6653124c13ca6b924d021c233f52'
+                    api: 'https://dplayer.moerats.com/',    //这里填写弹幕地址https://comment.bilibili.com/239884310.xml https://dplayer.moerats.com/v3/?id=
+                },
             // contextmenu: [
             //     {
             //         text: '作者博客',
@@ -229,9 +235,8 @@ setcookie("dt", $dt, $expire);
         });
         function jsc() {
             var d = new Date();
-            var jishu = document.getElementById('jishu').innerHTML
             d.setTime(d.getTime() + (30*24*60*60*1000));
-            document.cookie = "jishu =" + jishu + ";expires="+ d.toUTCString() + ";path=/";
+            document.cookie = "jishu =" + js + ";expires="+ d.toUTCString() + ";path=/";
         }
         jsc();
         function changeURLPar(destiny, par, par_value){
@@ -262,15 +267,20 @@ setcookie("dt", $dt, $expire);
                 }
                 echo "<script type=\"text/javascript\" >
     function player(n) {
-            dp.switchVideo({
+        dp.switchVideo(
+            {
                 url: urls2[n],
                 type: type,
-            })
+            },
+            {
+                id: dmid+n,
+                api: 'https://dplayer.moerats.com/',
+            }
+        );
             document.getElementById('title').innerHTML = name+urls1[n];
-            document.getElementById('jishu').innerHTML = n;
             url =changeURLPar(document.URL,'wd','".$wd."');
             url =changeURLPar(url,'id','".$n."');
-            url =changeURLPar(url,'js',document.getElementById('jishu').innerHTML);
+            url =changeURLPar(url,'js',n);
             var newUrl =url.replace(new RegExp('&amp;','g'),'&');
             history.pushState(null,null,newUrl)
             jsc();
@@ -286,11 +296,11 @@ setcookie("dt", $dt, $expire);
                 }
                 echo "<script type=\"text/javascript\" >
                 function video_front() {
-                        var i = Number(document.getElementById('jishu').innerHTML)-1;
+                        var i = js-1;
                         player(i);
                 }
                 function video_next() {
-                    var i = Number(document.getElementById('jishu').innerHTML)+1;
+                    var i = js+1;
                     player(i);
                 }</script>";
                 

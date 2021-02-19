@@ -76,7 +76,7 @@ if($name==""){
     header("Location: ./error.php?error_code=5&url=".$jx);
     exit();
 }
-if(array_key_exists("gx", $_POST)|array_key_exists("gx", $_GET)){if(isset($_POST["gx"])){$gx = $_POST["gx"];}else{$gx = $_GET["gx"];}}
+if(array_key_exists("gx", $_POST)|array_key_exists("gx", $_GET)){if(isset($_POST["gx"])){$gx = $_POST["gx"];}else{$gx = $_GET["gx"];}}else{$gx=0;}
 // 存放搜索记录到 cookie
 $search = serialize(array($name,time()));
 $expire=time()+60*60*24*30;
@@ -140,6 +140,20 @@ $url=array("http://www.okzyw.com/index.php","http://www.zuidazy5.com//index.php"
 $url1=array("ok资源爬取","最大资源爬取");    // 爬虫方式 资源站的搜索页
 $n = 0;
 
+function img_to_file($imgurl,$file){  //图片保存到本地
+    if(!file_exists($file)){
+        ob_start();
+        readfile($imgurl);
+        $img=ob_get_contents();ob_end_clean();
+        $imgurl = $file;
+        if(false!==fopen($file,'w+')){ 
+            file_put_contents($file,$img);//写入缓存 
+        }
+    }
+    return $file;
+}
+
+
 // 爬虫资源站页面
 function playdetail($detailurl,$url1,$f){
     global $array,$n,$ftp;
@@ -148,13 +162,7 @@ function playdetail($detailurl,$url1,$f){
 
     preg_match_all("/https?:\/\/.*\.jpe?g/",$html,$cover); // 封面 $cover[0][0]
     if ($ftp) {
-        ob_start();
-        readfile($cover[0][0]);
-        $img=ob_get_contents();ob_end_clean();
-        $cover[0][0] = "./data/img/".$title[1][0].$n.".jpg";
-        if(false!==fopen($cover[0][0],'w+')){ 
-            file_put_contents($cover[0][0],$img);//写入缓存 
-        }
+        $cover[0][0] = img_to_file($cover[0][0],"./data/img/".$title[1][0].$n.".jpg");
     }
 
     preg_match_all("/([^>]+)[$](https?.*\/index.m3u8)/",$html,$playurl);  // 播放地址
@@ -200,6 +208,7 @@ function getname($api,$api1,$f){
 }
 
 function geturl($id,$api,$api1,$f){
+    global $ftp;
     $data = file_get_contents($api."?ac=videolist&ids=".$id);
     $xml = simplexml_load_string($data);
     foreach($xml->list->video as $video){
@@ -213,13 +222,7 @@ function geturl($id,$api,$api1,$f){
         $title=(string)$video->name;
         $pic=(string)$video->pic; //封面
         if ($ftp) {
-            ob_start();
-            readfile($pic);
-            $img=ob_get_contents();ob_end_clean();
-            $pic = "./data/img/".$title.$n.".jpg";
-            if(false!==fopen($pic,'w+')){ 
-                file_put_contents($pic,$img);//写入缓存 
-            }
+            $pic = img_to_file($pic,"./data/img/".$title.$n.".jpg");
         }
 
         for($i=0;$i<sizeof($playurl[0]);$i++){
