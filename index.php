@@ -48,7 +48,7 @@ if(isset($_COOKIE['search1'])){
 
 $url = 'https://www.iqiyi.com/';
 $name0=array("爱奇艺电影","爱奇艺电视剧");
-$rlue1=array('/<div id="dianshiju" class="qy-mod-wrap-side">[\s\S]*?<\/p><\/div><\/div><\/li><\/ul>\s*?<\/div><\/div><\/div><\/div>/','/<div id="dianying" class="qy-mod-wrap-side">[\s\S]*?<\/p><\/div><\/div><\/li><\/ul>\s*?<\/div><\/div><\/div><\/div>/');
+$rlue1=array('/<div id="dianying" class="qy-mod-wrap-side">[\s\S]*?<\/p><\/div><\/div><\/li><\/ul>\s*?<\/div><\/div><\/div><\/div>/','/<div id="dianshiju" class="qy-mod-wrap-side">[\s\S]*?<\/p><\/div><\/div><\/li><\/ul>\s*?<\/div><\/div><\/div><\/div>/');
 $rlue2='/<img src=".*\.j?pn?g" srcset="[^<]*alt="([^<]*)" class="qy-mod-cover">/';
 
 function updata($url,$rlue1,$rlue2){
