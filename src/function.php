@@ -96,13 +96,19 @@ function curl_get($url, $cookie="") {//url为必传、若无cookie默认为空�
 }
 
 function blcid($wd,$name){
-
-    $url = "https://search.bilibili.com/bangumi?keyword=".urlencode($wd);
+    $urls = array("https://search.bilibili.com/bangumi?keyword=".urlencode($wd),"https://search.bilibili.com/pgc?keyword=".urlencode($wd));
     // echo $url;
-    $data = curl_get($url);
-    // echo ($data);
-    preg_match_all('/<a href="\/\/www.bilibili.com\/bangumi\/play\/ss([0-9]*?)\/\?from=search" title="([^"]*?)" target="_blank" class="title">/',$data,$season); // 标题 
-    if(!isset($season[1][0])){return ;}
+    foreach($urls as $i=>$url){
+        $data = curl_get($url);
+        // echo ($data);
+        preg_match_all('/<a href="\/\/www.bilibili.com\/bangumi\/play\/ss([0-9]*?)\/\?from=search" title="([^"]*?)" target="_blank" class="title">/',$data,$ls[$i]); // 标题 
+    }
+    if(isset($ls[0][1][0])){
+        $season = $ls[0];
+    }
+    if(isset($ls[1][1][0])){
+        $season = $ls[1];
+    }
     // print_r($season);
     $percents = array();
     for($i=0;$i<sizeof($season[2]);$i++){
@@ -126,8 +132,9 @@ function blcid($wd,$name){
     // print_r($data->code);  // 0 请求成功  -404失败
     if($data->code=='-404'){return ;}
     $episodes = $data->result->episodes;
+    // print_r($episodes);
     for($i=0;$i<sizeof($episodes);$i++){
-        // print_r($episodes[$i]->cid);
+        // print_r("cid=".$episodes[$i]->cid."<br>");
         $cids[$i]=$episodes[$i]->cid;
     }
     return $cids;

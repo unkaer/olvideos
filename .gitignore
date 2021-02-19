@@ -8,3 +8,4 @@ admin/olvideos-master/**
 *.htaccess
 ceshi/**
 data/img/*.jpg
+api.php
