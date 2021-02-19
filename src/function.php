@@ -106,8 +106,13 @@ function blcid($wd,$name){
     if(isset($ls[0][1][0])){
         $season = $ls[0];
     }
-    if(isset($ls[1][1][0])){
-        $season = $ls[1];
+    else{
+        if(isset($ls[1][1][0])){
+            $season = $ls[1];
+        }
+        else{
+            return ;
+        }
     }
     // print_r($season);
     $percents = array();
