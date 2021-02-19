@@ -21,6 +21,7 @@ if(array_key_exists("wd", $_POST)|array_key_exists("wd", $_GET)){
                     $urls[2]=$array[$n]["des"];  // 简介
                 }
                 $name = $array[$n]['title'];
+                $cids = blcid($wd,$name);
             }else{
                 header("Location: ./error.php?error_code=2&wd=".$wd."&id=".$n);
                 exit();
@@ -55,7 +56,6 @@ else{
     }
 }
 
-$cids = blcid($wd);
 // if(isset($cids)){
 //     print_r($cids);
 // }

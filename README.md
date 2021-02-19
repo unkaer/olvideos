@@ -78,6 +78,7 @@ php 环境
 [彩虹云](https://www.unkaer.cf/free.html)
 
 [heroku](https://www.heroku.com/)
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://dashboard.heroku.com/new?template=https%3A%2F%2Fgithub.com%2Funkaer%2Folvideos)
 
 演示用的网站，就运行在这上面(并添加 clouflare [CDN加速](https://dash.cloudflare.com/))。
 

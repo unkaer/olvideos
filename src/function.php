@@ -95,7 +95,7 @@ function curl_get($url, $cookie="") {//url为必传、若无cookie默认为空�
        return $data;
 }
 
-function blcid($wd){
+function blcid($wd,$name){
 
     $url = "https://search.bilibili.com/bangumi?keyword=".urlencode($wd);
     // echo $url;
@@ -103,9 +103,22 @@ function blcid($wd){
     // echo ($data);
     preg_match_all('/<a href="\/\/www.bilibili.com\/bangumi\/play\/ss([0-9]*?)\/\?from=search" title="([^"]*?)" target="_blank" class="title">/',$data,$season); // 标题 
     if(!isset($season[1][0])){return ;}
-    $season_id =$season[1][0];
-    // $title =$season[2][0];
-    // print_r($season_id);
+    // print_r($season);
+    $percents = array();
+    for($i=0;$i<sizeof($season[2]);$i++){
+        similar_text($name, $season[2][$i], $percent);
+        $percents[$i] = $percent ;
+        // echo $i.":".$percent."<br>";
+    }
+    // print_r($percents);
+    $max = max($percents);
+    // print_r("max=".$max."<br>");
+    $key= iconv('UTF-8', 'GBK', array_search(max($percents),$percents));
+    // print_r("kay=".$key."<br>");
+    $title =$season[2][$key];
+    // print_r("title=".$title."<br>");
+    $season_id =$season[1][$key];
+    
     $url = "http://api.bilibili.com/pgc/view/web/season?season_id=".urlencode($season_id);
     $data = curl_get($url);
     // echo $url;
