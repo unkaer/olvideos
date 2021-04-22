@@ -48,6 +48,8 @@ else{
         $name = "测试视频" ;
         $urls[0][0] = "测试集数" ;  // 集数 or 画质
         $urls[2] = "测试视频简介" ;  // 简介
+        $wd = "测试视频" ;  // 简介
+        $n = 0 ;  // 简介
         $js = 0 ;
     }
     else{
@@ -153,12 +155,12 @@ setcookie("dt", $dt, $expire);
         }
         const dp = new DPlayer({
             container: document.getElementById('dplayer'),
-            hotkey: true,
             autoplay: true,
+            theme: '#b7daff',
             screenshot: true,
             video: {
                 url: urls2[js],
-                type: type,
+                type: 'auto',
                 customType: {
                     'customHls': function (video, player) {
                         const hls = new Hls({
@@ -199,6 +201,12 @@ setcookie("dt", $dt, $expire);
             //         link: 'https://github.com/unkaer/olvideos/',
             //     },
             // ],   
+            highlight: [
+                {
+                    time: 120,
+                    text: '快进到2分钟',
+                },
+            ],
         });
         function updateStats() {
             var text = 'P2P正在为您加速' + (_totalP2PDownloaded/1024).toFixed(2)
@@ -245,6 +253,18 @@ setcookie("dt", $dt, $expire);
         
         dp.on('ended', function () {
             video_next();
+        });screen.lockOrientationUniversal = screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation;
+
+if (screen.lockOrientationUniversal("landscape-primary")) {
+  // 方向已锁定成功
+} else {
+  // 方向锁定失败
+}
+        dp.on('fullscreen', function () {
+            // alert('fullscreen');
+        });
+        dp.on('fullscreen_cancel', function () {
+            // alert('fullscreen');
         });
         function jsc() {
             var d = new Date();
@@ -283,7 +303,7 @@ setcookie("dt", $dt, $expire);
         dp.switchVideo(
             {
                 url: urls2[n],
-                type: type,
+                type: 'auto',
             },
             {
                 id: dmid+n,
@@ -302,7 +322,7 @@ setcookie("dt", $dt, $expire);
         };";
                 echo "</script><br><button type=\"button\" onclick=\"video_front()\">上一集</button>"; 
                 echo "<button type=\"button\" onclick=\"video_next()\">下一集</button>";
-                if($array[$n]["download"][0]!="暂无"&$array[$n]["download"][0]!=null){
+                if($array[$n]["download"][0]!="暂无"&$array[$n]["download"][0]!=null&$wd!="测试视频"){
                     print_r("<p>迅雷p2p下载:<br>");
                     for($j=0;$j<sizeof($array[$n]["tag"]);$j++){
                         print_r($array[$n]["tag"][$j]."$".$array[$n]["download"][$j]."\n</p>");
