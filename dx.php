@@ -134,8 +134,8 @@ setcookie("search", $search, $expire);    // 存放搜索数据
 <?php
 include './config.php';
 
-$api=array('http://api.iokzy.com/inc/apickm3u8.php','http://www.zdziyuan.com/inc/api.php');  // API方式 资源站API
-$api1=array('ok资源API','最大资源API');  // API方式 资源站API
+$api=array('https://cj.apibdzy.com/inc/api.php','http://cj.bajiecaiji.com/inc/seacmsapi.php');  // API方式 资源站API
+$api1=array('百度云资源','八戒资源');  // API方式 资源站API
 $url=array("http://www.okzyw.com/index.php","http://www.zuidazy5.com//index.php");    // 爬虫方式 资源站的搜索页
 $url1=array("ok资源爬取","最大资源爬取");    // 爬虫方式 资源站的搜索页
 $n = 0;
@@ -216,16 +216,24 @@ function geturl($id,$api,$api1,$f){
         $type=(string)$video->type; //类型
         $year=(string)$video->year; //上映时间
         $des=(string)$video->des; //简介
-        $url=(string)$video->dl->dd;   //播放地址
-        preg_match_all("/https?:\/\/[^#]*\/index.m3u8/",$url,$playurl);
-        preg_match_all("/#?([^#]+)[$]/",$url,$tag);
+
+        $zzt=count($video->dl->dd);
+		for($i=0;$i<$zzt;$i++)
+		{
+            $bfq = (string)$video->dl->dd[$i]['flag']; //播放器标识
+            $url = (string)$video->dl->dd[$i];   //播放地址
+            // preg_match_all("/https?:\/\/[^#]*\/index.m3u8/",$url,$playurl);
+            preg_match_all("/https?:\/\/[^#$]*/",$url,$playurl);
+            preg_match_all("/#?([^#$]+)[$]h/",$url,$tag);
+		}
+        
         $title=(string)$video->name;
         $pic=(string)$video->pic; //封面
         if ($ftp) {
             $pic = img_to_file($pic,"./data/img/".$title.$n.".jpg");
         }
 
-        for($i=0;$i<sizeof($playurl[0]);$i++){
+        for($i=0;$i<count($playurl[0]);$i++){
             $array[$n]["tag"][$i]=$tag[1][$i];  // 集数
             $array[$n]["url"][$i]=$playurl[0][$i];  // 播放地址
             $array[$n]["download"][$i]="暂无";
@@ -282,7 +290,7 @@ function getarray($f){
     global $api,$api1,$url,$url1,$name;
     // 只最大 API   // 节约服务器
     getname($api[1],"路线-1",$f);
-    getname($api[0],"路线-0",$f);
+    // getname($api[0],"路线-0",$f);
 
     
     // 只ok 爬取   // 节约服务器  有 爬虫处理 暂时舍弃
