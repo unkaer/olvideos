@@ -130,10 +130,13 @@ setcookie("dt", $dt, $expire);
     for($i=0;$i<sizeof($urls[0]);$i++){echo "urls1[$i] = \"".$urls[0][$i]."\";urls2[$i] = \"".$urls[1][$i]."\";";}  //var urls1 存播放集数 urls2 存播放地址
     echo "
     var ishttps = 'https:' == document.location.protocol ? true: false;
+    var urlishttp = 's' == urls2[0].slice(4,5) ? false: true;
     if(ishttps){
-        for (x in urls2){
-            urls2[x] = urls2[x].replace(/http/, \"https\");
-        };
+        if(urlishttp){
+            for (x in urls2){
+                urls2[x] = urls2[x].replace(/http/, \"https\");
+            };
+        }
     };";
     // $id = md5($name.$js);
     // echo "var name = \"".$name."\";";
